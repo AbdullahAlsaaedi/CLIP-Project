@@ -11,7 +11,7 @@ const signoutbtnEl  = document.querySelector('.signoutbtn');
 onAuthStateChanged(auth, (user) => {
     if (user) {
       console.log("User is logged in:", user);
-    //   window.location.href = '../index.html';
+      window.location.href = '../index.html';
     } else {
       console.log("User is not logged in");
     }
@@ -36,7 +36,7 @@ loginForm.addEventListener('submit', function(e) {
 
     signInWithEmailAndPassword(auth, email, password).then((cred) => {
         console.log('User logged in: ', cred.user);
-        // window.location.href = '../index.html';
+        window.location.href = '../index.html';
     }).catch(err => console.log(err.message))
 })
 
@@ -44,7 +44,7 @@ signoutbtnEl.addEventListener("click", e => {
 e.preventDefault();
  signOut(auth).then(() => {
         console.log('User signed out')
-        // window.location.href = '../index.html';
+        window.location.href = '../index.html';
         
     }).catch(err => console.log(err.message));
 })
