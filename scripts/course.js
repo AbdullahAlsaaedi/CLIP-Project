@@ -37,6 +37,8 @@ const signinEl = document.querySelector(".signin");
 const postsRef = collection(db, "posts");
 const commentsRef = collection(db, "comments");
 
+let overlay = document.querySelector('.modal-overlay'); 
+
 
 let currentURL = window.location.href;
             let currentPageName = currentURL.substr(currentURL.lastIndexOf('/') + 1);
@@ -525,7 +527,6 @@ function createPost3(postDoc) {
     const postReadEl = postEl.querySelector('.post-readbtn');
     const modalElement = postEl.querySelector('.post-modal');
 
-
     postReadEl.addEventListener('click', () => {
         {
             // Display the corresponding modal using the index
@@ -533,8 +534,9 @@ function createPost3(postDoc) {
             console.log("Hey");
             
                 let currModal = modalElement;
-        
                 modalElement.classList.remove("hidden");
+                overlay.classList.remove('hidden'); 
+
                 document.body.classList.add("no-scroll");
         
                 let closeBtn = modalElement.querySelector(".modal-close");
@@ -542,19 +544,26 @@ function createPost3(postDoc) {
                 closeBtn.addEventListener("click", () => {
                     modalElement.classList.add("hidden");
                     document.body.classList.remove("no-scroll");
-        
+                    overlay.classList.add('hidden'); 
                 })
         
                 document.addEventListener('keydown', (event) => {
                     if (event.key === 'Escape') {
                         currModal.classList.add("hidden");
                         document.body.classList.remove('no-scroll'); // Remove the class to enable scrolling
+                        overlay.classList.add('hidden'); 
                     }
                   })
+
+                 overlay.addEventListener('click', () => {
+                    currModal.classList.add("hidden");
+                    document.body.classList.remove('no-scroll'); // Remove the class to enable scrolling
+                    overlay.classList.add("hidden"); 
+
+                 }) 
                     
             }
     });
-
 
 
     return postEl; 
@@ -612,3 +621,8 @@ function showModal(modalElement) {
         console.log(modalElements[index]);
     
     }
+
+
+
+
+

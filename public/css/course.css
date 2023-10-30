@@ -1,25 +1,48 @@
+body {
+    position: relative;
+}
+
+
 .post-form, .posts {
-    margin: 5rem;
+    /* margin: 5rem; */
     /* margin-right: auto; */
    
 }
 
-.post-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
+.course-main {
+    margin: 7rem 30rem;
+    margin-bottom: 0;
+    
+   
 }
 
 
+
+
+.post-form {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    gap: 1.2rem;
+}
+
+.post-form-heading { 
+    align-self: flex-start;
+    font-size: 1.5rem;
+    font-weight: normal;
+}
+
+/* input */ 
 #postTitle {
-    background-color:rgb(64, 65, 67);
-    color: white;
+    background-color:rgb(234, 232, 232);
+    /* color: black; */
+    /* color: black; */
+    letter-spacing: 1px;
+    font-size: 1.1rem;
     border: none;
     padding: 1rem 1rem;
     border-radius: 1rem;
-
-    width: 50%;
+    /* width: 70%; */
     
 }
 
@@ -27,21 +50,30 @@
 #postContent {
     border-radius: 1rem;
     padding: 1rem;
-    width: 50%;
+
+    border: solid 0.5px gray;
+    
+    height: 12rem;
+    overflow: visible;
+
 
 }
 
 #postTitle:focus, #postContent:focus {
     outline: none;
 }
+
 .post-btn {
+
+    align-self: center;
     color: black;
     font-weight: bold;
     cursor: pointer;
     padding: 1rem 3rem;
     border: none;
     border-radius: 1rem;
-    background-color: yellow;
+    background-color: rgb(242, 148, 148);
+    margin-bottom: 1rem;
 
     /* align-self: flex-start; */
 }
@@ -54,12 +86,95 @@
 }
 
 .posts > * {
-    border: solid .1rem rgb(161, 161, 161);
+    border: solid 0.06px rgba(161, 161, 161, 0.431);
     padding: 2rem;
+
+    display: flex;
+    align-items: center;
+
+    /* gap: 2rem; */
 }
 
+.post {
+    cursor: pointer;
+}
 
+.votes {
+    padding: 1rem 2rem;
+    border-right: solid 0.06px rgba(161, 161, 161, 0.431);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.post-details {
+    padding-left: 2rem;
+    /* display: flex;
+    flex-direction: column; */
+}
+
+.post-details h3 {
+    margin-bottom: 0.5rem;
+    font-weight: normal;
+}
+
+.post-details-user {
+    display: flex;
+    gap: 1rem;
+}
 .comment {
     display: flex;
     gap: 20px;
+} 
+
+
+
+ /* Style for the modal */
+ .post-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%; 
+    /* max-width: 600px;  */
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    z-index: 2;
+
+    min-height: 60rem;
+  }
+
+.hidden {
+    display: none;
 }
+
+.no-scroll {
+    overflow: hidden;
+}
+
+
+.post {
+    /* position: relative; */
+}
+
+
+.modal {
+    z-index: 100;
+}
+
+.modal-overlay {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(209, 209, 209);
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    
+    opacity: 0.7;
+}
+
+

@@ -25,7 +25,6 @@ signupForm.addEventListener('submit', function(e) {
 
     createUserWithEmailAndPassword(auth, email, password).then((cred) => {
         console.log('User Created: ', cred.user);
-
     }).catch(err => console.log(err.message))
 })
 

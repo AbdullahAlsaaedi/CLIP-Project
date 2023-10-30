@@ -13,7 +13,6 @@ body {
     background-image: url("../images/photo-1631477076110-2b8c1fe0f3cc.avif");
     background-position: center;
     background-size: cover;
-    color: white;
     height: 100vh;
 }
 
@@ -78,6 +77,7 @@ li:hover {
     margin: 100px 350px;
     margin-top: 200px;
     text-align: center;
+    
 }
 
 
@@ -85,6 +85,13 @@ li:hover {
     font-size: 50px;
     letter-spacing: 10px;
     margin-bottom: 20px;
+    color: rgb(136, 255, 0); 
+
+}
+
+.landing-content p { 
+    color: white;
+    font-size: 11px;
 }
 
 
