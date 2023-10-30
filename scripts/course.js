@@ -88,25 +88,25 @@ onAuthStateChanged(auth, (user) => {
                 posts.innerHTML = "";
 
                 postsArr.forEach((el) => {
-                    const post = createPost2(el);
+                    const post = createPost3(el);
                     posts.appendChild(post);
                     
-                    // // get the comments 
-                    // const commentsQuery = query(commentsRef, where('postId', '==', el.id), orderBy('date', 'desc'));
+                    // get the comments 
+                    const commentsQuery = query(commentsRef, where('postId', '==', el.id), orderBy('date', 'desc'));
 
-                    // onSnapshot(commentsQuery, snapshot => {
-                    //     post.querySelector(".comments").innerHTML = "";      
+                    onSnapshot(commentsQuery, snapshot => {
+                        post.querySelector(".comments").innerHTML = "";      
 
 
-                    //     snapshot.forEach(doc => {
+                        snapshot.forEach(doc => {
 
-                    //         console.log(doc.id);
+                            console.log(doc.id);
 
-                    //         addComment(post, doc.data())
+                            createComment3(post, doc.data())
 
-                    //     })
+                        })
 
-                    // })
+                    })
                 });
             },
            
@@ -212,46 +212,48 @@ function addComment(post, comment) {
 
 
 
-const postReadEls = document.querySelectorAll('.post-readbtn');
-const modalElements = document.querySelectorAll('.post-modal');
+// const postReadEls = document.querySelectorAll('.post-readbtn');
+// const modalElements = document.querySelectorAll('.post-modal');
 
-// Add a click event listener to each post
-postReadEls.forEach((postRead, index) => {
+// // Add a click event listener to each post
+// postReadEls.forEach((postRead, index) => {
 
-    postRead.addEventListener('click', (event) => {
-        // Display the corresponding modal using the index
+//     postRead.addEventListener('click', (event) => {
+//         // Display the corresponding modal using the index
+
+//         console.log("Hey");
         
-        modalElements.forEach(e => e.classList.add("hidden"))
+//         modalElements.forEach(e => e.classList.add("hidden"))
 
-        if (modalElements[index]) {
+//         if (modalElements[index]) {
 
-            let currModal = modalElements[index];
+//             let currModal = modalElements[index];
 
-            currModal.classList.remove("hidden");
-            document.body.classList.add("no-scroll");
+//             currModal.classList.remove("hidden");
+//             document.body.classList.add("no-scroll");
 
-            let closeBtn = modalElements[index].querySelector(".modal-close")
+//             let closeBtn = modalElements[index].querySelector(".modal-close")
             
-            closeBtn.addEventListener("click", () => {
-                currModal.classList.add("hidden");
-                document.body.classList.remove("no-scroll");
+//             closeBtn.addEventListener("click", () => {
+//                 currModal.classList.add("hidden");
+//                 document.body.classList.remove("no-scroll");
 
-            })
+//             })
 
-            document.addEventListener('keydown', (event) => {
-                if (event.key === 'Escape') {
-                  modalElements.forEach((modal) => {
-                    currModal.classList.add("hidden");
-                    document.body.classList.remove('no-scroll'); // Remove the class to enable scrolling
-                  });
-                }
-              });
+//             document.addEventListener('keydown', (event) => {
+//                 if (event.key === 'Escape') {
+//                   modalElements.forEach((modal) => {
+//                     currModal.classList.add("hidden");
+//                     document.body.classList.remove('no-scroll'); // Remove the class to enable scrolling
+//                   });
+//                 }
+//               });
 
-            console.log(modalElements[index]);
+//             console.log(modalElements[index]);
         
-        }
-    });
-});
+//         }
+//     });
+// });
 
 
 function createPost2(el) {
@@ -413,3 +415,200 @@ function createModal() {
 function createComment2(post, commentDb) {
 
 }
+
+
+function createPost3(postDoc) {
+    let postEl = document.createElement("div"); 
+    postEl.classList.add("post");
+
+    postEl.innerHTML = `
+    
+
+        <div class="votes">
+            <button class="upvote">
+                ^
+            </button>
+
+            <div class="votes-number">
+                12k
+            </div>
+
+            <button class="downvote">
+                v
+            </button>
+        </div>
+
+
+        <div class="post-details">
+            <h3 class="title">${postDoc.title}</h3>
+
+            <div class="post-details-user">
+
+                <div class="pfp-container">
+                    <img src="" class="pfp" alt="img">
+                </div>
+
+                <div class="post-username">
+                    ahmed mosa
+                </div>
+
+                <div class="post-date">
+                    2 days ago
+                </div>
+
+            </div>
+        </div>
+        
+        <button class="post-readbtn">Read more</button>
+
+        <div class="post-modal hidden">
+            <button class="modal-close">X</button>
+
+            <h3 class="title">${postDoc.title}</h3>
+
+            <p>${postDoc.content}</p>
+            <input class="commentIn" type="text" placeholder="Add a comment"></input>
+            <button class="commentBtn"> + </button>
+
+            <div class="comments">
+                <div class="comment">
+                    logo
+                    <div class="p">conent</div>
+                </div>
+
+                <div class="comment">
+                    logo
+                    <div class="p">conent</div>
+                </div>
+
+                <div class="comment">
+                    logo
+                    <div class="p">conent</div>
+                </div>
+
+            <!-- end of comments -->  
+            </div>
+
+        <!-- end of modal -->  
+        </div>
+
+
+
+    
+
+
+    <!-- end of post-->
+
+
+
+`
+
+    let button = postEl.querySelector('.commentBtn');
+    let input = postEl.querySelector('.commentIn');
+
+    button.addEventListener("click", (e) => {
+        e.preventDefault();
+        const postId = postDoc.id;
+        const commentContent = input.value;
+
+        // add comment to databse
+
+        addDoc(commentsRef, {
+            postId: postId,
+            content: commentContent,
+            date: serverTimestamp(),
+        });
+    });
+
+
+
+    const postReadEl = postEl.querySelector('.post-readbtn');
+    const modalElement = postEl.querySelector('.post-modal');
+
+
+    postReadEl.addEventListener('click', () => {
+        {
+            // Display the corresponding modal using the index
+        
+            console.log("Hey");
+            
+                let currModal = modalElement;
+        
+                modalElement.classList.remove("hidden");
+                document.body.classList.add("no-scroll");
+        
+                let closeBtn = modalElement.querySelector(".modal-close");
+                
+                closeBtn.addEventListener("click", () => {
+                    modalElement.classList.add("hidden");
+                    document.body.classList.remove("no-scroll");
+        
+                })
+        
+                document.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape') {
+                        currModal.classList.add("hidden");
+                        document.body.classList.remove('no-scroll'); // Remove the class to enable scrolling
+                    }
+                  })
+                    
+            }
+    });
+
+
+
+    return postEl; 
+}
+
+// console.log(createPost3());
+
+
+
+function createComment3(postEl, postDoc) {
+
+    let comments = postEl.querySelector(".comments"); 
+    let newCommentEl = document.createElement("div"); 
+    newCommentEl.classList.add('comment');
+
+    newCommentEl.innerHTML = 
+    `
+    <div class="comment">
+        logo
+        <div class="p">${postDoc.content}</div>
+    </div>
+    `
+
+    comments.appendChild(newCommentEl);
+    
+}
+
+
+
+
+function showModal(modalElement) {
+
+    console.log("Hey");
+    
+        let currModal = modalElement;
+
+        modalElement.classList.remove("hidden");
+        document.body.classList.add("no-scroll");
+
+        let closeBtn = modalElement.querySelector(".modal-close");
+        
+        closeBtn.addEventListener("click", () => {
+            modalElement.classList.add("hidden");
+            document.body.classList.remove("no-scroll");
+
+        })
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                currModal.classList.add("hidden");
+                document.body.classList.remove('no-scroll'); // Remove the class to enable scrolling
+            }
+          })
+
+        console.log(modalElements[index]);
+    
+    }
