@@ -49,7 +49,16 @@ let currentURL = window.location.href;
 
 // const user = getAuth(auth).currentUser;
 
+let currUser = null; 
+
 onAuthStateChanged(auth, (user) => {
+
+    currUser = auth.currentUser; 
+
+    currUser.photoURL = '../images/photo-1631477076110-2b8c1fe0f3cc.avif'
+    console.log("the user rn is ", currUser);
+    
+
     if (user) {
         console.log("User is logged in:", user);
 
@@ -447,11 +456,11 @@ function createPost3(postDoc) {
             <div class="post-details-user">
 
                 <div class="pfp-container">
-                    <img src="" class="pfp" alt="img">
+                    <img src="${currUser.photoURL}" class="pfp" alt="img">
                 </div>
 
                 <div class="post-username">
-                    ahmed mosa
+                    ${currUser.email}
                 </div>
 
                 <div class="post-date">
@@ -469,8 +478,8 @@ function createPost3(postDoc) {
             <h3 class="title">${postDoc.title}</h3>
 
             <p>${postDoc.content}</p>
-            <input class="commentIn" type="text" placeholder="Add a comment"></input>
-            <button class="commentBtn"> + </button>
+            <textarea class="commentIn" type="text" placeholder="Add a comment"></textarea>
+            <button class="commentBtn"> add comment </button>
 
             <div class="comments">
                 <div class="comment">
@@ -581,10 +590,10 @@ function createComment3(postEl, postDoc) {
 
     newCommentEl.innerHTML = 
     `
-    <div class="comment">
+    
         logo
         <div class="p">${postDoc.content}</div>
-    </div>
+    
     `
 
     comments.appendChild(newCommentEl);
@@ -621,6 +630,7 @@ function showModal(modalElement) {
         console.log(modalElements[index]);
     
     }
+
 
 
 
