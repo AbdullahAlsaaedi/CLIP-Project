@@ -13,6 +13,7 @@ const signinEl = document.querySelector('.signin');
 onAuthStateChanged(auth, (user) => {
     if (user) {
       console.log("User is logged in:", user);
+    
       signinEl.parentElement.style.display = 'none'
     } else {
       console.log("User is not logged in");

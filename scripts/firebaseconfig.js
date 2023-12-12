@@ -6,8 +6,7 @@ import {
 } from 'https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js'
 
 import {
-  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged
-
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile
 } from 'https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js'
 
 const firebaseConfig = {
@@ -29,5 +28,5 @@ const colRef = collection(db, 'posts')
 
 export {initializeApp, getFirestore, collection, getDocs, addDoc, deleteDoc, doc, onSnapshot,
     query, where, orderBy, serverTimestamp, getDoc, updateDoc, firebaseConfig, app, db, auth, colRef, getAuth,
-    createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged
+    createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile
 }

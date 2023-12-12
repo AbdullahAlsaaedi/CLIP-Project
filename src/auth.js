@@ -25,6 +25,8 @@ const auth = getAuth(app);
 const colRef = collection(db, 'post')
 
 
+
+
 const signupForm  = document.querySelector('#signup-form');
 const loginForm = document.querySelector('#login-form');
 
