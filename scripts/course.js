@@ -35,31 +35,26 @@ const signinEl = document.querySelector(".signin");
 // const commentInEl = document.querySelector('.commentIn');
 
 const postsRef = collection(db, "posts");
-const usersRef = collection(db, 'users')
+const usersRef = collection(db, "users");
 const commentsRef = collection(db, "comments");
 
-
-let overlay = document.querySelector('.modal-overlay'); 
-
+let overlay = document.querySelector(".modal-overlay");
 
 let currentURL = window.location.href;
-            let currentPageName = currentURL.substr(currentURL.lastIndexOf('/') + 1);
-            currentPageName = currentPageName.substr(0, currentPageName.lastIndexOf('.'))
+let currentPageName = currentURL.substr(currentURL.lastIndexOf("/") + 1);
+currentPageName = currentPageName.substr(0, currentPageName.lastIndexOf("."));
 
-            console.log(currentPageName);
-            
+console.log(currentPageName);
 
 // const user = getAuth(auth).currentUser;
 
-let currUser = null; 
+let currUser = null;
 
 onAuthStateChanged(auth, (user) => {
-
-    currUser = auth.currentUser; 
+    currUser = auth.currentUser;
 
     // currUser.photoURL = '../images/photo-1631477076110-2b8c1fe0f3cc.avif'
     console.log("the user rn is ", currUser);
-    
 
     if (user) {
         console.log("User is logged in:", user);
@@ -69,141 +64,78 @@ onAuthStateChanged(auth, (user) => {
         const postForm = document.querySelector(".post-form");
         const posts = document.querySelector(".posts");
 
+
+
+        // 1 ----- CLICKED  THE BUTTON
+
         postForm.addEventListener("submit", function (e) {
             if (postForm.postTitle.value === "") return false;
             e.preventDefault();
 
-            
-            
             addDoc(postsRef, {
                 userID: currUser.uid,
                 title: postForm.postTitle.value,
                 content: postForm.postContent.value,
                 // check this later
-                course: currentPageName, 
-                date: serverTimestamp()
+                course: currentPageName,
+                date: serverTimestamp(),
             });
             // console.log(postForm.postTitle);
             postForm.reset();
             console.log(posts);
         });
-        
-    
-        const postQuery = query(postsRef, where('course', '==', currentPageName));
 
-         onSnapshot(postQuery, (snapshot) => {
+
+
+        // 2 ------ FETCH THE DAT 
+
+        const postQuery = query(
+            postsRef,
+            where("course", "==", currentPageName), orderBy("date", "desc")
+        );
+
+        onSnapshot(postQuery, (snapshot) => {
             posts.innerHTML = "";
 
+            let postsArr = [];
 
+            snapshot.docs.forEach((el) =>
+                postsArr.push({ ...el.data(), id: el.id })
+            );
 
+            postsArr.forEach((el) => {
+                let userDoc;
 
-                    let postsArr = [];
+                const posterQuery = query(
+                    usersRef,
+                    where("uid", "==", el.userID)
+                );
 
-                    snapshot.docs.forEach((el) =>
-                        postsArr.push({ ...el.data(), id: el.id })
-                    );
+                onSnapshot(posterQuery, (snapshot) => {
+                    snapshot.forEach((doc) => {
+                        const post = createPost3(el, doc.data());
+                        const tmpPost = document.getElementById(post.id);
+                        posts.appendChild(post);
 
-                    
-    
-                        
+                        // get the comments
+                        const commentsQuery = query(
+                            commentsRef,
+                            where("postId", "==", el.id),
+                            orderBy("date", "desc")
+                        );
 
-                    postsArr.forEach((el) => {
-                        
-                        // console.log(el);
-                        let userDoc; 
-                        // console.log(el.userID);
-                        
-                        // console.log(el.userID);
-                        
-                        const posterQuery = query(usersRef, where('uid', '==', el.userID));
-                        
-                        // console.log(posterQuery);
-                        
-                        onSnapshot(posterQuery, (snapshot) => {
+                        onSnapshot(commentsQuery, (snapshot) => {
+                            post.querySelector(".comments").innerHTML = "";
 
-                            // console.log("INSIDE DOCS");
-                            
-                            // console.log(snapshot);
-                            
-                            snapshot.forEach(doc => {
-                                // console.log("YESSSSSSSSSS");
-                                
-                                // console.log(doc.id, doc.data());
-
-
-                                const post = createPost3(el, doc.data());
-
-                                const tmpPost = document.getElementById(post.id); 
-                                
-                                posts.appendChild(post);
-                                
-                                // get the comments 
-                                const commentsQuery = query(commentsRef, where('postId', '==', el.id), orderBy('date', 'desc'));
-            
-                                onSnapshot(commentsQuery, snapshot => {
-                                    post.querySelector(".comments").innerHTML = "";      
-            
-            
-                                    snapshot.forEach(doc => {
-            
-            
-                                        createComment3(post, doc.data())
-            
-                                    })
-            
-                                })
-
-
-                            })
-                        })
-
-                        // console.log(el.userID);
-                        
-                        // const usersDoc = await getDocs(posterQuery);
-                        
-                        // usersDoc.forEach(doc => {
-                        //     userDoc = doc; 
-                        // })
-                        
-                        // console.log(userDoc);
-                        
-                        // // Correctly accessing the first document
-                        // const userDoc = usersDoc.docs[0];
-
-                        // console.log(userDoc);
-
-                        
-                        // const post = createPost3(el, userDoc.data());
-                        // const post = createPost3(el);
-
-                        // const tmpPost = document.getElementById(post.id); 
-                        
-                        // posts.appendChild(post);
-                         
-                        // // get the comments 
-                        // const commentsQuery = query(commentsRef, where('postId', '==', el.id), orderBy('date', 'desc'));
-    
-                        // onSnapshot(commentsQuery, snapshot => {
-                        //     post.querySelector(".comments").innerHTML = "";      
-    
-    
-                        //     snapshot.forEach(doc => {
-    
-    
-                        //         createComment3(post, doc.data())
-    
-                        //     })
-    
-                        // })
+                            snapshot.forEach((doc) => {
+                                createComment3(post, doc.data());
+                            });
+                        });
                     });
-                    
-                  
-                
-                
-
-
+                });
             });
-    }   
+        });
+    }
 });
 
 singoutEl.addEventListener("click", (e) => {
@@ -219,64 +151,78 @@ singoutEl.addEventListener("click", (e) => {
 
 // function
 
-
-  function createPost3(postDoc, userDoc) {
-
+function createPost3(postDoc, userDoc) {
     // console.log("POST CREATED");
-    
 
-    // get user associated with the post 
+    // get user associated with the post
 
-    // const userID = postDoc.userID;  
+    // const userID = postDoc.userID;
 
-    
-    
+    let posts = document.querySelector(".posts");
 
-    let posts = document.querySelector('.posts');
-
-    let postEl = document.createElement("div"); 
+    let postEl = document.createElement("div");
     postEl.classList.add("post");
-    postEl.id = postDoc.id; 
-    
+    postEl.id = postDoc.id;
+
     postEl.innerHTML = `
     
 
-        <div class="votes">
-            <button class="upvote">
-                ^
-            </button>
-
-            <div class="votes-number">
-                12k
-            </div>
-
-            <button class="downvote">
-                v
-            </button>
-        </div>
+        
 
 
         <div class="post-details">
-            <h3 class="title">${postDoc.title}</h3>
 
-            <div class="post-details-user">
 
-                <div class="pfp-container">
-                    <img src="${userDoc.photoURL}" class="pfp" alt="img">
-                </div>
+        <div class="post-heading-details"> 
 
-                <div class="post-username">
-                    ${userDoc.name}
-                </div>
+            <div class="pfp-container">
+                <img src="${userDoc.photoURL}" class="pfp" alt="img">
+            </div>
+
+            <div class="post-username">
+                ${userDoc.name}
 
                 <div class="post-date">
                     2 days ago
                 </div>
+            </div>
+
+            <button class="post-delete">X</button>
+
+        
+        </div>
+
+        
+
+       
+
+            <h3 class="title">${postDoc.title}</h3>
+
+            <h4 class="content">${postDoc.content}</h4>
+
+            <div class="post-details-user">
+
+            
+                <div class="votes">
+                    <button class="upvote">
+                        ^
+                    </button>
+
+                    <div class="votes-number">
+                        12k
+                    </div>
+
+                    <button class="downvote">
+                        v
+                    </button>
+                </div>
+
+                <button class="post-readbtn primary-btn">Read more</button>
+
 
             </div>
         </div>
         
-        <button class="post-readbtn">Read more</button>
 
         <div class="post-modal hidden">
             <button class="modal-close">X</button>
@@ -318,10 +264,10 @@ singoutEl.addEventListener("click", (e) => {
 
 
 
-`
+`;
 
-    let button = postEl.querySelector('.commentBtn');
-    let input = postEl.querySelector('.commentIn');
+    let button = postEl.querySelector(".commentBtn");
+    let input = postEl.querySelector(".commentIn");
 
     button.addEventListener("click", (e) => {
         e.preventDefault();
@@ -337,108 +283,107 @@ singoutEl.addEventListener("click", (e) => {
         });
     });
 
+    const postReadEl = postEl.querySelector(".post-readbtn");
+    const modalElement = postEl.querySelector(".post-modal");
+    const postDeleteEl = postEl.querySelector(".post-delete")
+
+    postDeleteEl.addEventListener("click", () => {
+        
+        console.log(postDoc.id);
+
+        // postsRef.doc(postDoc.id).delete().then(() => {
+        //     console.log("Successfuly delete");
+            
+        // })
 
 
-    const postReadEl = postEl.querySelector('.post-readbtn');
-    const modalElement = postEl.querySelector('.post-modal');
+        const docRef = doc(db, "posts", postDoc.id);
 
-    postReadEl.addEventListener('click', () => {
+        console.log(docRef);
+        
+        deleteDoc(docRef); 
+        
+        
+    })
+
+    postReadEl.addEventListener("click", () => {
         {
             // Display the corresponding modal using the index
-        
+
             console.log("Hey");
-            
-                let currModal = modalElement;
-                modalElement.classList.remove("hidden");
-                overlay.classList.remove('hidden'); 
 
-                document.body.classList.add("no-scroll");
-        
-                let closeBtn = modalElement.querySelector(".modal-close");
-                
-                closeBtn.addEventListener("click", () => {
-                    modalElement.classList.add("hidden");
-                    document.body.classList.remove("no-scroll");
-                    overlay.classList.add('hidden'); 
-                })
-        
-                document.addEventListener('keydown', (event) => {
-                    if (event.key === 'Escape') {
-                        currModal.classList.add("hidden");
-                        document.body.classList.remove('no-scroll'); // Remove the class to enable scrolling
-                        overlay.classList.add('hidden'); 
-                    }
-                  })
+            let currModal = modalElement;
+            modalElement.classList.remove("hidden");
+            overlay.classList.remove("hidden");
 
-                 overlay.addEventListener('click', () => {
+            document.body.classList.add("no-scroll");
+
+            let closeBtn = modalElement.querySelector(".modal-close");
+
+            closeBtn.addEventListener("click", () => {
+                modalElement.classList.add("hidden");
+                document.body.classList.remove("no-scroll");
+                overlay.classList.add("hidden");
+            });
+
+            document.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") {
                     currModal.classList.add("hidden");
-                    document.body.classList.remove('no-scroll'); // Remove the class to enable scrolling
-                    overlay.classList.add("hidden"); 
+                    document.body.classList.remove("no-scroll"); // Remove the class to enable scrolling
+                    overlay.classList.add("hidden");
+                }
+            });
 
-                 }) 
-                    
-            }
+            overlay.addEventListener("click", () => {
+                currModal.classList.add("hidden");
+                document.body.classList.remove("no-scroll"); // Remove the class to enable scrolling
+                overlay.classList.add("hidden");
+            });
+        }
     });
 
-
-    return postEl; 
+    return postEl;
 }
 
 // console.log(createPost3());
 
-
-
 function createComment3(postEl, postDoc) {
+    let comments = postEl.querySelector(".comments");
+    let newCommentEl = document.createElement("div");
+    newCommentEl.classList.add("comment");
 
-    let comments = postEl.querySelector(".comments"); 
-    let newCommentEl = document.createElement("div"); 
-    newCommentEl.classList.add('comment');
-
-    newCommentEl.innerHTML = 
-    `
+    newCommentEl.innerHTML = `
     
         logo
         <div class="p">${postDoc.content}</div>
     
-    `
+    `;
 
     comments.appendChild(newCommentEl);
-    
 }
 
-
-
-
 function showModal(modalElement) {
-
     console.log("Hey");
-    
-        let currModal = modalElement;
 
-        modalElement.classList.remove("hidden");
-        document.body.classList.add("no-scroll");
+    let currModal = modalElement;
 
-        let closeBtn = modalElement.querySelector(".modal-close");
-        
-        closeBtn.addEventListener("click", () => {
-            modalElement.classList.add("hidden");
-            document.body.classList.remove("no-scroll");
+    modalElement.classList.remove("hidden");
+    document.body.classList.add("no-scroll");
 
-        })
+    let closeBtn = modalElement.querySelector(".modal-close");
 
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                currModal.classList.add("hidden");
-                document.body.classList.remove('no-scroll'); // Remove the class to enable scrolling
-            }
-          })
+    closeBtn.addEventListener("click", () => {
+        modalElement.classList.add("hidden");
+        document.body.classList.remove("no-scroll");
+    });
 
-        console.log(modalElements[index]);
-    
-    }
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            currModal.classList.add("hidden");
+            document.body.classList.remove("no-scroll"); // Remove the class to enable scrolling
+        }
+    });
 
-
-
-
-
+    console.log(modalElements[index]);
+}
 

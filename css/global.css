@@ -1,0 +1,35 @@
+.hidden {
+    display: none;
+}
+
+
+main {
+    background-color: white;
+    border-top-right-radius: 10rem;
+    border-top-left-radius: 10rem;
+    padding: 7rem 10rem;
+
+    height: 100vh;
+
+}
+
+
+.input {
+    padding: 1rem 3rem;
+    border-radius: 0.5rem;
+    background-color: transparent;
+    border: solid 0.5px rgba(100, 100, 111, 0.2);
+    /* flex-basis: 40%; */
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 20px 0px;
+}
+
+
+.primary-btn {
+    background-color: #333661;
+    padding: 1rem 6rem;
+    border: none;
+    color: white;
+    border-radius: 1rem;
+    cursor: pointer;
+    box-shadow: rgba(100, 100, 111, 0.5) 0px 7px 20px 0px;
+}

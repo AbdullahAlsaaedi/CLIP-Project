@@ -114,7 +114,7 @@ function websdkready() {
                     meetingConfig.signature = res;
                     meetingConfig.sdkKey = CLIENT_ID;
                     var joinUrl =
-                        "http://127.0.0.1:5500/CDN/meeting.html?" +
+                        "http://127.0.0.1:5501/html/live/CDN/meeting.html?" +
                         testTool.serialize(meetingConfig);
                     console.log(joinUrl);
                     window.open(joinUrl, "_blank");
@@ -151,7 +151,7 @@ function websdkready() {
                 meetingConfig.signature = res.result;
                 meetingConfig.sdkKey = CLIENT_ID;
                 var joinUrl =
-                    "http://127.0.0.1:5500/CDN/meeting.html?" +
+                    "http://127.0.0.1:5501/html/live/CDN/meeting.html?" +
                     testTool.serialize(meetingConfig);
                 document
                     .getElementById("copy_link_value")

@@ -101,6 +101,10 @@ function websdkready() {
 
     ZoomMtg.inMeetingServiceListener("onUserLeave", function (data) {
       console.log("inMeetingServiceListener onUserLeave", data);
+
+
+      console.log("LOOOOOOOL");
+      
     });
 
     ZoomMtg.inMeetingServiceListener("onUserIsInWaitingRoom", function (data) {

@@ -109,26 +109,26 @@ a {
 
 }
 
-.signin-container {
+.signup-container {
     margin-top: 4rem;
 
     display: flex;
     flex-direction: column;
 }
 
-.signin-heading {
+.signup-heading {
     font-size: 3.5rem;
     margin-bottom: 1rem;
 }
 
-.signin-haveAcc {
+.signup-makeAcc {
     font-size: 1.7rem;
     color: rgba(0, 0, 0, 0.4);
     margin-bottom: 4rem;
     
 }
 
-.signin-haveAcc a {
+.signup-makeAcc a {
     color: rgba(0, 0, 0, 0.8);
     text-decoration: underline;
     cursor: pointer;
@@ -159,7 +159,7 @@ form  {
 
 }
 
-.signin-btn {
+.signup-btn {
     background-color: #154734;
     padding: 1rem 6rem;
     border: none;

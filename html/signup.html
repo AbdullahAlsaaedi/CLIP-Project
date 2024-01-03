@@ -6,9 +6,9 @@
     <title>Sign in</title>
 
     <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/signin.css">
+    <link rel="stylesheet" href="../css/signup.css">
 
-    <script defer type="module" src="../scripts/signin.js"></script>
+    <script defer type="module" src="../scripts/signup.js"></script>
 
 </head>
 <body>
@@ -51,23 +51,26 @@
 
     <main class="main">
 
-        <div class="signin-container">
-            <h1 class="signin-heading">
-                Log in 
+        <div class="signup-container">
+            <h1 class="signup-heading">
+                Create an account
             </h1>
     
-            <p class="signin-haveAcc">Dont have an account? <a href="signup.html"> Create now!</a></p>
+            <p class="signup-makeAcc">already have an account? <a href="signin.html">Sign in</a></p>
     
-            <form id="login-form">
+            <form id="signup-form">
     
                 <label for="email">Email </label>
                 <input class="input" name="email" type="email" id="email" placeholder="Email" required>
     
                 <label for="password">Password</label>
                 <input class="input" name="password" type="password" id="password" placeholder="Password" required>
-
     
-                <button class="signin-btn" type="submit">Sign in</button>
+                <label for="username">Name </label>
+                <input class="input" name="username" type="text" id="username" placeholder="Name" required>
+            
+    
+                <button class="signup-btn" type="submit">Sign Up</button>
             </form>
     
             <button class="goolge-sign-btn">Continue with Google</button>
@@ -81,14 +84,9 @@
         
 
     </main>
+    
 
-
-
-
-
-
-
-
+    
 
 
 </body>

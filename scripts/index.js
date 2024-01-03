@@ -13,8 +13,8 @@ const signinEl = document.querySelector('.signin');
 onAuthStateChanged(auth, (user) => {
     if (user) {
       console.log("User is logged in:", user);
-    
       signinEl.parentElement.style.display = 'none'
+      singoutEl.classList.remove("hidden")
     } else {
       console.log("User is not logged in");
     }
@@ -23,14 +23,12 @@ onAuthStateChanged(auth, (user) => {
 singoutEl.addEventListener("click", e => {
     e.preventDefault();
 
+    singoutEl.classList.add("hidden")
+
+
     signOut(auth).then(() => {
         console.log('User signed out')
         window.location.href = '../html/signin.html';
     }).catch(err => console.log(err.message));
 })
 
-
-
-
-const colRef = collection(db, 'posts');
-console.log(colRef);
