@@ -28,5 +28,3 @@ scrollbtn.addEventListener("click", () => {
 
 
 
-const colRef = collection(db, 'posts');
-console.log(colRef);
