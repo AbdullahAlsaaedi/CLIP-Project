@@ -117,10 +117,11 @@ onAuthStateChanged(auth, (user) => {
                         const tmpPost = document.getElementById(post.id);
                         posts.appendChild(post);
 
-                        // get the comments
+                        // -------------- COMMENTS FETCHING ----------- //
+                    
                         const commentsQuery = query(
                             commentsRef,
-                            where("postId", "==", el.id),
+                            where("postId", "==", el.id), where("parentCommentID", "==", null),
                             orderBy("date", "desc")
                         );
 
@@ -128,7 +129,14 @@ onAuthStateChanged(auth, (user) => {
                             post.querySelector(".comments").innerHTML = "";
 
                             snapshot.forEach((doc) => {
-                                createComment3(post, doc.data());
+
+
+
+                                createComment3(post, doc, el);
+
+
+
+
                             });
                         });
                     });
@@ -266,6 +274,12 @@ function createPost3(postDoc, userDoc) {
 
 `;
 
+
+
+
+    // ADDING A COMMENT -----------------------------------
+
+
     let button = postEl.querySelector(".commentBtn");
     let input = postEl.querySelector(".commentIn");
 
@@ -280,6 +294,7 @@ function createPost3(postDoc, userDoc) {
             postId: postId,
             content: commentContent,
             date: serverTimestamp(),
+            parentCommentID: null
         });
     });
 
@@ -347,20 +362,61 @@ function createPost3(postDoc, userDoc) {
 
 // console.log(createPost3());
 
-function createComment3(postEl, postDoc) {
+function createComment3(postEl, commentDoc, postDoc) {
     let comments = postEl.querySelector(".comments");
     let newCommentEl = document.createElement("div");
+    let commentData = commentDoc.data(); 
     newCommentEl.classList.add("comment");
 
     newCommentEl.innerHTML = `
     
         logo
-        <div class="p">${postDoc.content}</div>
-    
+        <div class="p">${commentData.content}</div>
+        <input class="reply-inp" type="text"/> 
+        <button class="reply-btn"> reply </button>
     `;
+
+
+    console.log(commentDoc.id);
+    
+
+
+    replies(newCommentEl, commentDoc, postDoc); 
 
     comments.appendChild(newCommentEl);
 }
+
+function replies(commentEl, commentDoc, postDoc) {
+
+    const replyInpEl = commentEl.querySelector('.reply-inp')
+    const replyBtnEl = commentEl.querySelector('.reply-btn')
+
+
+    replyBtnEl.addEventListener('click', (e) => {
+        console.log(replyInpEl.value);
+        console.log(commentDoc.id);
+        
+        const commentId = commentDoc.id; 
+        const postId = postDoc.id; 
+        const commentContent = replyInpEl.value; 
+
+        e.preventDefault();
+    
+
+        // add comment to databse
+
+        addDoc(commentsRef, {
+            postId: postId,
+            content: commentContent,
+            date: serverTimestamp(),
+            parentCommentID: commentId
+        });
+        
+    })
+    
+
+
+} 
 
 function showModal(modalElement) {
     console.log("Hey");
