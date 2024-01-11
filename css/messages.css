@@ -1,0 +1,275 @@
+/* body, html {
+    height: 100vh;
+} */
+
+/* -------------- layout ----------- */ 
+
+header {
+    min-height: 12vh;
+}
+
+
+body {
+    position: relative;
+    z-index: -4;
+}
+
+.messages-main {
+    display: grid;
+    padding: 2rem;
+    grid-template-columns: 1fr 3fr; /* 1st column for user list, 2nd for conversation */
+    gap: 2rem;
+    height: 88vh;
+    z-index: -4;
+    position: relative;
+}
+
+.user-list {
+    /* Additional styles for the user list */
+}
+
+.conversation {
+    display: grid;
+    grid-template-rows: auto 1fr; /* Auto for header, 1fr for message area */
+}
+
+.conversation-header {
+    /* Additional styles for the conversation header */
+}
+
+.message-area {
+    overflow-y: auto; /* For scrolling through messages */
+    /* Additional styles for the message area */
+}
+
+
+/* -------------- nested layout ----------- */ 
+.user-list {
+    border-right: solid 0.3px rgb(205, 205, 205);
+    padding-right: 2rem;
+}
+
+.user-list-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: solid 0.3px rgb(205, 205, 205);
+    padding-bottom: 1rem;
+
+}
+
+.user-list-users {
+    list-style: none;
+    padding-top: 1rem;
+
+}
+
+.conversation-header {
+    display: flex;
+    gap: 1rem;
+
+}
+
+.conversation-header-username {
+    margin-right: auto;
+}
+
+.message-area {
+    display: flex;    
+    /* overflow-y: auto; */
+    /* Additional styles for the message area */
+}
+
+
+.message-input-container {
+    align-self: end;
+    flex-grow: 1;
+    display: flex;
+    gap: 2rem;
+}
+
+.message-input {
+    /* flex-basis: 90%; */
+    flex: 1;
+}
+
+.message-area-btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 2rem;
+}
+
+.new-message-btn {
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+
+    cursor: pointer;
+}
+
+.new-message-btn img {
+    height: 2rem;
+
+}
+
+
+.accounts-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the modal */
+    width: 80%; /* Adjust width as needed */
+    /* height: 60vh; */
+    max-width: 500px; /* Maximum width */
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100; /* Ensure it's above other elements */
+    display: none; /* Hidden by default */
+}
+
+.accounts-modal.active {
+    display: block;
+    background-color: white;
+    color: black;
+}
+
+.accounts-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accounts-modal-closebtn {
+    padding: 0.5rem 1.4rem;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    z-index: 1;
+
+}
+
+.sendTo {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 1rem;
+    padding-bottom: 2rem;
+    border-bottom: solid 0.2px rgb(235, 233, 233);
+
+    position: relative;
+
+}
+.sendTo-input {
+    flex: 1;
+}
+
+
+.overlay {
+    position: absolute;
+    background-color: gray;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -3;
+    opacity: 0.5;
+}
+
+.accounts-found {
+    padding: 2rem;
+    color: gray;
+
+    /* height: 100%; */
+
+
+}
+.account-found {
+
+    display: flex;
+    margin-bottom: 2rem;
+    gap: 1rem;
+}
+
+.select-user-input {
+    margin-left: auto;
+}
+
+.sendTo  button {
+    font-size: 1.5rem;
+    position: absolute;
+    right: 0px;
+    background-color: transparent;
+    padding: 0.5rem 2rem;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+}
+.sendTo button:hover {
+    color: rgba(164, 0, 0, 0.657);
+}
+
+
+
+.accounts-found {
+    height: 40vh;
+}
+
+
+
+.modal-message-input-container {
+    align-self: end;
+    flex-grow: 1;
+    display: flex;
+    gap: 2rem;
+}
+
+
+.modal-message-input {
+    flex: 1;
+}
+
+
+.modal-message-area-btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 2rem;
+}
+
+
+.user-pfp-container {
+    height: 3rem;
+    width: 3rem;
+}
+
+.user-pfp {
+    height: 100%;
+    border-radius: 100rem;
+}
+
+
+.user-list-user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.2rem;
+}
+
+.messages {
+    margin-top: 1rem;
+    /* display: flex;
+    flex-direction: column; */
+}
+
+.message {
+    padding: 2rem;
+    background-color: rgb(241, 241, 241);
+    margin-bottom: 1rem;
+
+    border-radius: 3rem;
+    border-top-left-radius: 0rem;
+
+}

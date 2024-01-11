@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/messages.css">
+
+  
+
+
+
+    <script defer type="module" src="../scripts/messages.js"></script>
+    <script defer type="module" src="../scripts/index.js"></script>
+
+
+
+</head>
+<body>
+    
+    <!-- //////// navigation //////// -->
+
+    <header class="header">
+
+        <!-- for the navigation links -->
+        <nav class="nav">
+
+            <h1 class="heading"><a class="heading-link" href="../index.html">CLIP</a></h1>
+
+            <!-- unorder list -->
+            <ul class="nav-list nav-list-1">
+                <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="courses.html">Communities</a></li>
+                <li class="nav-item"><a class="nav-link" href="live/CDN/index.html">live rooms</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Courses</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Leaderboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="html/live2/index.html">live 2</a></li>
+
+
+                
+            </ul>
+
+
+            <ul class="nav-list nav-list-2">
+                <li class="nav-item"><img src="../images/search_2_line.svg" alt="search logo"></li>
+                <li class="nav-item"><img src="../images/bell_ringing_line.svg" alt="notifications logo"></li>
+
+                <li class="nav-item pfp">pfp</li>
+
+                <li><a class="signin" href="signin.html">Sign in</a></li>
+                <li><a class="signout hidden">Sign out</a></li>
+            </ul>
+
+
+        </nav>
+
+    </header>
+
+
+    
+
+    <main class="messages-main">
+        <div class="user-list">
+
+
+            <div class="user-list-header">
+                <h2>Messages</h2>
+                <button class="new-message-btn">
+                    new message
+                    <img src="../images/icons8-message-50.png" alt="Logo">
+                </button>
+            </div>
+
+            <div class="user-list-users">
+                
+            </div>
+
+        </div>
+        <div class="conversation">
+
+            <div class="conversation-header">
+            </div>
+
+
+            <div class="message-area">
+
+                <div class="messages">
+                    <div class="message">
+                        
+                    </div>
+                </div>
+                
+                <div class="message-input-container">
+                    <input type="text" disabled class="message-input input" placeholder="Type a message...">
+                    <button disabled class="message-area-btn">Send</button>
+                </div>
+
+            </div>
+        </div>
+
+        
+
+        
+
+    </main>
+
+
+    
+
+    <div class="accounts-modal hidden">
+        <div class="accounts-modal-header">
+            Send a message
+            <button class="accounts-modal-closebtn">
+                X
+            </button>
+        </div>
+
+        <div class="sendTo">
+            To: 
+            <input placeholder="Search for username" type="text" class="sendTo-input input">
+            <button class="sendTo-btn"> > </button>
+        </div>
+
+        
+        <div class="accounts-found">
+            no accounts found
+        </div>
+
+        <div class="modal-message-input-container">
+            <input type="text" class="modal-message-input input" placeholder="Type a message...">
+            <button class="modal-message-area-btn">Send</button>
+        </div>
+        
+
+        
+        
+
+        
+    </div>
+    
+
+    <div class="overlay hidden"></div>
+
+
+
+
+</body>
+</html>

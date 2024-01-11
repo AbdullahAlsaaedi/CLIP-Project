@@ -129,15 +129,36 @@ onAuthStateChanged(auth, (user) => {
                             post.querySelector(".comments").innerHTML = "";
 
                             snapshot.forEach((doc) => {
+                                let commentEl = createComment3(post, doc, el);
 
 
+                                // fetch the replies to the comment 
 
-                                createComment3(post, doc, el);
+                                const commentRepliesQuery = query(
+                                    commentsRef,
+                                    where("parentCommentID", "==", doc.id),
+                                    orderBy("date", "desc")
+                                );
 
+                                onSnapshot(commentRepliesQuery, (snapshot) => {
+                                    commentEl.querySelector('.replies').innerHTML = ''
+
+                                    snapshot.forEach(doc => {
+                                        console.log(doc.data());
+                                        
+                                        createReply(commentEl, doc)
+                                    })
+                                })
 
 
 
                             });
+
+                            
+
+
+
+
                         });
                     });
                 });
@@ -368,12 +389,61 @@ function createComment3(postEl, commentDoc, postDoc) {
     let commentData = commentDoc.data(); 
     newCommentEl.classList.add("comment");
 
-    newCommentEl.innerHTML = `
-    
-        logo
-        <div class="p">${commentData.content}</div>
-        <input class="reply-inp" type="text"/> 
-        <button class="reply-btn"> reply </button>
+    newCommentEl.dataset.id = commentDoc.id; 
+
+    newCommentEl.innerHTML = `    
+        <div class="reply-details">
+
+
+        <div class="post-heading-details"> 
+
+            <div class="pfp-container">
+                <img src="../images/photo-1631477076110-2b8c1fe0f3cc.avif" class="pfp" alt="img">
+            </div>
+
+            <div class="post-username">
+                Osama
+
+                <div class="post-date">
+                    2 days ago
+                </div>
+            </div>
+
+            <button class="post-delete">X</button>
+
+        
+        </div>
+
+        
+
+       
+
+            <h3 class="title">${commentDoc.data().content}</h3>
+
+            <div class="reply-details-user">
+
+            
+                <div class="votes">
+                    <button class="upvote">
+                        ^
+                    </button>
+
+                    <div class="votes-number">
+                        12k
+                    </div>
+
+                    <button class="downvote">
+                        v
+                    </button>
+                </div>
+
+                <input placeholder="reply.." class="reply-inp input" type="text"/> 
+                <button class="reply-btn primary-btn"> reply </button>
+
+            </div>
+        </div>
+
+        <div class="replies"></div>
     `;
 
 
@@ -384,6 +454,8 @@ function createComment3(postEl, commentDoc, postDoc) {
     replies(newCommentEl, commentDoc, postDoc); 
 
     comments.appendChild(newCommentEl);
+
+    return newCommentEl;
 }
 
 function replies(commentEl, commentDoc, postDoc) {
@@ -417,6 +489,66 @@ function replies(commentEl, commentDoc, postDoc) {
 
 
 } 
+
+function createReply(commentEl, commentDoc, userDoc) {
+    let newReply = document.createElement("div");
+    let repliesDiv = commentEl.querySelector('.replies')
+    newReply.innerHTML = `
+
+        <div class="reply-details">
+
+
+        <div class="post-heading-details"> 
+
+            <div class="pfp-container">
+                <img src="../images/photo-1631477076110-2b8c1fe0f3cc.avif" class="pfp" alt="img">
+            </div>
+
+            <div class="post-username">
+                Osama
+
+                <div class="post-date">
+                    2 days ago
+                </div>
+            </div>
+
+            <button class="post-delete">X</button>
+
+        
+        </div>
+
+        
+
+       
+
+            <h3 class="title">${commentDoc.data().content}</h3>
+
+            <div class="reply-details-user">
+
+            
+                <div class="votes">
+                    <button class="upvote">
+                        ^
+                    </button>
+
+                    <div class="votes-number">
+                        12k
+                    </div>
+
+                    <button class="downvote">
+                        v
+                    </button>
+                </div>
+
+
+            </div>
+        </div>
+    
+    `;
+
+
+    repliesDiv.appendChild(newReply)
+}
 
 function showModal(modalElement) {
     console.log("Hey");
