@@ -283,7 +283,7 @@ function createUserElement(userDoc) {
 const conversationHeader = document.querySelector(".conversation-header")
 const conversationHeaderPfp = document.querySelector(".conversation-header-pfp")
 const conversationHeaderMore = document.querySelector(".conversation-header-more")
-const messages = document.querySelector('.messages'); 
+const messages = document.querySelector('.message-area'); 
 
 
 function openDM(userDM) {
@@ -339,6 +339,7 @@ function openDM(userDM) {
 
             const clicked = userDM.dataset.clicked;
             const messagesRef = collection(convoRef, "messages");
+            const q = query(messagesRef, orderBy('timestamp', 'asc')) // or 'desc' for descending
  
 
 
@@ -375,17 +376,19 @@ function openDM(userDM) {
 
 
             // fetch the data 
-            onSnapshot(messagesRef, snapshot => {
+            onSnapshot(q, snapshot => {
                 messages.innerHTML = "";
                 
-                snapshot.docs.forEach(doc => {
+                snapshot.docs.forEach((doc, index, array) => {
                     console.log(doc.data().text);
                     
                     displayMessages(doc)
+
+                    if(index == array.length - 1) messages.scrollTop = messages.scrollHeight;
                 })
             })
-
-                        
+            
+           
 
         })
 }
@@ -409,4 +412,7 @@ function displayMessages(doc) {
     // 5. append them to it 
     messages.appendChild(msg)
 
+
 }
+
+
