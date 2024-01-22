@@ -293,8 +293,8 @@ function openDM(userDM) {
 
             const msgBtn = document.querySelector(".message-area-btn")
 
-            msgInp.disabled = false; 
-            msgBtn.disabled = false; 
+
+            msgInp.value = ""
 
 
             let convoID = userDM.dataset.id; 
@@ -316,8 +316,22 @@ function openDM(userDM) {
             `
             <img src="" alt="logo" class="conversation-header-pfp">
             <p class="conversation-header-username">${userName}</p>
-            <img class="conversation-header-more" src="" alt="More..">
+
+            <div class="dropdown">
+                <button class="dropbtn">
+                    <img src="../images/icons8-info-50.png" alt="Info"/>
+                </button>
+                <div class="dropdown-content" id="myDropdown">
+                    <a href="#" id="closeMessage">Close the message</a>
+                    <a href="#" class="red" id="deleteMessage">Delete the message</a>
+                </div>
+            </div>
+
+
             `
+            moreButtonFunctionality(conversationHeader);
+
+        
 
             // make the userDM the current active one 
             const openDMS = document.querySelectorAll('.openedDM');
@@ -340,14 +354,19 @@ function openDM(userDM) {
             const clicked = userDM.dataset.clicked;
             const messagesRef = collection(convoRef, "messages");
             const q = query(messagesRef, orderBy('timestamp', 'asc')) // or 'desc' for descending
- 
+            
+            msgBtn.disabled = false; 
+            msgInp.disabled = false; 
 
 
             if(clicked == "false") {
-                msgBtn.addEventListener("click", () => {
+                msgBtn.addEventListener("click", (e) => {
+                    e.preventDefault(); 
                     
                     userDM.dataset.clicked = "true"; 
                     
+
+
                     console.log(userDM);
                     
                     // create new document inside the message collection that is nested inside conversations 
@@ -361,6 +380,10 @@ function openDM(userDM) {
 
                     convoRef = doc(conversationsRef, convoID); 
 
+                    if(msgInp.value.trim() == "") {
+                        return;
+                    }
+
                     addDoc(messagesRef, {
                         senderId: currUser.uid,
                         text: msgInp.value, 
@@ -368,8 +391,21 @@ function openDM(userDM) {
                         read: false
                     })
 
+                    msgInp.value = ""
 
-                    
+
+
+                    // document.addEventListener('keydown', (keyEvent) => {
+                    //     if(keyEvent.key == "Enter") {
+                    //         addDoc(messagesRef, {
+                    //             senderId: currUser.uid,
+                    //             text: msgInp.value, 
+                    //             timestamp: serverTimestamp(),
+                    //             read: false
+                    //         })
+                    //     }
+                        
+                    // })
 
                 })
             }
@@ -416,3 +452,141 @@ function displayMessages(doc) {
 }
 
 
+
+function moreButtonFunctionality(conversationHeader) {
+
+
+    /* 
+
+     <div class="dropdown">
+                <button class="dropbtn">
+                    <img src="../images/icons8-info-50.png" alt="Info"/>
+                </button>
+                <div class="dropdown-content" id="myDropdown">
+                    <a href="#" id="closeMessage">Close the message</a>
+                    <a href="#" id="deleteMessage">Delete the message</a>
+                </div>
+            </div>
+
+    */
+
+    conversationHeader.querySelector('.dropbtn').addEventListener('click', function(event) {
+        var dropdown = conversationHeader.querySelector("#myDropdown");
+        dropdown.classList.toggle("show");
+    });
+
+    const closeMsgEl = document.getElementById("closeMessage")
+    const dltMsgEl = document.getElementById("deleteMessage")
+
+    
+    dltMsgEl.addEventListener("click", () => {
+        deleteMsg(); 
+    })
+
+    closeMsgEl.addEventListener("click", () => {
+        closeMsg(); 
+    })
+}
+
+
+ async function deleteMsg() {
+    const currentOpenDM = document.querySelector(".openedDM"); 
+    const msgArea = document.querySelector(".message-area"); 
+
+    console.log(currentOpenDM.dataset.id);
+    const dmID = currentOpenDM.dataset.id; 
+    const docRef = doc(db, "conversations", dmID);
+    
+
+    // delete the document here: 
+    // code: 
+
+     // Assuming messages are stored in a subcollection inside each conversation
+     const messagesCollectionRef = collection(docRef, "messages");
+
+     // First, delete all messages in the subcollection
+     const messagesSnapshot = await getDocs(messagesCollectionRef);
+     const deletePromises = messagesSnapshot.docs.map(doc => deleteDoc(doc.ref));
+     await Promise.all(deletePromises);
+ 
+     // Then, delete the conversation document itself
+     await deleteDoc(docRef);
+
+
+    // closing the message
+    closeMsg()
+    
+}
+
+async function deleteDocumentWithSubcollections(docRef) {
+
+    docRef = db.doc(docRef);
+    const collections = await docRef.listCollections();
+    
+    for (const collection of collections) {
+        const snapshot = await collection.get();
+
+        for (const doc of snapshot.docs) {
+            await deleteDocumentWithSubcollections(`${docRef}/${collection.id}/${doc.id}`);
+        }
+    }
+
+    await docRef.delete();
+
+}
+
+
+function closeMsg() {
+    const msgArea = document.querySelector(".message-area"); 
+    const headerArea = document.querySelector(".conversation-header"); 
+
+    msgArea.innerHTML = ""
+    headerArea.innerHTML = ""
+
+    emptyMessagesForm()
+}
+
+
+
+const messageForm = document.querySelector('.message-input-container'); 
+const searchAccForm = document.querySelector('.sendTo'); 
+
+function emptyMessagesForm() {
+    messageForm.reset(); 
+    searchAccForm.reset(); 
+
+    document.querySelector(".message-input").disabled = true; 
+    document.querySelector(".message-area-btn").disabled = true; 
+
+}
+
+window.onload = emptyMessagesForm;
+
+
+
+
+
+
+// Close the dropdown menu if clicked outside
+window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn, .dropbtn *')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+};
+
+// Functionality for menu options
+document.getElementById('closeMessage').addEventListener('click', function() {
+    // Implement close message logic
+    console.log("Message closed");
+});
+
+document.getElementById('deleteMessage').addEventListener('click', function() {
+    // Implement delete message logic
+    console.log("Message deleted");
+});

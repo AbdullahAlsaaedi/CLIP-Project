@@ -1,0 +1,336 @@
+
+/* <header> */ 
+
+.body {
+    background-color: #D4D6FB;
+    font-family: "Oceanwide", "Poppins", "Sans";
+}
+
+
+a {
+    text-decoration: none;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 10rem;
+    background-color: transparent;
+    gap: 2rem;
+}
+
+/* h1 */ 
+.heading {
+    font-size: 4rem;
+}
+
+/* h1 a */ 
+.heading-link {
+    text-decoration: none;
+    color: black
+
+}
+
+/* navigation */
+
+.nav-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    font-size: 1.1rem;
+
+}
+
+.nav-list-1 {
+    gap: 5rem;
+}
+
+
+.nav-list-2 {
+    gap: 3rem;
+}
+
+.nav-item {
+    cursor: pointer;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #303261;
+
+}
+
+/* .pfp {
+    margin-right: auto;
+} */
+
+/* svgs */ 
+
+.nav-item img {
+    width: 2rem;
+    height: 2rem;
+
+}
+
+
+
+
+/* Landing page */ 
+
+.landing-content {
+    background-color: white;
+    border-top-right-radius: 10rem;
+    border-top-left-radius: 10rem;
+    position: relative;
+    height: 100vh;
+}
+
+
+
+
+
+/* ----------- landing-intro ---------- */
+
+.primary-btn {
+    background-color: #333661;
+    padding: 1rem 6rem;
+    border: none;
+    color: white;
+    border-radius: 1rem;
+    cursor: pointer;
+    box-shadow: rgba(100, 100, 111, 0.5) 0px 7px 20px 0px;
+}
+
+.primary-btn a {
+    color: white;
+}
+
+
+.primary-btn:hover {
+    background-color: #7a81e3;
+}
+
+
+
+.landing-intro {
+    padding: 7rem 10rem;
+}
+
+
+.landing-intro-heading {
+    font-size: 8rem;
+    color: #3A3438;
+    width: 80rem;
+}
+
+.landing-intro-description {
+    color: #777575;
+    font-size: 1.4rem;
+    width: 50rem;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+}
+
+.landing-intro-img {
+    position: absolute;
+    top: 2rem;
+    right: 5rem;
+}
+
+
+.pink {
+    color: #EF8EC8;
+}
+
+.yellow {
+    color: #91EA68;
+}
+
+
+/* ----------- landing communities ---------- */
+
+.landing-communities {
+    background-color: #F2F3FC;
+    padding: 7rem 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+
+}
+
+.landing-communities-heading {
+    color: #3A3438;
+    font-size: 4rem;
+}
+
+.landing-communities-desc {
+    color: #777575;
+    font-size: 1.2rem;
+
+}
+
+.landing-communities-search-container {
+    align-self: stretch;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.input-container {
+    flex-basis: 40%;
+
+    position: relative;
+
+
+}
+
+.input {
+    padding: 1rem 3rem;
+    border-radius: 0.5rem;
+    background-color: transparent;
+    border: solid 0.5px rgba(100, 100, 111, 0.2);
+    /* flex-basis: 40%; */
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 20px 0px;
+}
+
+
+.search {
+
+    width: 100%;
+    
+}
+
+
+.search:hover::placeholder {
+    color: rgb(173, 161, 214);
+}
+
+/* For Webkit browsers like Chrome and Safari */
+.search:hover::-webkit-input-placeholder {
+    color: rgb(173, 161, 214);
+}
+
+/* For Mozilla Firefox */
+.search:hover::-moz-placeholder {
+    color: rgb(173, 161, 214);
+    opacity: 1; /* Firefox reduces the opacity by default */
+}
+
+
+
+.search-icon {
+    position: absolute;
+    left: 5px; /* Adjust based on desired icon position */
+    top: 50%;
+    transform: translateY(-50%);
+    height: 15px; /* Adjust to match your icon's size */
+    width: auto;
+}
+
+
+
+
+.horizontal-scroll {
+    display: flex;
+}
+
+.scroll-btn-container {
+    align-self: center;
+    flex-basis: 30rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Horizontal Scroll Container Styles */
+.horizontal-scroll-container {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none; /* For Firefox */
+
+    margin-top: 2rem;
+    margin-right: 5rem;
+
+    padding: 3rem;
+    padding-bottom: 2rem;
+    
+}
+
+.horizontal-scroll-container::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+}
+
+.scroll-item {
+    flex: 0 0 auto; /* Don't grow, don't shrink, base width on content */
+    margin-right: 20px; /* Space between items */
+    /* Add more styles for your items here (width, height, etc.) */
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 3rem;
+    padding: 1rem;
+
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 20px 0px;
+
+}
+
+
+
+.scroll-img-container {
+    height: 30rem;
+}
+
+.scroll-img-container img {
+    height: 100%;
+}
+
+
+
+
+.scroll-progress-bar {
+    height: 4px;
+    background-color: #ccc; /* Progress bar color */
+    width: 6rem; /* Initial width */
+    transition: width 0.25s ease-out; /* Smooth transition for width change */
+    margin-left: 1rem;
+
+    max-width: 130rem;
+    margin-top: 2rem;
+    border-radius: 10rem;
+    align-self: start;
+
+    /* margin-right: 200rem; */
+}
+
+
+/* hovering and aesthetics */ 
+
+.nav-link:hover {
+    /* color: rgb(19, 19, 19); */
+
+    background-color: #EFEA7F;
+    padding: 0.5rem 1rem;
+    border-radius: 10rem;
+}
+
+.active { 
+    background-color: #EFEA7F;
+    padding: 0.5rem 1.5rem;
+    border-radius: 10rem;
+    color: black;
+}
+
+
+.active:hover { 
+    background-color: #303261;
+    color: white;
+}
+
+

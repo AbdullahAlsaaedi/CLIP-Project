@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in</title>
+
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/signup.css">
+
+    <script defer type="module" src="../scripts/signup.js"></script>
+
+</head>
+<body>
+
+    <header class="header">
+
+        <!-- for the navigation links -->
+        <nav class="nav">
+
+            <h1 class="heading"><a class="heading-link" href="../index.html">CLIP</a></h1>
+
+            <!-- unorder list -->
+            <ul class="nav-list nav-list-1">
+                <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="courses.html">Communities</a></li>
+                <li class="nav-item"><a class="nav-link" href="live/CDN/index.html">live rooms</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Courses</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Leaderboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="html/live2/index.html">live 2</a></li>
+
+
+                
+            </ul>
+
+
+            <ul class="nav-list nav-list-2">
+                <li class="nav-item"><img src="../images/search_2_line.svg" alt="search logo"></li>
+                <li class="nav-item"><img src="../images/bell_ringing_line.svg" alt="notifications logo"></li>
+
+                <li class="nav-item pfp">pfp</li>
+
+                <li><a class="signin" href="html/signin.html">Sign in</a></li>
+            </ul>
+
+
+        </nav>
+
+    </header>
+
+
+    <main class="main">
+
+        <div class="signup-container">
+            <h1 class="signup-heading">
+                Create an account
+            </h1>
+    
+            <p class="signup-makeAcc">already have an account? <a href="signin.html">Sign in</a></p>
+    
+            <form id="signup-form">
+    
+                <label for="email">Email </label>
+                <input class="input" name="email" type="email" id="email" placeholder="Email" required>
+    
+                <label for="password">Password</label>
+                <input class="input" name="password" type="password" id="password" placeholder="Password" required>
+    
+                <label for="username">Name </label>
+                <input class="input" name="username" type="text" id="username" placeholder="Name" required>
+            
+    
+                <input class="signup-btn" type="submit"/>
+            </form>
+    
+            <button class="goolge-sign-btn">Continue with Google</button>
+
+        </div>
+
+        <div class="image-container">
+            <img src="../images/Social life-rafiki 2.png" alt="">
+        </div>
+
+        
+
+    </main>
+    
+
+    
+
+
+</body>
+</html>

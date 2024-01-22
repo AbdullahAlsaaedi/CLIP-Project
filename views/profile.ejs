@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/profile.css">
+
+  
+    <script defer type="module" src="../scripts/index.js"></script>
+    <script defer type="module" src="../scripts/profile.js"></script>
+
+
+</head>
+<body>
+
+    <!-- <p><%= user.name %></p>
+    <p><%= user.email %></p>
+    <p><%= user.uid %></p> -->
+
+
+    <header class="header">
+
+        <!-- for the navigation links -->
+        <nav class="nav">
+
+            <h1 class="heading"><a class="heading-link" href="../index.html">CLIP</a></h1>
+
+            <!-- unorder list -->
+            <ul class="nav-list nav-list-1">
+                <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="../html/courses.html">Communities</a></li>
+                <li class="nav-item"><a class="nav-link" href="live/CDN/index.html">live rooms</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Courses</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Leaderboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="html/live2/index.html">live 2</a></li>
+
+
+                
+            </ul>
+
+
+            <ul class="nav-list nav-list-2">
+                <li class="nav-item"><img src="../images/search_2_line.svg" alt="search logo"></li>
+                <li class="nav-item"><img src="../images/bell_ringing_line.svg" alt="notifications logo"></li>
+
+                <li class="nav-item pfp">pfp</li>
+
+                <li class="nav-item profile-link-container hidden">
+                    <a class="profile-link" href="#">profile</a>
+                </li>
+
+
+                <li><a class="signin" href="../html/signin.html">Sign in</a></li>
+                <li><a class="signout hidden">Sign out</a></li>
+            </ul>
+
+
+        </nav>
+
+    </header>
+
+
+    <main class="profile-main">
+
+        <div class="profile-cover-image">
+            <img src="../images/photo-1631477076110-2b8c1fe0f3cc.avif" alt="cover">
+        </div>
+
+        <div class="profile-user-info">
+
+            <div class="profile-pfp">
+                <img src="../images/photo-1631477076110-2b8c1fe0f3cc.avif" alt="pfp">
+            </div>
+
+            <div class="profile-info">
+                <h2 class="profile-username"><%= user.name %></h2>
+                <div class="profile-major">Computer science student</div>
+                <div class="profile-uni">King abdulaziz university</div>
+            </div>
+
+            <button class="send-msg-btn">Send a message</button>
+        </div>
+
+        <div class="about">
+            <h3 class="about-header">About me</h3>
+            <p class="about-description">
+                Hello my name is faris, im a student in king abdulaziz university, currently in my 3th year 
+                im interested in tech, sciences, and art, and i would like to pursue a career in web development 
+                if you would like to know me more, feel free to send a dm !
+            </p>
+        </div>
+       
+
+
+        <!-- <p><%= user.name %></p>
+        <p><%= user.email %></p>
+        <p><%= user.uid %></p> -->
+    </main>
+
+
+
+    
+    
+</body>
+</html>
