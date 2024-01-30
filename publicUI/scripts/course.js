@@ -402,7 +402,7 @@ function createComment3(postEl, commentDoc, postDoc) {
             </div>
 
             <div class="post-username">
-                Osama
+                ${currUser.displayName}
 
                 <div class="post-date">
                     2 days ago

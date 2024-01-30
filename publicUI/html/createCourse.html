@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses</title>
+
+
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/createCourse.css">
+
+
+    <script defer type="module" src="../scripts/index.js"></script>
+    <!-- <script defer type="module" src="../scripts/index.js"></script> -->
+
+
+
+
+</head>
+<body>
+
+    <header class="header">
+
+        <!-- for the navigation links -->
+        <nav class="nav">
+
+            <h1 class="heading"><a class="heading-link" href="../index.html">CLIP</a></h1>
+
+            <!-- unorder list -->
+            <ul class="nav-list nav-list-1">
+                <li class="nav-item"><a class="nav-link active" href="../index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="courses.html">Communities</a></li>
+                <li class="nav-item"><a class="nav-link" href="html/live/CDN/index.html">live rooms</a></li>
+                <li class="nav-item"><a class="nav-link" href="courses2.html">Courses</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Leaderboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="html/live2/index.html">live 2</a></li>
+                <li class="nav-item"><a class="nav-link" href="html/messages.html">Messages</a></li>
+
+
+                
+            </ul>
+
+
+            <ul class="nav-list nav-list-2">
+                <li class="nav-item"><img src="images/search_2_line.svg" alt="search logo"></li>
+                <li class="nav-item"><img src="images/bell_ringing_line.svg" alt="notifications logo"></li>
+
+                <li class="nav-item pfp">pfp</li>
+
+                <li class="nav-item profile-link-container hidden">
+                    <a class="profile-link" href="#">profile</a>
+                </li> 
+
+                <li><a class="signin" href="html/signin.html">Sign in</a></li>
+                <li><a class="signout hidden">Sign out</a></li>
+            </ul>
+
+
+        </nav>
+
+    </header>
+
+    <main class="createCourse-main">
+
+        <form class="create-course-form" method="POST" action="/create-course">
+            <h1 class="course-heading">Create your course</h1>
+
+            <label for="crs-name">How would you like to name your course?</label>
+            <input class="input" placeholder="Course title" type="text" name="crs-name" id="crs-name">
+
+            <label for="crs-desc">Describe your course</label>
+            <textarea class="input" placeholder="Course description" name="crs-desc" id="crs-desc"> </textarea>
+
+            <input value="Publish" type="submit" name="submit-form" id="submit-form">
+        </form>
+    </main>
+    
+</body>
+</html>

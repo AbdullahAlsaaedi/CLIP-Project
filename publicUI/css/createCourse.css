@@ -1,0 +1,34 @@
+
+.course-heading {
+    font-size: 3rem;
+}
+
+.create-course-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input {
+    box-shadow: none;
+    border: solid 0.1px rgba(0, 0, 0, 0.377);
+    margin-top: 1rem;
+}
+
+label {
+    margin-top: 1rem;
+}
+
+#crs-desc {
+    height: 10rem;
+}
+
+#submit-form {
+    padding: 1rem 2rem;
+    background-color: #FF0000;
+    color: white;
+    border-radius: 1rem;
+    margin-top: 2rem;
+    cursor: pointer;
+    border: none;
+}

@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 router.get("/", (req, res) => {
-    res.send("USERS !")
+    res.send("root")
 })
 
 

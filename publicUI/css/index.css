@@ -2,7 +2,6 @@
 /* <header> */ 
 
 .body {
-    background-color: #D4D6FB;
     font-family: "Oceanwide", "Poppins", "Sans";
 }
 
@@ -29,7 +28,7 @@ a {
 .heading-link {
     text-decoration: none;
     color: black
-
+    
 }
 
 /* navigation */
@@ -151,7 +150,6 @@ a {
 /* ----------- landing communities ---------- */
 
 .landing-communities {
-    background-color: #F2F3FC;
     padding: 7rem 10rem;
     display: flex;
     flex-direction: column;

@@ -56,6 +56,27 @@ app.get("/user/:id", async (req, res) => {
     }
 })
 
+
+
+// creating courses ! 
+
+app.post("/create-course", async (req, res) => {
+    const coursesRef = db.collection("courses")
+    
+    
+    const courseData = req.body;
+    
+    const newCourseRef = await coursesRef.add(courseData);
+
+    res.send(courseData['crs-name'])
+
+    
+    
+})
+
+
+
+
 const usersRouter = require('./routes/users');
 const { on } = require('nodemon');
 app.use('/users', usersRouter)
