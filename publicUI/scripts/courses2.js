@@ -67,6 +67,7 @@ function createCourseHTML(doc) {
 
     const courseEl = document.createElement('div')
     courseEl.classList.add('course'); 
+    courseEl.dataset.id = doc.id; 
     courseEl.innerHTML = 
     `
     <div class="course-details">
@@ -76,6 +77,15 @@ function createCourseHTML(doc) {
     <div class="course-title">${courseData['crs-name']}</div>
     <div class="course-author">Khalid</div>
     `
+
+    courseEl.addEventListener("click", () => {
+        console.log(courseEl.dataset.id);
+
+        const courseid = courseEl.dataset.id;
+
+        window.location.href = `./courses2.html/${courseid}`
+        
+    })
 
     
     coursesContainer.appendChild(courseEl)

@@ -1,0 +1,100 @@
+
+main {
+    padding: 0;
+}
+
+.course-container {
+    display: grid;
+    grid-template-columns: 3fr 1fr; /* Adjust the ratio as per your design */
+    grid-template-rows: auto 1fr; /* Adjust based on content */
+    grid-template-areas: 
+        "video sidebar"
+        "details sidebar";
+    height: 100vh;
+}
+
+.video-player {
+    grid-area: video;
+    background-color: #07011d;
+    position: relative;
+    height: 600px; /* Adjust as needed */
+}
+
+.video-placeholder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+}
+
+.empty-video-text {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #FF0000;
+    border: none;
+    color: white;
+    letter-spacing: 1px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.custom-file-upload:hover {
+    color: rgb(232, 224, 241);
+}
+
+input[type="file"] {
+    display: none; /* Hide the default file input */
+}
+
+.course-sidebar {
+    grid-area: sidebar;
+    position: sticky;
+    top: 0;
+    height: 100vh; /* Full height */
+    overflow-y: auto; /* Scrollable */
+    /* Additional styles for sidebar */
+}
+
+.details {
+    grid-area: details;
+    /* Styles for description */
+}
+
+#uploadedVideo {
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.course-sidebar {
+    /* padding-left: 2rem; */
+    /* height: 600px; */
+    overflow: auto;
+}
+
+.lesson {
+    padding: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: solid 1px gray;
+    /* margin-bottom: 1rem; */
+    /* border-radius: 1rem; */
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+.sidebar-title {
+    padding: 2rem;
+    padding-top: 0;
+    border-bottom: solid 1px gray;
+
+}

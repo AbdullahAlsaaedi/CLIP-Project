@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/../css/reset.css">
+    <link rel="stylesheet" href="/../css/navigation.css">
+    <link rel="stylesheet" href="/../css/global.css">
+    <link rel="stylesheet" href="/../css/courseContent.css">
+
+  
+    <script defer type="module" src="/../scripts/index.js"></script>
+    <script defer type="module" src="/../scripts/courseContent.js"></script>
+
+
+</head>
+<body data-id="<%= locals.id %>">
+
+
+    <header class="header">
+
+        <!-- for the navigation links -->
+        <nav class="nav">
+
+            <h1 class="heading"><a class="heading-link" href="/">CLIP</a></h1>
+
+            <!-- unorder list -->
+            <ul class="nav-list nav-list-1">
+                <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/html/courses.html">Communities</a></li>
+                <li class="nav-item"><a class="nav-link" href="html/live/CDN/index.html">live rooms</a></li>
+                <li class="nav-item"><a class="nav-link" href="/html/courses2.html">Courses</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Leaderboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="html/live2/index.html">live 2</a></li>
+                <li class="nav-item"><a class="nav-link" href="/html/messages.html">Messages</a></li>
+
+
+                
+            </ul>
+
+
+            <ul class="nav-list nav-list-2">
+                <li class="nav-item"><img src="/../images/search_2_line.svg" alt="search logo"></li>
+                <li class="nav-item"><img src="/../images/bell_ringing_line.svg" alt="notifications logo"></li>
+
+                <li class="nav-item pfp">pfp</li>
+
+                <li class="nav-item profile-link-container hidden">
+                    <a class="profile-link" href="#">profile</a>
+                </li>
+
+
+                <li><a class="signin" href="../html/signin.html">Sign in</a></li>
+                <li><a class="signout hidden">Sign out</a></li>
+            </ul>
+
+
+        </nav>
+
+    </header>
+
+
+    <main class="course-main">
+
+        <div class="course-container">
+            <div class="video-player">
+                <video id="uploadedVideo" controls hidden></video>
+                <div class="video-placeholder">
+                    <p class="empty-video-text">Get started and upload your first video!</p>
+
+                    <input type="file" id="videoUpload" name="videoUpload" accept="video/*" hidden>
+                    <label for="videoUpload" class="custom-file-upload">Upload Video</label>
+                </div>
+            </div>
+            
+            <div class="course-sidebar">
+                
+                <h2 class="sidebar-title">Course Content</h2>
+
+                
+            </div>
+
+            <div class="course-details">Details</div>
+        </div>
+        
+
+
+        <!-- <p><%= course['crs-desc'] %></p> -->
+    </main>
+
+
+
+    
+    
+</body>
+</html>

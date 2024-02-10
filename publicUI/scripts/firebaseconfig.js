@@ -2,12 +2,16 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebas
 
 import {
     getFirestore, collection, getDocs, addDoc, deleteDoc, doc, setDoc, onSnapshot,
-    query, where, orderBy, serverTimestamp, getDoc, updateDoc,
+    query, where, orderBy, serverTimestamp, getDoc, updateDoc, 
 } from 'https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js'
 
 import {
   getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile
 } from 'https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js'
+
+import {
+    getStorage, ref, uploadBytes, getDownloadURL, deleteObject
+} from 'https://www.gstatic.com/firebasejs/10.5.0/firebase-storage.js'
 
 const firebaseConfig = {
   apiKey: "AIzaSyBciolYGlX5URQC6MV5AhPDEGDo-E8vcJ0",
@@ -26,7 +30,7 @@ const auth = getAuth(app);
 const colRef = collection(db, 'posts')
 
 
-export {initializeApp, getFirestore, collection, getDocs, addDoc, deleteDoc, doc, onSnapshot,
+export {initializeApp, getFirestore, collection, setDoc, getDocs, addDoc, deleteDoc, doc, onSnapshot,
     query, where, orderBy, serverTimestamp, getDoc, updateDoc, firebaseConfig, app, db, auth, colRef, getAuth,
-    createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile
+    createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, getStorage, ref, uploadBytes, getDownloadURL, deleteObject
 }

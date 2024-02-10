@@ -22,7 +22,7 @@ const { collection, onSnapshot } = db;
 
 
 app.get("/", (req, res) => {
-    res.send("COOL SHIT")
+   // 
 })
 
 app.get("/user/:id", async (req, res) => {
@@ -67,13 +67,47 @@ app.post("/create-course", async (req, res) => {
     const courseData = req.body;
     
     const newCourseRef = await coursesRef.add(courseData);
+    const docSnapshot = await newCourseRef.get(); // `get` is a method on the DocumentReference
+    const data = docSnapshot.data();
 
-    res.send(courseData['crs-name'])
+    res.render("course", {course: data}); 
+    // render the course 
+
 
     
     
 })
 
+
+// get course 
+
+app.get("/html/courses2.html/:id", async (req, res) => {
+    const id = req.params.id; 
+
+    // fetch from firebase 
+
+    const docRef = db.collection("courses").doc(id); // `doc` is a method on the CollectionReference
+    const docSnapshot = await docRef.get(); // `get` is a method on the DocumentReference
+    const data = docSnapshot.data(); 
+    const courseID = docSnapshot.id; 
+    const crsDesc = data['crs-desc']; 
+    const crsName = data['crs-name']; 
+
+
+    // create the ejs html template 
+    res.render("course", {course: data, id: courseID});
+
+    // style it 
+
+    // uploading a video functionality 
+
+    // when uploaded, insert video to database 
+
+    // fetch the videos and display them into the sidebar 
+
+    // when sidebar is clicked, make the video active 
+    
+})
 
 
 
