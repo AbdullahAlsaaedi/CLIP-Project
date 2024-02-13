@@ -68,17 +68,66 @@
             <div class="video-player">
                 <video id="uploadedVideo" controls hidden></video>
                 <div class="video-placeholder">
-                    <p class="empty-video-text">Get started and upload your first video!</p>
+                    <p class="empty-video-text hidden">Get started and upload your first video!</p>
 
-                    <input type="file" id="videoUpload" name="videoUpload" accept="video/*" hidden>
-                    <label for="videoUpload" class="custom-file-upload">Upload Video</label>
+                    <input class="hidden" type="file" id="videoUpload" name="videoUpload" accept="video/*" hidden>
+                    <label for="videoUpload" class="custom-file-upload hidden">Upload Video</label>
                 </div>
             </div>
             
             <div class="course-sidebar">
-                
-                <h2 class="sidebar-title">Course Content</h2>
 
+                <div class="sidebar-heading">
+
+                    <div class="sidebar-title">
+                        <h2>Course Content</h2>
+    
+                        <div class="open-modal-btn-wrapper">
+                            <button class="open-modal-btn">
+                                Add new lesson 
+                            </button>
+                        </div>
+                     
+                        <div class="modal-overlay hide">
+                            <div class="modal-wrapper">
+                                
+                                <h1 class="modal-heading">Lesson details</h1>
+                                <div class="modal-content">
+                                    <div action="#" class="create-lsn-form">
+    
+                                        <label for="lsn-title">Title</label>
+                                        <input required placeholder="enter the title" type="text" name="lsn-title" id="lsn-title">
+    
+                                        <label for="lsn-details">Details</label>
+                                        <textarea placeholder="enter the details" name="lsn-details" id="lsn-details"> </textarea>
+    
+                                        <label for="lsn-video">upload your video</label>
+                                        <input required type="file" id="lsn-video" name="lsn-video" accept="video/*">
+                                        
+                                        <input required class="lsn-submit" type="submit" value="Publish" name="" id="">
+                                        
+                                        <div class="close-btn-wrapper">
+                                            <button class="lsn-decline close-modal-btn">
+                                                Decline
+                                            </button>
+                                        </div>
+    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                    </div>
+
+                    <div class="sidebar-lessons">
+
+                    </div>
+
+                </div>
+                
+                
+
+                
                 
             </div>
 

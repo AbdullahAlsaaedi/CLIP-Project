@@ -51,7 +51,7 @@ main {
     color: rgb(232, 224, 241);
 }
 
-input[type="file"] {
+#videoUpload {
     display: none; /* Hide the default file input */
 }
 
@@ -93,8 +93,131 @@ input[type="file"] {
     font-size: 1.2rem;
 }
 .sidebar-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 2rem;
     padding-top: 0;
     border-bottom: solid 1px gray;
 
+}
+
+.hidden {
+    display: none;
+}
+
+
+
+.modal-overlay {
+    background: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+ 
+.modal-wrapper {
+    width: 50rem;
+    height: 60rem;
+    background: ghostwhite;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5rem;
+}
+ 
+.open-modal-btn-wrapper {
+
+}
+ 
+
+.open-modal-btn {
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    background: #FF0000;
+    font-size: 1.2rem;
+    border: none;
+    color: white;
+
+
+    cursor: pointer;
+}
+
+
+ 
+.close-btn-wrapper {
+    /* display: flex; */
+    /* margin-left: auto; */
+}
+ 
+.modal-content {
+    /* margin: 20px auto;
+    max-width: 30rem;
+    width: 100%; */
+    height: 80%;
+    
+}
+
+.create-lsn-form {
+    display: flex;
+    flex-direction: column;
+    margin: auto 8rem;
+    height: 100%;
+}
+
+
+
+.create-lsn-form > label { 
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+}
+
+.create-lsn-form > input, .create-lsn-form > textarea { 
+    padding: 1.4rem;
+    border-radius: 1rem;
+    border: solid 0.1px rgba(0, 0, 0, 0.168); 
+}
+
+textarea:focus {
+    outline: none;
+}
+ 
+.hide {
+    display: none;
+}
+
+.create-lsn-form .lsn-submit {
+    margin-top: auto;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+    background-color: #FF0000;
+    color: white;
+    padding: 1rem;
+}
+
+.lsn-submit:hover {
+    color: rgb(114, 114, 114);
+}
+
+
+.lsn-decline {
+    padding: 0.5rem;
+    border-radius: 1rem;
+    border: solid 0.1px rgba(0, 0, 0, 0.168); 
+    cursor: pointer;
+    width: 100%;
+}
+ 
+h1 {
+    text-align: center;
+    font-size: 4rem;
+}
+
+.modal-heading {
+    margin-top: 2rem;
 }

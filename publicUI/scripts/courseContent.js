@@ -71,6 +71,31 @@ const fileInput = document.getElementById('videoUpload');
 const videoPlayer = document.getElementById('uploadedVideo');
 const videoPlaceholder = document.querySelector('.video-placeholder');
 
+function init() {
+    // check if the database if not empty:
+        // then the first item inside the sidebar will be the active one
+            // video player source url => 1st doc url 
+            console.log('inside init');
+            
+            onSnapshot(coursesVideos, async snap => {
+                if(snap.docs.length === 0) {
+                    showPlaceholders(); 
+                    return; 
+                }
+                
+                const doc = snap.docs[0];
+                const url = await getDownloadURL(ref(storage, `coursesVids/${doc.id}`)); 
+
+                videoPlayer.src = url;
+                videoPlayer.hidden = false;
+                videoPlaceholder.style.display = 'none';
+
+
+                console.log(url);
+            })
+}
+
+init(); 
 
 fileInput.addEventListener('change', function(event) {
     const file = event.target.files[0];
@@ -100,7 +125,37 @@ fileInput.addEventListener('change', function(event) {
     insertVid(file);
 });
 
-function insertVid(file) {
+function addLesson() {
+
+    const title = document.querySelector('#lsn-title'); 
+    const details = document.querySelector('#lsn-details'); 
+    const videoInp = document.querySelector('#lsn-video'); 
+
+    videoInp.addEventListener('change', function(event) { 
+
+        const file = event.target.files[0];
+
+        if (!file) {
+            console.log("No file selected.");
+            return;
+        }
+
+        const videoURL = URL.createObjectURL(file);
+
+        console.log(videoURL);
+
+        insertVid(file, title.value, details.value);
+
+
+    })
+
+
+
+}
+
+addLesson();
+
+function insertVid(file, title, details) {
 
     const id = uuidv4();
     const vidsRef = ref(storage, `coursesVids/${id}`)
@@ -117,7 +172,7 @@ function insertVid(file) {
 
     uploadTask.then((snapshot) => {
         const vidRef = doc(coursesVideos, id)
-        setDoc(vidRef, {date: serverTimestamp()})
+        setDoc(vidRef, {title: title, details: details, date: serverTimestamp()})
     })
 
 
@@ -130,16 +185,16 @@ function fetchVids() {
 
     // fetch the database, 
     onSnapshot(coursesVideos, snapshot => {
-        document.querySelector('.course-sidebar').innerHTML = ""
+        document.querySelector('.sidebar-lessons').innerHTML = "" 
         snapshot.docs.forEach(async doc => {
-            console.log(doc.data());
+            // console.log(doc.data());
 
             // based on id, fetch the storage, get the url that matches the id. 
             const id = doc.id; 
 
             const url = await getDownloadURL(ref(storage, `coursesVids/${id}`)); 
 
-            console.log(url);
+            // console.log(url);
             
             createVideosHTML(doc, url) 
 
@@ -176,7 +231,7 @@ function createVideosHTML(doc, url) {
 
      }) 
 
-     document.querySelector('.course-sidebar').appendChild(lessonEl)
+     document.querySelector('.sidebar-lessons').appendChild(lessonEl)
 
 
 }
@@ -200,3 +255,36 @@ function getIDfromURL() {
 
 
 
+
+function showPlaceholders() {
+    const title = document.querySelector('.empty-video-text')
+    const input = document.querySelector('#videoUpload')
+    const label = document.querySelector('.custom-file-upload')
+
+    title.classList.remove('hidden')
+    input.classList.remove('hidden')
+    label.classList.remove('hidden')
+
+
+}
+
+
+
+const openBtn = document.querySelector(".open-modal-btn");
+const modal = document.querySelector(".modal-overlay");
+const closeBtn = document.querySelector(".close-modal-btn");
+ 
+function openModal() {
+    modal.classList.remove("hide");
+}
+ 
+function closeModal(e, clickedOutside) {
+    if (clickedOutside) {
+        if (e.target.classList.contains("modal-overlay"))
+            modal.classList.add("hide");
+    } else modal.classList.add("hide");
+}
+ 
+openBtn.addEventListener("click", openModal);
+modal.addEventListener("click", (e) => closeModal(e, true));
+closeBtn.addEventListener("click", closeModal);
