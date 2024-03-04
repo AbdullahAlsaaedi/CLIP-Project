@@ -33,13 +33,35 @@ app.get("/html/courses2.html/review/:id", async (req, res) => {
     const docSnapshot = await docRef.get(); // `get` is a method on the DocumentReference
     const data = docSnapshot.data(); 
     const courseID = docSnapshot.id; 
+
+    // querying the users collection 
+    const usersQuery = await db.collection('users').where('uid', '==', data.userUid).get(); 
+
+    const userDoc = usersQuery.docs[0];
+    const userData = userDoc.data();
+
+
+    const videosSnapshot = await docRef.collection('videos').get();
+    const videosCount = videosSnapshot.size;
+
+
+
+
+
+//    console.log(data.userUid);
+    
+
+    // if(userDoc.exists) console.log("exists", userDoc);
+    
+
+    
     const crsDesc = data['crs-desc']; 
     const crsName = data['crs-name']; 
     const crsLogo = data['crs-logo']; 
 
     
     // create the ejs html template 
-    res.render("coursePreview", {course: data, id: courseID});
+    res.render("coursePreview", {course: data, user: userData, id: courseID, videosCount});
 }); 
 
 

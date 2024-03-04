@@ -1,5 +1,35 @@
+import {
+    auth,
+    onAuthStateChanged,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+} from "./firebaseconfig.js";
+import {
+    initializeApp,
+    getFirestore,
+    collection,
+    getDocs,
+    addDoc,
+    deleteDoc,
+    doc,
+    onSnapshot,
+    query,
+    where,
+    orderBy,
+    serverTimestamp,
+    getDoc,
+    updateDoc,
+    firebaseConfig,
+    app,
+    db,
+    getAuth,
+} from "./firebaseconfig.js";
+
 
 const enrollbtn = document.querySelector(".enrollbtn"); 
+const usersRef = collection(db, "users");
+
 
 enrollbtn.addEventListener("click", () => {
     let url = window.location.href; 
@@ -8,5 +38,7 @@ enrollbtn.addEventListener("click", () => {
     console.log(lastPart);
     
     window.location.href = `/html/courses2.html/${lastPart}`
-    
 })
+
+// const query = query(usersRef, where())
+// onSnapshot(usersRef)
