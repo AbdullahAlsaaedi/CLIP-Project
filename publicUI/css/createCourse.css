@@ -1,3 +1,32 @@
+.header {
+
+}
+
+
+main {
+    padding: 0;
+}
+
+
+.createCourse-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 50vh;
+    padding-top: 4rem;
+}
+
+.createCourse-header h1 { 
+    font-size: 3rem;
+    color: rgb(40, 3, 41);
+    margin-bottom: 1rem;
+}
+
+.createCourse-header p {
+    color: gray;
+    font-size: 1.2rem;
+}
+
 
 .course-heading {
     font-size: 3rem;
@@ -5,18 +34,56 @@
 
 .create-course-form {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    /* justify-content: space-between; */
+    /* flex-direction: column;
+    align-items: center; */
+    margin-right: 35rem;
+    margin-left: 35rem;
+    margin-top: -25rem;
+    border-radius: 3rem;
+    background-color: white;
+    padding: 2rem;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+
 }
+
+.form-image {
+    flex-basis: 30%;
+    padding: 2rem;
+    margin-right: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.create-course-form-container {
+    display: flex;
+    flex-direction: column; 
+    flex: 1;
+    margin-right: 3rem;
+
+    /* align-items: center; */
+}
+
 
 .input {
     box-shadow: none;
-    border: solid 0.1px rgba(0, 0, 0, 0.377);
     margin-top: 1rem;
+    border: none;
+    border-bottom: solid 0.2rem rgb(180, 172, 201);
+    border-radius: 0;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    padding-bottom: 2rem;
 }
 
 label {
     margin-top: 1rem;
+    font-size: 1.2rem;
+    color: rgb(105, 100, 118);
+    font-weight: bold;
 }
 
 #crs-desc {
@@ -24,13 +91,20 @@ label {
 }
 
 #submit-form {
-    padding: 1rem 2rem;
-    background-color: #FF0000;
+    padding: 1.5rem 7rem;
+    background-color: rgb(180, 172, 201);
     color: white;
     border-radius: 1rem;
     margin-top: 2rem;
     cursor: pointer;
     border: none;
+    align-self: start;
+    /* width: 20%; */
 }   
+
+#submit-form:hover {
+    background: rgb(220, 217, 229);
+    color: rgb(87, 86, 86);
+}
 
 

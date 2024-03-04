@@ -64,16 +64,37 @@
 
     <main class="createCourse-main">
 
+        <div class="createCourse-header">
+            <h1>Publish Your Course</h1>
+            <p>Get ready with your course, enter the details before you lunch it! paving the way for you to grow your audience and help the community</p>    
+        </div>
+
+
         <form class="create-course-form" method="POST" action="/create-course">
-            <h1 class="course-heading">Create your course</h1>
 
-            <label for="crs-name">How would you like to name your course?</label>
-            <input class="input" placeholder="Course title" type="text" name="crs-name" id="crs-name">
+            <div class="form-image">
+                <img src="../images/undraw_slider_re_ch7w.svg" alt="" class="img">
+                </div>
 
-            <label for="crs-desc">Describe your course</label>
-            <textarea class="input" placeholder="Course description" name="crs-desc" id="crs-desc"> </textarea>
+            
+            <div class="create-course-form-container">
 
-            <input value="Publish" type="submit" name="submit-form" id="submit-form">
+                <label for="crs-name">How would you like to name your course?</label>
+                <input required class="input" placeholder="Course title" type="text" name="crs-name" id="crs-name">
+    
+                <label for="crs-desc">Describe your course</label>
+                <textarea required class="input" placeholder="Course description" name="crs-desc" id="crs-desc"> </textarea>
+    
+    
+                <label for="crs-logo">Course logo</label>
+                <input required type="file" class="input" placeholder="Course logo" name="crs-logo" id="crs-logo" accept="image/*"/>
+    
+    
+    
+                <input value="Publish" type="submit" name="submit-form" id="submit-form">
+    
+
+            </div>
         </form>
     </main>
     

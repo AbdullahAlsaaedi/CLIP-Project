@@ -219,7 +219,7 @@ function createVideosHTML(doc, url) {
     lessonEl.classList.add('lesson')
     lessonEl.dataset.url = url; 
     lessonEl.innerHTML = 
-    `<div class="lesson-title">Step 1: lorem</div>
+    `<div class="lesson-title">${doc.data().title}</div>
     <div class="lesson-duration">1hr:30m</div>
      `
 
@@ -228,10 +228,23 @@ function createVideosHTML(doc, url) {
 
         videoPlayer.src = lessonEl.dataset.url;
         videoPlayer.hidden = false;
-
+        makeActive(lessonEl)
      }) 
 
      document.querySelector('.sidebar-lessons').appendChild(lessonEl)
+
+
+}
+
+function makeActive(El) {
+
+    
+    const lessonsEls = document.querySelectorAll('.lesson');
+    
+
+    lessonsEls.forEach(lessonEl => lessonEl.classList.remove('playing'));
+
+    El.classList.add('playing');
 
 
 }

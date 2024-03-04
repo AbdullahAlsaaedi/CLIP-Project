@@ -1,0 +1,58 @@
+
+.course-preview-main {
+    display: flex;
+}
+
+h1 {
+    font-size: 6rem;
+    /* max-width: 70%; */
+}
+
+
+.course-details-col1 {
+    flex-basis: 70%;
+}
+
+.course-details-col2 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.author {
+    display: flex;
+    gap: 2rem;
+    margin-top: 4rem;
+    align-items: center;
+
+}
+
+.course-details {
+    display: flex;
+    gap: 2rem;
+}
+
+.course-description {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    color: rgba(0, 0, 0, 0.703);
+}
+
+
+.enrollbtn {
+    /* align-self: end; */
+    background-color: #333661; 
+    border-radius: 2rem;
+    border: none;
+    color: white;
+    padding: 2rem 4rem;
+    cursor: pointer;
+}
+
+
+.enrollbtn:hover {
+    background-color: #4d5074; 
+}

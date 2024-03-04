@@ -83,7 +83,7 @@ function createCourseHTML(doc) {
 
         const courseid = courseEl.dataset.id;
 
-        window.location.href = `./courses2.html/${courseid}`
+        window.location.href = `./courses2.html/review/${courseid}`
         
     })
 

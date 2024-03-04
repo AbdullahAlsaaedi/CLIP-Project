@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/../css/reset.css">
+    <link rel="stylesheet" href="/../css/navigation.css">
+    <link rel="stylesheet" href="/../css/global.css">
+    <link rel="stylesheet" href="/../css/coursePreview.css">
+
+  
+    <script defer type="module" src="/../scripts/index.js"></script>
+    <script defer type="module" src="/../scripts/coursePreview.js"></script>
+
+
+</head>
+<body data-id="<%= locals.id %>">
+
+
+    <header class="header">
+
+        <!-- for the navigation links -->
+        <nav class="nav">
+
+            <h1 class="heading"><a class="heading-link" href="/">CLIP</a></h1>
+
+            <!-- unorder list -->
+            <ul class="nav-list nav-list-1">
+                <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/html/courses.html">Communities</a></li>
+                <li class="nav-item"><a class="nav-link" href="html/live/CDN/index.html">live rooms</a></li>
+                <li class="nav-item"><a class="nav-link" href="/html/courses2.html">Courses</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Leaderboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="html/live2/index.html">live 2</a></li>
+                <li class="nav-item"><a class="nav-link" href="/html/messages.html">Messages</a></li>
+
+
+                
+            </ul>
+
+
+            <ul class="nav-list nav-list-2">
+                <li class="nav-item"><img src="/../images/search_2_line.svg" alt="search logo"></li>
+                <li class="nav-item"><img src="/../images/bell_ringing_line.svg" alt="notifications logo"></li>
+
+                <li class="nav-item pfp">pfp</li>
+
+                <li class="nav-item profile-link-container hidden">
+                    <a class="profile-link" href="#">profile</a>
+                </li>
+
+
+                <li><a class="signin" href="../html/signin.html">Sign in</a></li>
+                <li><a class="signout hidden">Sign out</a></li>
+            </ul>
+
+
+        </nav>
+
+    </header>
+
+
+    <main class="course-preview-main">
+
+     <div class="course-details-col1">
+        <h1 class="course-title"><%= course['crs-name'] %></h1>
+
+        <div class="author">
+    
+            <div class="author-pfp-container">
+                <img src="" alt="img" class="author-pfp">
+            </div>
+    
+            <div class="author-details">
+                <h3 class="author-name">Saed</h3>
+                <div class="course-details">
+                    <div class="period">40 mins</div>
+                    <div class="numoflessons">10 lesson</div>
+                    <div class="date">published two months ago</div>
+                </div>
+            </div>
+        </div>
+    
+    
+        <p class="course-description">
+            <%= course['crs-desc'] %>
+        </p>
+
+     </div>  
+     
+     <div class="course-details-col2">
+        <div src="" alt="" class="course-logo-container">
+            <img src="" alt="courselogo" class="course-logo">
+        </div>
+
+        <button class="enrollbtn">Start watching</button>
+     </div>
+
+    
+
+        
+        
+
+
+        <!-- <p><%= course['crs-desc'] %></p> -->
+    </main>
+
+
+
+    
+    
+</body>
+</html>

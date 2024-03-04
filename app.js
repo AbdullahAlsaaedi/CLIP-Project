@@ -25,6 +25,24 @@ app.get("/", (req, res) => {
    // 
 })
 
+
+app.get("/html/courses2.html/review/:id", async (req, res) => {
+    const id = req.params.id; 
+
+    const docRef = db.collection("courses").doc(id); // `doc` is a method on the CollectionReference
+    const docSnapshot = await docRef.get(); // `get` is a method on the DocumentReference
+    const data = docSnapshot.data(); 
+    const courseID = docSnapshot.id; 
+    const crsDesc = data['crs-desc']; 
+    const crsName = data['crs-name']; 
+    const crsLogo = data['crs-logo']; 
+
+    
+    // create the ejs html template 
+    res.render("coursePreview", {course: data, id: courseID});
+}); 
+
+
 app.get("/user/:id", async (req, res) => {
     const id = req.params.id;
     console.log(id);
@@ -70,7 +88,7 @@ app.post("/create-course", async (req, res) => {
     const docSnapshot = await newCourseRef.get(); // `get` is a method on the DocumentReference
     const data = docSnapshot.data();
 
-    res.render("course", {course: data}); 
+    res.redirect(`/html/courses2.html/${docSnapshot.id}`); 
     // render the course 
 
 
