@@ -66,11 +66,21 @@ onAuthStateChanged(auth, (user) => {
 
 
 
+
+        formModal(); 
+
+
+
         // 1 ----- CLICKED  THE BUTTON
 
+
         postForm.addEventListener("submit", function (e) {
+            
             if (postForm.postTitle.value === "") return false;
             e.preventDefault();
+
+            const modal = document.querySelector('.form-modal');
+            modal.style.display = "none";
 
             addDoc(postsRef, {
                 userID: currUser.uid,
@@ -233,17 +243,18 @@ function createPost3(postDoc, userDoc) {
 
             
                 <div class="votes">
-                    <button class="upvote">
-                        ^
-                    </button>
+                    <div class="like-container">
+                        <img src="../images/heart-svgrepo-com.svg" alt="" class="like-svg">
+                        <div class="likes-num">321 likes</div> 
 
-                    <div class="votes-number">
-                        12k
                     </div>
+    
+    
+                    <div class="comment-container">
+                        <img src="../images/comment.svg" alt="" class="comment-svg">
+                        <div class="comments-num"> 23 comments </div> 
 
-                    <button class="downvote">
-                        v
-                    </button>
+                    </div>
                 </div>
 
                 <button class="post-readbtn primary-btn">Read more</button>
@@ -424,17 +435,16 @@ function createComment3(postEl, commentDoc, postDoc) {
 
             
                 <div class="votes">
-                    <button class="upvote">
-                        ^
-                    </button>
 
-                    <div class="votes-number">
-                        12k
+                    <div class="like-container">
+                        <img src="../images/heart-svgrepo-com.svg" alt="" class="like-svg">
                     </div>
-
-                    <button class="downvote">
-                        v
-                    </button>
+            
+            
+                    <div class="comment-container">
+                        <img src="../images/comment.svg" alt="" class="comment-svg">
+                    </div>
+                    
                 </div>
 
                 <input placeholder="reply.." class="reply-inp input" type="text"/> 
@@ -575,3 +585,35 @@ function showModal(modalElement) {
     console.log(modalElements[index]);
 }
 
+
+
+
+
+function formModal() {
+    // Get the modal
+    const modal = document.querySelector('.form-modal');
+
+    // Get the button that opens the modal
+    const btn = document.querySelector('.create-post-btn');
+
+    // Get the <span> element that closes the modal
+    const span = document.querySelector(".close-form-modal");
+
+    // When the user clicks the button, open the modal 
+    btn.addEventListener('click', () => {
+    modal.style.display = "block";
+    });
+
+    // When the user clicks on <span> (x), close the modal
+    span.addEventListener('click', () => {
+    modal.style.display = "none";
+    });
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.addEventListener('click', (event) => {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+    });
+
+}

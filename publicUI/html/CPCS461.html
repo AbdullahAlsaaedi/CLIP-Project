@@ -48,6 +48,9 @@
                 <li class="nav-item"><img src="../images/bell_ringing_line.svg" alt="notifications logo"></li>
 
                 <li class="nav-item pfp">pfp</li>
+                <li class="nav-item profile-link-container hidden">
+                    <a class="profile-link" href="#">profile</a>
+                </li> 
 
                 <li><a class="signin" href="signin.html">Sign in</a></li>
                 <li><a class="signout hidden">Sign out</a></li>
@@ -74,6 +77,11 @@
 
     </div>
 
+
+
+
+    
+    
     <div class="sort-search">
         <select class="sort" >
             <option value="" disabled selected>Sort by : </option>
@@ -82,16 +90,35 @@
             <option value="top">top</option>
         </select>
         <input placeholder="search" type="text" class="search input">
+        <button class="create-post-btn">Create a post</button>
 
     </div>
 
     <!-- Post Form -->
-   <form action="#" class="post-form">
-       <h1 class="post-form-heading">Make a post</h1>
-       <input type="text" required name="postTitle" id="postTitle" placeholder="title: ">
-       <textarea name="postContent" id="postContent" placeholder="type something"></textarea>
-       <button class="post-btn" type="post-submit">Submit</button>
-   </form>
+
+
+    <div class="form-modal">
+
+        
+
+        <div class="form-modal-content">
+
+            <span class="close-form-modal">
+                &times;
+            </span>
+            
+            <form action="#" class="post-form ">
+                <h1 class="post-form-heading">Make a post</h1>
+                <input type="text" required name="postTitle" id="postTitle" placeholder="title: ">
+                <textarea name="postContent" id="postContent" placeholder="type something"></textarea>
+                <button class="post-btn" type="post-submit">Submit</button>
+            </form>
+        </div>
+
+    </div>
+
+
+   
 
 
    <!-- POSTS LIST -->
