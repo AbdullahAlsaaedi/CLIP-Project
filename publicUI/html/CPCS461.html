@@ -99,6 +99,9 @@
 
     <div class="form-modal">
 
+
+        
+
         
 
         <div class="form-modal-content">
@@ -106,13 +109,56 @@
             <span class="close-form-modal">
                 &times;
             </span>
-            
-            <form action="#" class="post-form ">
-                <h1 class="post-form-heading">Make a post</h1>
+
+            <div class="post-types">
+                <div class="post-type text-type">
+                    Text
+                    <img src="../images/undraw_browsing_online_re_umsa.svg" alt="">
+
+                </div>
+    
+                <div class="post-type visual-type">
+                    images and videos 
+                    <img src="../images/undraw_drag_re_shc0.svg" alt="">
+                </div>
+
+                <div class="post-type file-type">
+                    Files
+                    <img src="../images/undraw_drag_re_shc0.svg" alt="">
+                </div>
+    
+            </div>
+
+            <form action="#" class="post-form hidden">
+                <h1 class="post-form-heading">Enter your post details</h1>
                 <input type="text" required name="postTitle" id="postTitle" placeholder="title: ">
                 <textarea name="postContent" id="postContent" placeholder="type something"></textarea>
                 <button class="post-btn" type="post-submit">Submit</button>
             </form>
+
+            <form action="#" class="visual-form hidden">
+                <h1 class="post-form-heading">Title</h1>
+                <input type="text" required name="postTitle" id="postTitle" placeholder="title: ">
+                
+                <!-- Hidden file input -->
+                <input type="file" id="fileInput" style="display: none;" />
+            
+                <!-- Button to trigger file input click -->
+                <button type="button" id="uploadBtn">Upload Image Here</button>
+
+                <div class="imagePreviewContainer">
+                    <img class="imagePreview hidden" src="" alt="Image preview">
+                </div>
+            
+                <button class="post-btn" type="submit">Submit</button>
+            </form>
+
+            <!-- <form action="#" class="file-form hidden">
+                <h1 class="post-form-heading">Enter your post details</h1>
+                <input type="text" required name="postTitle" id="postTitle" placeholder="title: ">
+                <textarea name="postContent" id="postContent" placeholder="type something"></textarea>
+                <button class="post-btn" type="post-submit">Submit</button>
+            </form> -->
         </div>
 
     </div>

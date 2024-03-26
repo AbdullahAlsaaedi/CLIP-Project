@@ -23,14 +23,22 @@ import {
     firebaseConfig,
     app,
     db,
-    getAuth,
+    getAuth, setDoc,
+    getStorage, ref, uploadBytes, getDownloadURL, deleteObject, 
 } from "./firebaseconfig.js";
+
+
+import { v4 as uuidv4 } from 'https://cdn.skypack.dev/uuid';
+
 
 const signupForm = document.querySelector("#signup-form");
 const loginForm = document.querySelector("#login-form");
 
 const singoutEl = document.querySelector(".signout");
 const signinEl = document.querySelector(".signin");
+
+const storage = getStorage(); 
+
 // const commentBtnEl = document.querySelector('.commentBtn');
 // const commentInEl = document.querySelector('.commentIn');
 
@@ -68,6 +76,7 @@ onAuthStateChanged(auth, (user) => {
 
 
         formModal(); 
+        visualFromSubmission(); 
 
 
 
@@ -89,6 +98,7 @@ onAuthStateChanged(auth, (user) => {
                 // check this later
                 course: currentPageName,
                 date: serverTimestamp(),
+                type: 'text', 
             });
             // console.log(postForm.postTitle);
             postForm.reset();
@@ -123,7 +133,10 @@ onAuthStateChanged(auth, (user) => {
 
                 onSnapshot(posterQuery, (snapshot) => {
                     snapshot.forEach((doc) => {
-                        const post = createPost3(el, doc.data());
+                        
+                        const post = createPost3(el, doc.data()) 
+                      
+                        
                         const tmpPost = document.getElementById(post.id);
                         posts.appendChild(post);
 
@@ -203,7 +216,11 @@ function createPost3(postDoc, userDoc) {
     postEl.classList.add("post");
     postEl.id = postDoc.id;
 
-    postEl.innerHTML = `
+
+
+    if(postDoc.type === "text") {
+
+        postEl.innerHTML = `
     
 
         
@@ -237,7 +254,11 @@ function createPost3(postDoc, userDoc) {
 
             <h3 class="title">${postDoc.title}</h3>
 
-            <h4 class="content">${postDoc.content}</h4>
+            <h4 class="content">
+                
+                ${postDoc}
+                ${postDoc.content}
+            </h4>
 
             <div class="post-details-user">
 
@@ -305,6 +326,120 @@ function createPost3(postDoc, userDoc) {
 
 
 `;
+
+
+
+    } else if (postDoc.type === "image") {
+
+        postEl.innerHTML = `
+    
+
+        
+
+
+        <div class="post-details">
+
+
+        <div class="post-heading-details"> 
+
+            <div class="pfp-container">
+                <img src="${userDoc.photoURL}" class="pfp" alt="img">
+            </div>
+
+            <div class="post-username">
+                ${userDoc.name}
+
+                <div class="post-date">
+                    2 days ago
+                </div>
+            </div>
+
+            <button class="post-delete">X</button>
+
+        
+        </div>
+
+        
+
+       
+
+            <h3 class="title">${postDoc.title}</h3>
+
+            <h4 class="content">
+                
+            <img src="${postDoc.content}" />
+            </h4>
+
+            <div class="post-details-user">
+
+            
+                <div class="votes">
+                    <div class="like-container">
+                        <img src="../images/heart-svgrepo-com.svg" alt="" class="like-svg">
+                        <div class="likes-num">321 likes</div> 
+
+                    </div>
+    
+    
+                    <div class="comment-container">
+                        <img src="../images/comment.svg" alt="" class="comment-svg">
+                        <div class="comments-num"> 23 comments </div> 
+
+                    </div>
+                </div>
+
+                <button class="post-readbtn primary-btn">Read more</button>
+
+
+            </div>
+        </div>
+        
+
+        <div class="post-modal hidden">
+            <button class="modal-close">X</button>
+
+            <h3 class="title">${postDoc.title}</h3>
+
+            <p>${postDoc.content}</p>
+            <textarea class="commentIn" type="text" placeholder="Add a comment"></textarea>
+            <button class="commentBtn"> add comment </button>
+
+            <div class="comments">
+                <div class="comment">
+                    logo
+                    <div class="p">conent</div>
+                </div>
+
+                <div class="comment">
+                    logo
+                    <div class="p">conent</div>
+                </div>
+
+                <div class="comment">
+                    logo
+                    <div class="p">conent</div>
+                </div>
+
+            <!-- end of comments -->  
+            </div>
+
+        <!-- end of modal -->  
+        </div>
+
+
+
+    
+
+
+    <!-- end of post-->
+
+
+
+`;
+
+
+    }
+    
 
 
 
@@ -391,6 +526,18 @@ function createPost3(postDoc, userDoc) {
 
     return postEl;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 // console.log(createPost3());
 
@@ -586,7 +733,9 @@ function showModal(modalElement) {
 }
 
 
-
+const fileInput = document.querySelector('#fileInput');
+const uploadBtn = document.querySelector('#uploadBtn');
+const imagePreview = document.querySelector('.imagePreview');
 
 
 function formModal() {
@@ -607,13 +756,135 @@ function formModal() {
     // When the user clicks on <span> (x), close the modal
     span.addEventListener('click', () => {
     modal.style.display = "none";
+
+    document.querySelector(".post-types").style.display = "flex"; 
+    document.querySelector(".post-form").style.display = "none"; 
+
+
+    fileInput.value = "";
+    // Hide the image preview
+    imagePreview.src = "";
+    // imagePreview.classList.add("hidden")
+    document.querySelector(".visual-form").style.display = "none"; 
+    imagePreview.classList.add("hidden");
+
     });
 
     // When the user clicks anywhere outside of the modal, close it
     window.addEventListener('click', (event) => {
     if (event.target == modal) {
         modal.style.display = "none";
+
+        document.querySelector(".post-types").style.display = "flex"; 
+        document.querySelector(".post-form").style.display = "none"; 
+
     }
     });
 
+}
+
+
+
+const postType = document.querySelectorAll(".post-type"); 
+const modelContent = document.querySelector('.form-modal-content');
+
+postType.forEach((elem) => {
+    elem.addEventListener("click", () => {
+        
+        if(elem.classList.contains("text-type")) {
+            document.querySelector(".post-types").style.display = "none"; 
+            document.querySelector(".post-form").style.display = "flex"; 
+        } else if (elem.classList.contains("visual-type")) {
+            document.querySelector(".post-types").style.display = "none"; 
+            document.querySelector(".visual-form").style.display = "flex"; 
+            uploadBtn.style.display = 'initial'
+
+
+        }
+        
+        
+    })
+    
+})
+
+
+
+
+
+    fileInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imagePreview.classList.remove("hidden")
+                uploadBtn.style.display = 'none'
+                
+                        };
+
+                        setTimeout(() => {
+                            modelContent.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 100)
+
+            reader.readAsDataURL(file);
+        }
+    });
+
+document.getElementById('uploadBtn').addEventListener('click', function() {
+    document.getElementById('fileInput').click()
+});
+
+
+
+
+function visualFromSubmission() {
+    const visualForm = document.querySelector(".visual-form") 
+    visualForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        document.querySelector(".form-modal").style.display = "none"
+
+
+        const fileInput = document.getElementById('fileInput'); 
+
+        const file = fileInput.files[0];
+
+        if (file) {
+            console.log(file); // Log the File object to the console
+
+            // Example of accessing properties of the File object
+            console.log(`File Name: ${file.name}`);
+            console.log(`File Type: ${file.type}`);
+            console.log(`File Size: ${file.size} bytes`);
+        }
+
+        const id = uuidv4();
+        const fileRef = ref(storage, `images/${id}`)
+        const uploadImage = uploadBytes(fileRef, file); 
+
+
+        uploadImage.then(async (snapshot) => {
+            
+            const url = await getDownloadURL(ref(storage, `images/${id}`)); 
+            
+            addDoc(postsRef, {
+                content: url, 
+                type: "image", 
+                course: currentPageName,
+                date: serverTimestamp(),
+                userID: currUser.uid, 
+                title: visualForm.postTitle.value
+            })
+
+        })
+
+        // console.log();
+        
+        // const fileUrl = await fileRef.getDownloadURL();
+
+
+        // console.log(fileUrl);
+        
+        
+        
+    })
 }
