@@ -81,8 +81,39 @@
                 <h2 class="profile-username"><%= user.name %></h2>
                 <div class="profile-major">Computer science student</div>
                 <div class="profile-uni">King abdulaziz university</div>
+                <div class="follows">
+                    <button class="followers"><span class="followers-num">0</span> Followers</button>
+                    <button class="followings"><span class="followings-num">0</span> Followings</button>
+
+                </div>
+
+
+                <div class="follows-modal hidden">
+                    <div class="follows-modal-content">
+                        <span class="close-follows-modal-btn">&times;</span>
+                        <h2 class="follows-modal-title">List</h2>
+                        <div class="followings-list-content">
+                            <div class="">Ahmed</div>
+                            <div class="">Ahmed</div>
+                            <div class="">Ahmed</div>
+                            <div class="">Ahmed</div>
+                            <div class="">Ahmed</div>
+                            <div class="">Ahmed</div>
+                            <div class="">Ahmed</div>
+                            <div class="">Ahmed</div>
+                            <div class="">Ahmed</div>
+                            <div class="">Ahmed</div>
+                            <div class="">Ahmed</div>
+
+                        </div> 
+                        <div class="followers-list-content"></div> 
+
+                    </div>
+                </div>
+
             </div>
 
+            <button class="followBtn" style="display: none;">Follow</button>
             <button class="send-msg-btn">Send a message</button>
         </div>
 
@@ -94,6 +125,14 @@
                 if you would like to know me more, feel free to send a dm !
             </p>
         </div>
+
+
+        <div class="activities">
+
+            <h3>Recent Activities</h3>
+
+            
+        </div>
        
 
 
@@ -101,6 +140,9 @@
         <p><%= user.email %></p>
         <p><%= user.uid %></p> -->
     </main>
+
+    <div class="modal-overlay hidden"></div>
+
 
 
 

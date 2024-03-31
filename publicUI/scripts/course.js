@@ -256,7 +256,6 @@ function createPost3(postDoc, userDoc) {
 
             <h4 class="content">
                 
-                ${postDoc}
                 ${postDoc.content}
             </h4>
 

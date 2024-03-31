@@ -1,7 +1,7 @@
 .profile-main {
     margin-left: 10rem;
     margin-right: 10rem;
-    padding: 3rem 0;
+    padding: 0 0;
 }
 
 .profile-cover-image {
@@ -39,6 +39,8 @@
 
 .profile-info {
     margin-top: 2rem;
+    margin-right: auto;
+
 }
 
 .profile-username {
@@ -56,13 +58,517 @@
 }
 
 .about-description {
+    font-size: 1.4rem;
 }
 
-.send-msg-btn {
+.send-msg-btn, .followBtn {
     align-self: flex-start;
     margin-top: 2rem;
-    margin-left: auto;
     border-radius: 2rem;
     padding: 1rem 2rem;
     border: none;
+    cursor: pointer;
+}
+
+.followBtn {
+    padding: 1rem 4rem;
+}
+
+.send-msg-btn {
+    margin-left: 2rem;
+    background-color: #2e2d2d;
+    color: white;
+    cursor: pointer;
+}
+
+.send-msg-btn:hover,  .followBtn:hover{
+    /* margin-left: 2rem;
+    background-color: #2e2d2d; */
+    color: rgb(131, 109, 145);
+}
+
+
+
+.activities {
+    display: flex;
+    flex-direction: column;
+    /* gap: 3rem; */
+}
+
+.activities > * {
+    /* box-shadow: rgba(100, 100, 111, 0.2) 0px 4px 10px 0px; */
+    /* border-radius: 2rem; */
+    border-bottom: solid 0.1px rgba(0, 0, 0, 0.199);
+    padding-bottom: 4rem;
+    padding-top: 4rem;
+
+    /* display: flex; */
+    align-items: center;
+    overflow-wrap: break-word;
+    
+    
+
+    /* gap: 2rem; */
+}
+
+.post {
+    
+}
+
+
+.post-heading-details {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    font-size: 1.3rem;
+
+    margin-bottom: 2rem;
+}
+
+.post-date {
+    font-size: 1rem;
+    color: #818181;
+}
+
+.post-username {
+    margin-right: auto;
+}
+
+.votes {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.2rem;
+    color: #575757;
+    margin-right: auto;
+}
+
+.upvote, .downvote {
+    border: none;
+    padding: 0.5rem 2rem;
+    border-radius: 1rem;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 4px 10px 0px;
+    cursor: pointer;
+
+}
+
+.post-readbtn {
+    background-color: rgb(33, 42, 54);
+    /* color: rgb(45, 45, 45); */
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 4px 10px 0px;
+    text-decoration: underline;
+    padding: 1rem 3rem;
+    font-size: 1.3rem;
+}
+
+.post-readbtn {
+
+}
+
+.post-readbtn:hover {
+    background-color: #494c8a;
+}
+
+.post-details {
+    /* width: 100%; */
+    /* display: flex;
+    flex-direction: column; */
+}
+
+.post-details h3 {
+    margin-bottom: 0.5rem;
+    font-weight: normal;
+    font-size: 2.5rem;
+}
+
+.content {
+    font-size: 1.3rem;
+    color: #575757;
+    font-weight:lighter;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+
+}
+
+.post-details-user {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+}
+
+
+
+
+ /* Style for the modal */
+ .post-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%; 
+    /* max-width: 600px;  */
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 5rem 10rem;
+    z-index: 2;
+
+    height: 90vh;
+
+    overflow-y: auto;
+    cursor:default;
+
+
+  }
+
+.hidden {
+    display: none;
+}
+
+.no-scroll {
+    overflow: hidden;
+}
+
+
+.post {
+    /* position: relative; */
+}
+
+
+.modal {
+    z-index: 100;
+}
+
+.modal-overlay {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(209, 209, 209);
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    
+    opacity: 0.7;
+}
+
+.post-modal h3 {
+    font-size: 2rem;
+}
+
+.post-modal p {
+    font-size: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 4rem;
+
+}
+
+
+.post-modal textarea {
+    width: 100%;
+    height: 10rem;
+    border-radius: 1rem;
+    padding: 1rem;
+    border-style: none;
+    box-shadow: 1px 1px 5px rgba(128, 128, 128, 0.337);
+    /* margin-right: auto; */
+
+}
+
+
+.commentBtn {
+   padding: 1rem 5rem;
+   margin: 2rem 0;
+   display: block;
+   border-radius: 1rem;
+   border: none;
+   background-color: rgb(66, 59, 59);
+   color: white;
+   font-weight: bold;
+   letter-spacing: 1px; 
+   cursor: pointer;
+
+   font-size: 1.3rem;
+
+
+}
+
+
+.post-modal textarea:focus {
+    outline: none;
+}
+
+
+
+.comments    {
+    margin-top: 5rem;
+    /* padding: 2rem 2rem; */
+    /* gap: 2rem; */
+    display: flex;
+    flex-direction: column;
+    /* border-top: solid 0.5px gray; */
+}
+
+.comment {
+    padding: 2rem;
+
+}
+
+
+.modal-close {
+    border-radius: 100%;
+    padding: 0.5rem 1rem;
+    border: none ;
+    background-color: orange;
+    cursor: pointer;
+    position: absolute;
+    right: 1rem;
+    top: 2rem;
+}
+
+
+ .pfp {
+height: 6rem;
+width: 6rem;
+border-radius: 50%;
+}
+
+
+
+.post-delete {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    border: none;
+    border-radius: 1rem;
+}
+
+.replies {
+    margin-top: 4rem;
+    margin-left: 3rem;
+    padding-left: 2rem;
+    border-left: solid 0.2px rgb(190, 190, 190);
+}
+
+.replies > * {
+    margin-bottom: 2rem;
+    padding-bottom: 3rem;
+
+}
+
+.replies .pfp {
+    height: 4rem;
+    width: 4rem;
+}
+
+.replies .title {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+} 
+
+.replies .votes {
+    font-size: 1rem;
+}
+
+
+
+
+.reply-details .votes {
+    margin-bottom: 2rem;
+}
+
+
+.post-details-user {
+    display: flex;
+    
+}
+
+
+.title {
+}
+
+
+.reply-details-user input {
+    padding: 0.5rem 2rem;
+    margin-right: 1rem;
+    width: 40%;
+}
+
+
+
+.reply-details-user .primary-btn {
+    padding: 0.5rem 2rem;
+    margin-right: 1rem;
+    background-color: rgb(210, 211, 210);
+    color: black;
+
+    font-size: 1.3rem;
+
+}
+
+
+
+
+
+.votes {
+    color: #868686;
+}
+
+.votes > * {
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: inherit; 
+    cursor: pointer;
+}
+
+.votes > *:hover {
+    color: black;
+}
+
+
+.like-container {
+    
+
+
+}
+
+
+.comment-container {
+   
+    text-decoration: underline;
+
+
+}
+
+
+.like-svg {
+    height: 100%;
+    color: inherit; 
+
+}
+
+.comment-svg {
+    height: 100%;
+}
+
+.likes-num {
+    margin-right: 1rem;
+}
+
+.comments-num {
+    /* padding-bottom: 1rem; */
+}
+
+
+
+.activities {
+    margin-top: 3rem;
+    font-size: 1.7rem;
+    padding: 0 3rem;
+}
+
+.post:first-of-type {
+    /* margin-top: 3rem; */
+}
+
+
+
+.post .profile-pfp {
+    width: 5rem;
+    height: 5rem;
+}
+
+
+
+.follows {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    margin-top: 2rem;
+    font-weight: bold;
+    color: #4f4e4e;
+    font-size: 1.2rem;
+    
+}
+
+
+.follows > * {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+
+.follows > *:hover {
+    color: #714a4a;
+}
+
+
+
+
+.follows-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.follows-modal-title {
+    padding-left: 2rem ;
+    margin-bottom: 1rem;
+    position: static;
+}
+
+.follows-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 20%; /* Could be more or less, depending on screen size */
+    border-radius: 2rem;
+    height: 50rem;
+    font-size: 1.2rem;
+    overflow: auto;
+
+    
+}
+
+.followings-list-content {
+    overflow: auto;
+
+}
+
+.followings-list-content > *, .followers-list-content > * {
+    padding: 2rem;
+    cursor: pointer;
+    border-radius: 1rem;
+}
+
+
+
+.followings-list-content > *:hover, .followers-list-content > *:hover {
+   background-color: #eeeded;
+}
+
+
+.close-follows-modal-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-follows-modal-btn:hover,
+.close-follows-modal-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }

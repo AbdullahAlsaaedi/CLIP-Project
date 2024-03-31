@@ -98,6 +98,13 @@ let joinStream = async() => {
 
     await client.publish([localTracks[0], localTracks[1]])
 
+
+//     await localTracks[0].setMuted(true); 
+//    await localTracks[1].setMuted(true);
+
+//    document.getElementById('mic-btn').classList.remove('active'); 
+//    document.getElementById('camera-btn').classList.remove('active');
+
 }
 
 
