@@ -19,6 +19,7 @@ header a {
     z-index: 0;
     position: relative;
     background-color: transparent;
+    padding-top: 2rem;
     /* height: 100%; */
 }
 
@@ -70,6 +71,7 @@ header a {
     color: white;
     font-weight: normal;
     transition: transform 0.3s ease;
+    /* justify-content: space-evenly; */
 
     /* z-index: 2; */
 }
@@ -111,7 +113,7 @@ header a {
 .course-title {
     font-size: 1.5rem;
     letter-spacing: 1px;
-    margin-top: auto;
+    margin-top: 10%;
 }
 
 .course-author {
@@ -134,23 +136,27 @@ header a {
 .banner {
     position: relative;
     z-index: -1;
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
 }
 
 
 .banner h1 {
     font-size: 10rem;
-    max-width: 70%;
-    margin-bottom: 2rem;
+    max-width: 80%;
+    margin-bottom: 7rem;
     z-index: 2;
     color: rgb(255, 255, 255);
 }
 
 .banner p {
-    font-size: 3rem;
-    margin-bottom: 2rem;
+    font-size: 2rem;
+    margin-bottom: 8rem;
     max-width: 70%;
     z-index: 1;
+    color: rgb(197, 197, 197);
 
 }
 

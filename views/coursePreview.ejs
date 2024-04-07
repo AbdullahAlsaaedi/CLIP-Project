@@ -67,37 +67,62 @@
      <div class="course-details-col1">
         <h1 class="course-title"><%= course['crs-name'] %></h1>
 
-        <div class="author">
-    
-            <div class="author-pfp-container">
-                <img src="" alt="img" class="author-pfp">
-            </div>
-    
-            <div class="author-details">
-                <h3 class="author-name">
-                    <%= user.name %>
-                </h3>
-                <div class="course-details">
-                    <div class="period">duration</div>
-                    <div class="numoflessons">Number of lessons: <%= videosCount %></div>
-                    <div class="date">Date</div>
-                </div>
-            </div>
-        </div>
-    
-    
         <p class="course-description">
             <%= course['crs-desc'] %>
         </p>
+
+        
+    
+             
+    
+            <div class="author-details">
+                <div class="course-details">
+                    <div class="numoflessons"><%= videosCount %> Lessons</div>
+                    <div class="num-of-students">Students</div>
+
+                </div> 
+
+            </div>
+
+            <div class="date"> <span class="white">Published at </span><%= course['date'] %></div>
+
+        
+
+        <div class="action-btns">
+
+            <button class="enroll-btn"></button> 
+            <button class="enrollbtn">
+                <img src="/../images/icons8-play-video-50.png">
+                Start watching
+            </button>
+
+        </div>   
+        
+
+
+        <div class="author">
+
+            <div class="author-pfp-container">
+                <img src="" alt="img" class="author-pfp">
+            </div>
+            
+            <h3 class="author-name">
+               Taught by <span class="author-name-colored"><%= user.name %></span> 
+            </h3>
+
+        </div>
+        
+    
+    
+        
 
      </div>  
      
      <div class="course-details-col2">
         <div src="" alt="" class="course-logo-container">
-            <img src="" alt="courselogo" class="course-logo">
+            <img src="" alt="" class="course-logo">
         </div>
 
-        <button class="enrollbtn">Start watching</button>
      </div>
 
     

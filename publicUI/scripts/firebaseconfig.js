@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebas
 
 import {
     getFirestore, collection, getDocs, addDoc, deleteDoc, doc, setDoc, onSnapshot,
-    query, where, orderBy, serverTimestamp, getDoc, updateDoc, arrayUnion
+    query, where, orderBy, serverTimestamp, getDoc, updateDoc, arrayUnion, arrayRemove
 } from 'https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js'
 
 import {
@@ -31,6 +31,6 @@ const colRef = collection(db, 'posts')
 
 
 export {initializeApp, getFirestore, collection, setDoc, getDocs, addDoc, deleteDoc, doc, onSnapshot,
-    query, where, orderBy, serverTimestamp, arrayUnion, getDoc, updateDoc, firebaseConfig, app, db, auth, colRef, getAuth,
+    query, where, arrayRemove, orderBy, serverTimestamp, arrayUnion, getDoc, updateDoc, firebaseConfig, app, db, auth, colRef, getAuth,
     createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, getStorage, ref, uploadBytes, getDownloadURL, deleteObject
 }

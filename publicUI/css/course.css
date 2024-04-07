@@ -1,7 +1,23 @@
+header {
+    background-color: transparent;
+    box-shadow: none;
+    color: white;
+}
+
+a {
+    color: white;
+}
+
+
+.heading {
+    color: white;
+}
+
 body {
     position: relative;
 
-    background-color: #F8F8F8;
+    background: rgb(1,15,15);
+    background: linear-gradient(345deg, rgba(1,15,15,1) 0%, rgb(11, 26, 75) 100%);
     font-family: "Poppins", "Sans";
 }
 

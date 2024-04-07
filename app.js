@@ -2,6 +2,7 @@ const admin = require('firebase-admin');
 const express = require('express');
 
 
+
 const app = express();
 
 app.set('view engine', 'ejs'); 
@@ -10,15 +11,27 @@ app.use(express.static("publicUI"))
 app.use(express.urlencoded({ extended: true }));
 
 
+
+
+
 admin.initializeApp({
     credential: admin.credential.cert(require('./clip-4cdf9-firebase-adminsdk-673ej-f5b6499acb.json')),
     // If you're using Firestore or Firebase Realtime Database, add their URLs here
     // databaseURL: 'https://your-database-name.firebaseio.com',
     databaseURL: 'https://clip-4cdf9.firestore.euw.firebasedatabase.app.',
+    storageBucket: 'clip-4cdf9.appspot.com'
 });
 
 const db = admin.firestore();
 const { collection, onSnapshot } = db;
+
+
+
+const storage = admin.storage();
+
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
+const { v4: uuidv4 } = require('uuid');
 
 
 app.get("/", (req, res) => {
@@ -100,17 +113,72 @@ app.get("/user/:id", async (req, res) => {
 
 // creating courses ! 
 
-app.post("/create-course", async (req, res) => {
-    const coursesRef = db.collection("courses")
-    
-    
-    const courseData = req.body;
-    
-    const newCourseRef = await coursesRef.add(courseData);
-    const docSnapshot = await newCourseRef.get(); // `get` is a method on the DocumentReference
-    const data = docSnapshot.data();
+app.post("/create-course", upload.single('crs-logo'), async (req, res) => {
 
-    res.redirect(`/html/courses2.html/${docSnapshot.id}`); 
+        // Get current date
+    const currentDate = new Date();
+
+
+    // Define options for formatting
+    const options = { 
+    day: 'numeric', 
+    month: 'long', 
+    year: 'numeric' 
+    };
+
+    // Format the date
+    const formattedDate = currentDate.toLocaleDateString('en-US', options);
+
+
+    try {
+        const file = req.file;
+        const randomId = uuidv4();
+        const logoURL = `courses/${randomId}`;
+
+        if (file) {
+            // Upload the file to Firebase Storage
+            const blob = storage.bucket().file(logoURL);
+            const blobWriter = blob.createWriteStream({
+              metadata: {
+                contentType: file.mimetype,
+              },
+            });
+      
+            blobWriter.on('error', (err) => console.error(err));
+            blobWriter.on('finish', async () => {
+              // The file is uploaded, now you can save the course info to Firestore with the logoURL
+              const publicUrl = `https://storage.googleapis.com/${storage.bucket().name}/${logoURL}`;
+                
+              const coursesRef = db.collection("courses")
+              req.body.date = formattedDate; 
+              req.body.logoURL = publicUrl; 
+              req.body.logoID = randomId; 
+
+
+              const courseData = req.body;
+                
+
+              
+              const newCourseRef = await coursesRef.add(courseData);
+              const docSnapshot = await newCourseRef.get(); // `get` is a method on the DocumentReference
+              const data = docSnapshot.data(); 
+
+              res.redirect(`/html/courses2.html/${docSnapshot.id}`); 
+
+              
+            });
+      
+            blobWriter.end(file.buffer);
+          } else {
+            res.status(400).send('No logo file uploaded.');
+          }
+        } catch (error) {
+          console.error('Error submitting course:', error);
+          res.status(500).send(error.message);
+        }
+    
+
+
     // render the course 
 
 

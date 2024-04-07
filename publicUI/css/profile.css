@@ -522,27 +522,34 @@ border-radius: 50%;
 }
 
 .follows-modal-title {
-    padding-left: 2rem ;
+    padding-left: 4rem ;
+    padding-top: 3rem;
     margin-bottom: 1rem;
-    position: static;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    
+
 }
 
 .follows-modal-content {
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
+    /* padding: 20px; */
     border: 1px solid #888;
     width: 20%; /* Could be more or less, depending on screen size */
     border-radius: 2rem;
     height: 50rem;
     font-size: 1.2rem;
-    overflow: auto;
+    overflow: scroll;
 
     
 }
 
 .followings-list-content {
-    overflow: auto;
+    /* overflow: auto; */
 
 }
 
@@ -550,6 +557,8 @@ border-radius: 50%;
     padding: 2rem;
     cursor: pointer;
     border-radius: 1rem;
+    padding-left: 4rem ;
+
 }
 
 
@@ -564,6 +573,17 @@ border-radius: 50%;
     float: right;
     font-size: 28px;
     font-weight: bold;
+
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 100;
+    padding-top: 2.5rem;
+    padding-right: 2rem ;
+    display: flex;
+    align-items: start;
+
+
 }
 
 .close-follows-modal-btn:hover,

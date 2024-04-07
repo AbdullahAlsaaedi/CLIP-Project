@@ -1,6 +1,22 @@
 
+body {
+    color: white;
+    background-color: rgb(9, 9, 11);
+
+}
+
+header {
+}
+
+header a {
+    color: white !important;
+}
+
 .course-preview-main {
     display: flex;
+    background-color: inherit; 
+    justify-content: space-between;
+    
 }
 
 h1 {
@@ -10,16 +26,19 @@ h1 {
 
 
 .course-details-col1 {
-    flex-basis: 70%;
+    flex-basis: 40%;
 }
 
 .course-details-col2 {
-    flex: 1;
+    flex-basis: 40%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
 }
+
+
+
 
 
 .author {
@@ -33,26 +52,115 @@ h1 {
 .course-details {
     display: flex;
     gap: 2rem;
+    align-items: center;
 }
 
 .course-description {
     margin-top: 2rem;
-    font-size: 1.5rem;
-    color: rgba(0, 0, 0, 0.703);
+    font-size: 1.7rem;
+    color: rgba(222, 221, 221, 0.703);
+    margin-bottom: 3rem;
+}
+
+.action-btns {
+    display: flex;
+    align-items: center;
+    margin-top: 2.5rem;
+
 }
 
 
 .enrollbtn {
     /* align-self: end; */
-    background-color: #333661; 
-    border-radius: 2rem;
-    border: none;
+    background-color: transparent; 
+    border-radius: 1.5rem;
     color: white;
-    padding: 2rem 4rem;
+    padding: 1rem 4rem;
+    font-size: 1.3rem;
+
+    border: solid 1px rgb(137, 137, 137);
+    border-radius: 1.5rem;
+    margin-left: 1rem;
+
+    display: flex;
+    align-items: center;
     cursor: pointer;
+}
+
+.enrollbtn img {
+    height: 2rem;
+    margin-right: 1rem;
 }
 
 
 .enrollbtn:hover {
     background-color: #4d5074; 
+    box-shadow: rgba(227, 227, 227, 0.226) 0px 3px 20px 0px;
+    color: rgb(255, 255, 112);
+
+
+}
+
+
+.enroll-btn {
+    background-color: rgb(80, 70, 227);
+    color: white;
+    padding: 1rem 3rem;
+    border-radius: 1rem;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    opacity: 0;
+
+}
+
+.enroll-btn:hover {
+    box-shadow: rgba(227, 227, 227, 0.226) 0px 7px 20px 0px;
+    cursor: pointer;
+    color: yellow;
+
+}
+
+.numoflessons {
+    border: solid 1px rgb(137, 137, 137);
+    border-radius: 1.5rem;
+    padding: 1rem;
+}
+
+.num-of-students {
+    border: solid 1px rgb(137, 137, 137);
+    border-radius: 1.5rem;
+    padding: 1rem;
+    background-color: #dbb7b7;
+    color: black;
+}
+
+
+
+.date {
+    margin-top: 3rem;
+    /* border: solid 1px rgb(137, 137, 137);
+    border-radius: 1.5rem;
+    padding: 1rem;
+    border-right: ; */
+    color: rgb(216, 180, 66);
+}
+
+
+
+.author-name {
+    font-weight: normal;
+}
+.author-name-colored {
+    color: rgb(216, 180, 66);
+}
+
+
+.white {
+    color: white;
+}
+
+
+.course-logo-container {
+
 }

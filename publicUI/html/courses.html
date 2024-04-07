@@ -1,58 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
 
-    <link rel="shortcut icon" href="#">
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/course.css">
+        <link rel="shortcut icon" href="#" />
+        <link rel="stylesheet" href="../css/reset.css" />
+        <link rel="stylesheet" href="../css/navigation.css" />
+        <link rel="stylesheet" href="../css/global.css" />
+
+        <link rel="stylesheet" href="../css/courses.css" />
+
+        <script defer type="module" src="../scripts/index.js"></script>
+        <script defer type="module" src="../scripts/courses.js"></script>
+    </head>
+    <body>
+        <!-- //////// navigation //////// -->
+
+        <header class="header">
+            <!-- for the navigation links -->
+            <nav class="nav">
+                <h1 class="heading">
+                    <a class="heading-link" href="../index.html">CLIP</a>
+                </h1>
+
+                <!-- unorder list -->
+                <ul class="nav-list nav-list-1">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="courses.html">Communities</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="html/live/CDN/index.html"
+                            >live rooms</a
+                        >
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="courses2.html">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Leaderboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="html/live2/index.html"
+                            >live 2</a
+                        >
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="messages.html">Messages</a>
+                    </li>
+                </ul>
+
+                <ul class="nav-list nav-list-2">
+                    <li class="nav-item pfp">pfp</li>
+
+                    <li class="nav-item profile-link-container hidden">
+                        <a class="profile-link" href="#">profile</a>
+                    </li>
+
+                    <li><a class="signin" href="signin.html">Sign in</a></li>
+                    <li><a class="signout hidden">Sign out</a></li>
+                </ul>
+            </nav>
+        </header>
+
     
 
-    <script defer type="module" src="../scripts/courses.js"></script>
 
-</head>
-<body>
-    <!-- //////// navigation //////// -->
+        <main class="courses-main">
+        
+        
+            <div class="banner">
+                <h1>CLIP Communities</h1>
+                <p>
+                    Our commminuties are dedicated to the FCIT students to help
+                    them share content between others paving the way for their
+                    academic sucess, find the communities below!
+                </p>
+    
+                    <svg class="svg circle circle1" viewBox="0 0 388 307" width="800" height="800"><path fill-rule="evenodd" clip-rule="evenodd" d="M187.4 6.4c54.2-4 114.7-19.1 154 18.6C384.8 66.7 397.5 134.2 381 192c-15.6 55-64 95.4-118.7 111.6-46.2 13.6-88-18.1-131.9-37.5-47.3-21-110.4-27.1-126.2-76.5C-12.2 138.3 21.9 84.4 60 46.2 93.1 13 140.7 9.9 187.4 6.4z" fill="currentColor"></path></svg>
+                    <svg class="svg circle circle2" viewBox="0 0 312 303" width="700" height="700"><path fill-rule="evenodd" clip-rule="evenodd" d="M139.7 8.8c37.8 2.8 76.4 1.8 106.6 24.9C280.7 59.9 307.9 97 311.4 140c3.9 46.3-12 94-45.8 125.8-33 31.2-80.6 39.6-126 36.5-42-3-83-20-109.5-52.9-24.1-30-18.6-70.8-20.9-109.4-2.5-42.7-23.1-92.8 7-123.2C46.5-13.5 97 5.7 139.8 9z" fill="currentColor"></path></svg>
+    
+    
+            </div>
+    
+    
+            <div class="courses-container">
+                <a href="CPCS461.html" class="course">
+                    CPCS416
+                    <div class="course-title">Data structures</div>    
+                </a>
 
-    <header>
+                <a href="CPCS461.html" class="course">
+                    CPCS416
+                    <div class="course-title">Data structures</div>    
+                </a>
 
-        <h1 class="heading"><a class="heading-link" href="../index.html">CLIP</a></h1>
+                <a href="CPCS461.html" class="course">
+                    CPCS416
+                    <div class="course-title">Data structures</div>    
+                </a>
 
-        <!-- for the navigation links -->
-        <nav>
-            <!-- unorder list -->
-            <ul>
-                <li><a href="courses.html">Courses</a></li>
-                <li><a href="livessions.html">live</a></li>
-                <li><a class="signin" href="signin.html">Sign in</a></li>
-                <li><a class="signout">Sign out</a></li>
-            </ul>
-        </nav>
+                <a href="CPCS461.html" class="course">
+                    CPCS416
+                    <div class="course-title">Data structures</div>    
+                </a>
 
-    </header>
+                <a href="CPCS461.html" class="course">
+                    CPCS416
+                    <div class="course-title">Data structures</div>    
+                </a>
 
-    <div class="courses">
-        <div class="course">
-            <a href="CPCS461.html">CPCS-461</a>               
-        </div>
+                <a href="CPCS461.html" class="course">
+                    CPCS416
+                    <div class="course-title">Data structures</div>    
+                </a>
 
-        <div class="course">
-            <a href="CPCS403.html">CPCS-403</a>   
-        </div>
+                <a href="CPCS461.html" class="course">
+                    CPCS416
+                    <div class="course-title">Data structures</div>    
+                </a>
 
-        <div class="course">
-            <a href="CPCS432.html">CPCS-432</a>
-        </div>
-
-        <div class="course">
-            <a href="CPCS492.html">CPCS-492</a>            
-        </div>
-    </div>
-
+                <a href="CPCS461.html" class="course">
+                    CPCS416
+                    <div class="course-title">Data structures</div>    
+                </a>
+            </div>
+        </main>
 
 
-</body>
+
+    </body>
 </html>
