@@ -1,11 +1,17 @@
 body {
     color: white;
-    background: rgb(131,58,180);
-background: linear-gradient(343deg, rgba(131,58,180,1) 0%, rgba(3,7,22,1) 27%, rgba(9,14,33,1) 47%);
+background: linear-gradient(343deg, rgb(174, 165, 169) 0%, rgb(255, 239, 239), rgba(255, 241, 253, 0.529) 47%);
+}
+
+header {
+    position: relative;
+    z-index: 10;
 }
 
 header a {
-    color: white !important;
+    /* color: white !important; */
+    z-index: 10;
+
 }
 
 
@@ -20,6 +26,7 @@ header a {
     position: relative;
     background-color: transparent;
     padding-top: 2rem;
+    font-family: "Martian Mono";
     /* height: 100%; */
 }
 
@@ -56,8 +63,8 @@ header a {
 }
 
 .course {
-    position: relative; /* Ensure the ::before pseudo-element is positioned relative to this element */
-    flex-basis: 30%;
+    /* position: relative; /* Ensure the ::before pseudo-element is positioned relative to this element */
+    /* flex-basis: 30%;
     padding: 1rem 2rem;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 20px 0px;
     border: 1px solid rgb(99, 99, 99);
@@ -67,41 +74,18 @@ header a {
     height: 14rem;
     display: flex;
     flex-direction: column;
-    background-color: rgb(27, 26, 27); 
-    color: white;
-    font-weight: normal;
-    transition: transform 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.71); 
+    color: black;
+    font-weight: bold;
+    transition: transform 0.3s ease; */ 
     /* justify-content: space-evenly; */
 
     /* z-index: 2; */
+    background-color: #fff;
 }
 
 
-.course:hover .course-title {
-    color: rgb(245, 245, 132);
 
-}
-
-.course:hover {
-    transform: translateY(-2px);
-
-}
-
-.course::before {
-    content: ""; /* Required for the pseudo-element to be generated */
-    position: absolute;
-     /* top: -20px; */
-    left: -15px;  
-    width: 100%;
-    height: 100%;
-    /* background-color: rgba(42, 65, 14, 0.164);  */
-    background-color: var(--bg-color);
-    border-radius: 1rem; /* Match the border-radius of the parent element */
-    z-index: -2;
-    border: 1px solid rgb(133, 133, 133);
-    /* padding-bottom: 1rem;
-    padding-right: 1rem; */
-}
 
 .course-details {
     display: flex;
@@ -116,11 +100,7 @@ header a {
     margin-top: 10%;
 }
 
-.course-author {
-    /* align-self: start; */
-    /* margin-top: auto; */
-    /* margin-bottom: 2rem; */
-}
+
 
 
 .course-students {
@@ -144,19 +124,24 @@ header a {
 
 
 .banner h1 {
-    font-size: 10rem;
+    margin-top: 5rem;
+    font-size: 3rem;
     max-width: 80%;
     margin-bottom: 7rem;
     z-index: 2;
-    color: rgb(255, 255, 255);
+    /* font-weight: bold; */
+    color: rgb(40, 40, 40);
 }
 
 .banner p {
-    font-size: 2rem;
-    margin-bottom: 8rem;
+    font-size: 1.3rem;
+    margin-bottom: 5rem;
     max-width: 70%;
     z-index: 1;
     color: rgb(197, 197, 197);
+    color: rgb(34, 11, 11);
+    text-align: center;
+
 
 }
 
@@ -171,6 +156,7 @@ path {
     position: absolute;
     top: 0;
     left: 0;
+    opacity: 0.1;
 }
 
 .circle1 {

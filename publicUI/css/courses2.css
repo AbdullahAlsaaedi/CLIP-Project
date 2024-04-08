@@ -1,7 +1,7 @@
 body {
     color: white;
     background: rgb(131,58,180);
-background: linear-gradient(343deg, rgba(131,58,180,1) 0%, rgba(3,7,22,1) 27%, rgba(9,14,33,1) 47%);
+    background: linear-gradient(343deg, rgba(131,58,180,1) 0%, rgba(3,7,22,1) 27%, rgba(9,14,33,1) 47%);
 }
 
 header a {
