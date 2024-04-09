@@ -9,13 +9,14 @@ const signupForm  = document.querySelector('#signup-form');
 onAuthStateChanged(auth, async (user) => {
     if (user) {
       console.log("User is logged in:", user);
-
+      
       
 
     //   window.location.href = '../index.html';
 
     } else {
       console.log("User is not logged in");
+      infoFormFun(user); 
     }
   });
 
@@ -38,14 +39,23 @@ signupForm.addEventListener('submit', async function(e) {
                 uid: user.uid, 
                 name: user.displayName,
                 email: user.email,
-                photoURL: '../../images/photo-1631477076110-2b8c1fe0f3cc.avif'
+            }).then((doc) => {
+                console.log("Auth changed, ", user.displayName);
+                console.log(docRef);
+    
+                
+                infoFormFun(doc, this);
             })
 
-            console.log("Auth changed, ", user.displayName);
-            console.log(docRef);
-            setTimeout(() => {
-                window.location.href = `/users/${user.uid}`;
-            }, 2000)
+            
+    
+
+            
+
+
+            // setTimeout(() => {
+            //     window.location.href = `/users/${user.uid}`;
+            // }, 1000)
             
         })
 
@@ -57,5 +67,112 @@ signupForm.addEventListener('submit', async function(e) {
         
     }).catch(err => console.log(err.message))
 })
+
+
+document.getElementById('profile-pic-container').addEventListener('click', function() {
+    document.getElementById('pfp').click();
+});
+
+
+document.getElementById('pfp').addEventListener('change', function(event) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const preview = document.getElementById('profile-pic-preview');
+        const uploadImgText = document.querySelector('.upload-img');
+        const uploadText = document.querySelector('.upload-text');
+
+        const picContainer = document.querySelector('.profile-pic-container');
+
+        preview.src = e.target.result;
+        preview.style.display = 'block'; // Show the preview
+        uploadImgText.style.display = "none";
+        uploadText.style.display = "none";
+        };
+    reader.readAsDataURL(event.target.files[0]);
+});
+
+const signupInfoBtn = document.querySelector('.signup-info-btn'); 
+const infoForm = document.getElementById('profile-info-form');
+
+function infoFormFun(doc, form) { 
+
+    
+        const signBtn = document.querySelector('.signup-info-btn');
+        const signBtnText = document.querySelector('.signup-info-btn-text');
+        const loadingIcon = document.querySelector('.icon');
+
+
+        signBtn.style.backgroundColor = "#fff"; 
+        signBtn.style.boxShadow = "none"; 
+    
+        signBtnText.textContent = "please wait to process your information..."
+        signBtnText.style.color = "black"
+    
+        loadingIcon.style.display = "inline-block"
+        signBtn.disabled = true;
+        signBtn.style.cursor = 'default';
+    
+        // insert profile and the bio to the firebase.
+        // const userRef = doc(db, 'users', user.uid);
+
+        updateDoc(doc, {
+            bio: form.bio.value,
+            pfp: form.pfp.value
+        }).then(() => {
+            console.log("User details updated successfully");
+            loadingIcon.src = '../images/icons8-checkmark-64.png'
+            signBtnText.textContent = "Your account is created!"
+        }).catch((error) => {
+            console.error("Error updating user details:", error);
+        });
+
+
+  
+    
+    
+}
+
+
+
+document.querySelector('.continue-btn').addEventListener('click', () => {
+    const infoForm = document.getElementById("profile-info-form");
+
+
+            const email = document.getElementById('email')
+            const username = document.getElementById('username')
+            const password = document.getElementById('password')
+
+            if(!email.value || !username.value || !password.value) {
+                console.log(email.value, username.value, password.value);
+                
+                console.log("Please fill out the fields!");
+                return; 
+            }  else {
+                const credForm = document.getElementById('profile-cred-form') ;
+                const googleBtn = document.querySelector('.goolge-signup-btn'); 
+                const signupBtn = document.querySelector('.signup-btn'); 
+                const divider = document.querySelector('.divider'); 
+                const signMakeAcc = document.querySelector('.signup-makeAcc'); 
+                const signHeading = document.querySelector('.signup-heading'); 
+                
+                infoForm.style.display = "flex"; 
+                credForm.style.display = "none"; 
+                
+                googleBtn.style.display = "none"; 
+                divider.style.display = "none"; 
+                signMakeAcc.style.display = "none"; 
+                signHeading.style.display = "none"; 
+            }
+
+            
+})
+
+// signupInfoBtn.addEventListener("click", {
+
+// })
+
+
+
+// console.log("Hey");
 
 

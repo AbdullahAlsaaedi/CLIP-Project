@@ -54,7 +54,7 @@ header a {
 .courses-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 4rem;
+    gap: 3rem;
     row-gap: 4rem;
     margin-top: 3rem;
     position: relative; 
@@ -62,6 +62,9 @@ header a {
     color: black;
 }
 
+.courses-container > * {
+    flex: 1;
+}
 .course {
     /* position: relative; /* Ensure the ::before pseudo-element is positioned relative to this element */
     /* flex-basis: 30%;
@@ -82,6 +85,17 @@ header a {
 
     /* z-index: 2; */
     background-color: #fff;
+    padding: 3rem;
+    border-radius: 2rem;
+    font-size: 1.4rem;
+    color: white;
+    position: relative;
+    height: 43rem;
+    z-index: -1;
+
+    transition: transform 0.5s ease; /* Smooth transition for the transform property */
+    transform: scale(1);
+
 }
 
 
@@ -95,10 +109,130 @@ header a {
 }
 
 .course-title {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     letter-spacing: 1px;
     margin-top: 10%;
 }
+
+.hover-btn {
+    padding: 2rem 1rem;
+    border: solid 0.5px rgba(255, 255, 255, 0.518);
+    background-color: transparent;
+    border-radius: 2rem;
+    font-size: 1rem;
+    position: absolute;
+    top: 13rem;
+    left: 3rem;
+    color: rgba(255, 255, 255, 0.651);
+    
+    transition: opacity 0.5s ease; /* Smooth transition for the transform property */
+    opacity: 0; 
+
+}
+
+.course:hover .hover-btn {
+    opacity: 1;
+}
+
+.hover-btn:hover {
+    border: solid 0.5px white; 
+    color: white;
+    cursor: pointer;
+}
+
+.course:nth-of-type(1) {
+    background-color: rgb(67, 120, 115);
+}
+
+
+.course:hover {
+    transform: scale(1.02);
+}
+
+
+
+.course:nth-of-type(1):hover .course-image-1  {
+    transform: translateY(-20%) ;
+}
+
+.course:nth-of-type(1):hover .course-image-2  {
+    transform: rotate(-45deg);
+}
+
+.course:nth-of-type(2):hover .course-image-3  {
+    transform: translateY(30%) ;
+}
+
+.course:nth-of-type(2):hover .course-image-4  {
+    transform: translateY(-20%) ;
+}
+
+.course:nth-of-type(3):hover .course-image-5  {
+    transform: rotate(-45deg);
+}
+
+.course:nth-of-type(3):hover .course-image-6  {
+    transform: translateY(-20%) ;
+}
+
+.course:nth-of-type(2) {
+    background-color: rgb(95, 45, 214);
+}
+
+.course:nth-of-type(3) {
+    background-color: rgb(227, 150, 115);
+}
+
+.course-image {
+    position: absolute;
+    z-index: 10;
+    transition: transform 0.5s ease; /* Smooth transition for the transform property */
+    transform: translateY(0); /* Initial position */
+    transform: rotate(0deg);
+}
+
+.course-image-1 {
+    right: 2rem;
+    bottom: 1rem;
+    
+}
+
+.course-image-2 {
+    right: 2rem;
+    bottom: 1rem;
+    /* transform: rotate(0deg); */
+}
+
+.course-image-3 {
+    right: 15rem;
+    top: 14rem;
+    z-index: 1000;
+}
+
+.course-image-4 {
+    right: 7rem;
+    top: 17rem;
+    z-index: -10;
+}
+
+.course-image-5 {
+    right: 5rem;
+    bottom: 2rem;
+    z-index: 100;
+}
+
+.course-image-6 {
+    right: 7rem;
+    top: 17rem;
+    z-index: -10;
+}
+
+
+.blob {
+    mix-blend-mode: luminosity;
+}
+
+
 
 
 

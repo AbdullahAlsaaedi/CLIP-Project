@@ -20,28 +20,7 @@
 
             <h1 class="heading"><a class="heading-link" href="../index.html">CLIP</a></h1>
 
-            <!-- unorder list -->
-            <ul class="nav-list nav-list-1">
-                <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="courses.html">Communities</a></li>
-                <li class="nav-item"><a class="nav-link" href="live/CDN/index.html">live rooms</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Courses</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Leaderboard</a></li>
-                <li class="nav-item"><a class="nav-link" href="html/live2/index.html">live 2</a></li>
-
-
-                
-            </ul>
-
-
-            <ul class="nav-list nav-list-2">
-                <li class="nav-item"><img src="../images/search_2_line.svg" alt="search logo"></li>
-                <li class="nav-item"><img src="../images/bell_ringing_line.svg" alt="notifications logo"></li>
-
-                <li class="nav-item pfp">pfp</li>
-
-                <li><a class="signin" href="html/signin.html">Sign in</a></li>
-            </ul>
+        
 
 
         </nav>
@@ -49,37 +28,94 @@
     </header>
 
 
+    
+
+
     <main class="main">
 
         <div class="signup-container">
             <h1 class="signup-heading">
-                Create an account
+               Create an account in CLIP 
             </h1>
     
             <p class="signup-makeAcc">already have an account? <a href="signin.html">Sign in</a></p>
-    
+            
+            
             <form id="signup-form">
+
+                <div style="display: default;" id="profile-cred-form">
+
+                    <label for="email">Email </label>
+                    <input class="input" name="email" type="email" id="email" placeholder="Email" required>
+        
+                    <label for="password">Password</label>
+                    <input class="input" name="password" type="password" id="password" placeholder="Password" required>
+        
+                    <label for="username">Username</label>
+                    <input class="input" name="username" type="text" id="username" placeholder="Username" required>
+
+                    <div class="continue-btn">Continue</div>
+
+                </div>
     
-                <label for="email">Email </label>
-                <input class="input" name="email" type="email" id="email" placeholder="Email" required>
+
+
+                <div style="display: none;"  id="profile-info-form">
+                    <label for="pfp">Profile Picture</label>
+                    <div id="profile-pic-container" class="profile-pic-container">
+                        <img class="upload-img" src="../images/icons8-upload-48.png" alt="">
+                        <div class="upload-text">Upload</div>
+                        <img id="profile-pic-preview" alt="Profile picture preview" style="display: none;">
+                    </div>
+                    <!-- The file input is hidden -->
+                    <input class="input pfp" name="pfp" type="file" id="pfp" required style="display: none;">
+                
+                    <label for="bio">Biography</label>
+                    <textarea class="input bio" name="bio" id="bio" placeholder="Biography" required> </textarea>
+                
     
-                <label for="password">Password</label>
-                <input class="input" name="password" type="password" id="password" placeholder="Password" required>
-    
-                <label for="username">Name </label>
-                <input class="input" name="username" type="text" id="username" placeholder="Name" required>
+                    <div class="submit-container">
+                        <button class="signup-info-btn" type="submit">
+                            <img src="../images/icons8-loading(1).gif" id="loading-icon" class="icon" alt="Loading">
+                            
+                            <div class="signup-info-btn-text">Sign up</div>
+                        </button>
+                        <!-- <img src="checkmark-icon.svg" id="checkmark-icon" class="icon" style="display:none;" alt="Done"> -->
+                    </div>
+                </div>
             
     
-                <input class="signup-btn" type="submit"/>
+                
             </form>
+
+            
+            
+
+            <div class="divider">
+                <span class="divider-text">or</span>
+            </div>
     
-            <button class="goolge-sign-btn">Continue with Google</button>
+            <button class="goolge-signup-btn">
+                <img src="../images/google-icon.svg" alt="">
+                Continue with Google
+            </button>
 
         </div>
 
-        <div class="image-container">
+        
+
+        <div class="img-container">
+            <h1>Benefit from all CLIP features with a free account!</h1>
+            <p>in order to use all the feature in CLIP u need to create an account to be able to add friends, share content, enter live sessions and much more !</p>
+            <img src="../images/2.webp" alt="image" class="img img-2">
+            <img src="../images/3.webp" alt="image" class="img img-3">
+            <img src="../images/5.webp" alt="image" class="img img-4">
+
+        </div>
+
+        <!-- <div class="image-container">
             <img src="../images/Social life-rafiki 2.png" alt="">
-        </div>
+        </div> -->
 
         
 

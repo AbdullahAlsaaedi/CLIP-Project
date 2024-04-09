@@ -1,7 +1,8 @@
 body {
-    font-family: "Oceanwide", "Poppins", "Sans";
-    background-color: #D4D6FB;
-
+    font-family: "Martian Mono","Poppins", "Sans";
+    overflow: hidden;
+    position: relative;
+    height: 100vh;
 }
 
 
@@ -98,10 +99,9 @@ a {
     background-color: white;
     border-top-right-radius: 10rem;
     border-top-left-radius: 10rem;
-    position: relative;
-    height: 100vh;
+    height: 100%;
 
-    padding: 10rem 10rem;
+    padding: 0rem 10rem;
 
     display: flex;
     justify-content: space-between;
@@ -110,19 +110,20 @@ a {
 }
 
 .signin-container {
-    margin-top: 4rem;
-
+    margin-top: 10rem;
+    margin-left: 7rem;
     display: flex;
     flex-direction: column;
+    
 }
 
 .signin-heading {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     margin-bottom: 1rem;
 }
 
 .signin-haveAcc {
-    font-size: 1.7rem;
+    font-size: 1.2rem;
     color: rgba(0, 0, 0, 0.4);
     margin-bottom: 4rem;
     
@@ -137,12 +138,11 @@ a {
 }
 
 .input {
-    padding: 1rem 3rem;
-    border-radius: 0.5rem;
+    padding: 1.8rem 2rem;
+    border-radius: 2rem;
     background-color: transparent;
-    border: solid 0.5px rgba(100, 100, 111, 0.2);
+    border: solid 0.5px rgb(125, 125, 125);
     /* flex-basis: 40%; */
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 20px -5px;
 
     width: 50rem;
     margin-top: 1rem;
@@ -150,8 +150,21 @@ a {
     
 }
 
+
+.input:hover {
+    /* background-color: rgba(227, 227, 244, 0.799); */
+    border: solid 0.5px rgba(39, 1, 255, 0.939);
+    color: rgba(39, 1, 255, 0.939);
+
+}
+
+.input:focus {
+    box-shadow: rgba(136, 107, 255, 0.8) 0px 0px 0px 3px;
+}
+
+
 form  {
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
 
     display: flex;
     flex-direction: column;
@@ -160,30 +173,75 @@ form  {
 }
 
 .signin-btn {
-    background-color: #154734;
-    padding: 1rem 6rem;
+    background-color: rgb(39, 39, 42);
+    color: white;
+    padding: 1.7rem 6rem;
     border: none;
     color: white;
-    border-radius: 1rem;
+    border-radius: 2rem;
     cursor: pointer;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 20px 0px;
     align-self: stretch;
-    width: 50%;
+    width: 50rem;
     margin-top: 1rem;
+    font-size: 1.2rem;
 
+}
+
+.signin-btn:hover {
+    background-color: black;
 }
 
 .goolge-sign-btn {
     background-color: transparent;
-    padding: 1rem 6rem;
-    border: none;
     color: black;
-    border-radius: 1rem;
+    padding: 1.7rem 6rem;
+    border: none;
+    border-radius: 2rem;
     cursor: pointer;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 20px 0px;
     align-self: stretch;
-    width: 50%;
+    width: 50rem;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    border: solid 0.5px rgba(136, 107, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
 
+.goolge-sign-btn  img {
+    height: 3rem;
+}
+
+.goolge-sign-btn:hover {
+    /* background-color: rgba(227, 227, 244, 0.799); */
+    border: solid 0.5px rgba(17, 0, 112, 0.939);
+
+
+}
+
+.goolge-sign-btn:active {
+    box-shadow: rgba(136, 107, 255, 0.8) 0px 0px 0px 3px;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 2rem; /* Adjust spacing around the divider as needed */
+    color: rgb(155, 155, 155);
+}
+
+.divider:before,
+.divider:after {
+    content: '';
+    flex: 1;
+    border: solid 0.5px rgb(155, 155, 155);
+}
+
+.divider-text {
+    margin: 0 10px; /* Adjust spacing around the 'or' text as needed */
 }
 
 
@@ -196,12 +254,90 @@ input {
 }
 
 
-.image-container {
-    height: 100%;
-    /* margin-right: 10rem; */
+
+.img-container {
+        background-color: rgb(249, 246, 253);
+    background: linear-gradient(345deg, rgb(255, 240, 240) 0%, rgb(249, 246, 253));
+
+    /* background-color: rgb(249, 246, 253); */
+    width: 80rem;
+    margin-right: 6rem;
+    border-radius: 3rem;
+    /* height: 80vh; */
+    position: absolute; 
+    top: 0;
+    right: 0;
+    height: 90%;
+    margin-top: 5rem;
+
+    padding: 4rem;
+    z-index: 10;
+    /* margin: 3rem; */
+    
 }
 
-.image-container img {
-    height: 100%;
+.img-container h1 {
+    width: 90%;
+    font-size: 3rem;
+    position: relative;
+    z-index: 10;
 }
 
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-80px); /* Adjust as needed */
+    }
+}
+
+@keyframes float2 {
+    0%, 100% {
+        transform: translateY(-80px);
+    }
+    50% {
+        transform: translateY(0); /* Adjust as needed */
+    }
+}
+
+
+.img-container img {
+    position: absolute;
+    animation: float 20s ease-in-out infinite;
+    /* z-index: -1; */
+
+}
+
+.img-1 {
+    top: 40rem;
+    left: 30rem;
+}
+
+.img-2 {
+    top: 25rem;
+    left: 30rem;
+}
+
+.img-3 {
+    top: 7rem;
+    left: 65rem;
+    animation: float2 20s ease-in-out infinite !important;
+
+}
+
+.img-4 {
+    bottom: 4rem;
+    left: 4rem;
+    animation: float2 20s ease-in-out infinite !important;
+
+}
+
+
+.img-container p {
+    font-size: 1.8rem;
+    width: 90%;
+    margin-top: 4rem;
+    z-index: 100;
+    position: relative;
+}
