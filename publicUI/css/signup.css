@@ -474,3 +474,42 @@ input {
 .continue-btn:hover {
     background-color: black;
 }
+
+.goto-profile {
+    background-color: rgb(41, 66, 255);
+    color: white;
+    padding: 1.7rem 6rem;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 20px 0px;
+    align-self: stretch;
+    width: 50rem;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    display: none;
+    justify-content: center;
+    color: white;
+
+}
+
+.goto-profile:hover {
+    background-color: black;
+}
+
+
+.goto-homepage {
+    text-align: center;
+    margin-top: 2rem;
+    text-decoration: underline;
+    font-size: 1.2rem;
+    display: none;
+
+}
+
+
+
+.goto-homepage:hover {
+    color: black;
+}
+

@@ -1,9 +1,32 @@
 import {auth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile} from "./firebaseconfig.js"
 
-import {initializeApp, getFirestore, collection, getDocs, addDoc, deleteDoc, doc, onSnapshot,
-  query, where, orderBy, serverTimestamp, getDoc, updateDoc, firebaseConfig, app, db, getAuth } from "./firebaseconfig.js"
+import {initializeApp,
+    getFirestore,
+    collection,
+    getDocs,
+    addDoc,
+    deleteDoc,
+    doc,
+    onSnapshot,
+    query,
+    where,
+    orderBy,
+    serverTimestamp,
+    getDoc,
+    updateDoc,
+    firebaseConfig,
+    app,
+    db,
+    getAuth, setDoc,
+    getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "./firebaseconfig.js"
+
+  
 
 const signupForm  = document.querySelector('#signup-form');
+signupForm.reset(); 
+
+const storage = getStorage(); 
+
 
 
 onAuthStateChanged(auth, async (user) => {
@@ -16,7 +39,6 @@ onAuthStateChanged(auth, async (user) => {
 
     } else {
       console.log("User is not logged in");
-      infoFormFun(user); 
     }
   });
 
@@ -44,7 +66,7 @@ signupForm.addEventListener('submit', async function(e) {
                 console.log(docRef);
     
                 
-                infoFormFun(doc, this);
+                infoFormFun(doc, signupForm);
             })
 
             
@@ -115,13 +137,44 @@ function infoFormFun(doc, form) {
         // insert profile and the bio to the firebase.
         // const userRef = doc(db, 'users', user.uid);
 
+
+        const file = form.pfp.files[0];
+
+        const pfpRef = ref(storage, `profiles/${doc.id}`)
+        const uploadTask = uploadBytes(pfpRef, file); 
+
+        // uploadTask.then((snapshot) => {
+        //     const pfpRef = doc(coursesVideos, id)
+
+        //     setDoc(pfpRef, {title: title, details: details, date: serverTimestamp()})
+        // })
+
+
+
+        
         updateDoc(doc, {
             bio: form.bio.value,
             pfp: form.pfp.value
         }).then(() => {
             console.log("User details updated successfully");
-            loadingIcon.src = '../images/icons8-checkmark-64.png'
-            signBtnText.textContent = "Your account is created!"
+
+            setTimeout(() => {
+                loadingIcon.src = '../images/icons8-checkmark-64.png'
+                signBtnText.textContent = "Your account is created!"
+    
+                const gotoProfile = document.querySelector(".goto-profile");
+                const gotoHomepage = document.querySelector(".goto-homepage");
+    
+                gotoProfile.style.display = "flex"; 
+                gotoProfile.href = `/../user/${doc.id}`
+                gotoHomepage.style.display = "block"; 
+
+            }, 1500)
+            
+            
+            
+
+
         }).catch((error) => {
             console.error("Error updating user details:", error);
         });

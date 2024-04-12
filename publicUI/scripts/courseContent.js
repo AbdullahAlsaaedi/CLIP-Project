@@ -162,20 +162,10 @@ function insertVid(file, title, details) {
     console.log(vidsRef);
     const uploadTask = uploadBytes(vidsRef, file); 
 
-    // uploadTask.then((snapshot) => {
-    //     addDoc(coursesVideos, {
-    //         date: serverTimestamp(),
-    //     }).then(doc => {
-    //         setDoc(doc, )
-    //     })
-    // })
-
     uploadTask.then((snapshot) => {
         const vidRef = doc(coursesVideos, id)
         setDoc(vidRef, {title: title, details: details, date: serverTimestamp()})
     })
-
-
     
 }
 
