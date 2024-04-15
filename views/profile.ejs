@@ -74,7 +74,7 @@
         <div class="profile-user-info">
 
             <div class="profile-pfp">
-                <img src="../images/photo-1631477076110-2b8c1fe0f3cc.avif" alt="pfp">
+                <img class="profile-pfp-img" src="" alt="pfp">
             </div>
 
             <div class="profile-info">
@@ -84,7 +84,6 @@
                 <div class="follows">
                     <button class="followers"><span class="followers-num"></span> Followers</button>
                     <button class="followings"><span class="followings-num"></span> Followings</button>
-
                 </div>
 
 
@@ -106,6 +105,38 @@
 
             <button class="followBtn" style="display: none;">Follow</button>
             <button class="send-msg-btn">Send a message</button>
+            <button class="edit-profile-btn">Edit Profile</button>
+
+
+            <div class="edit-modal">
+                <div class="edit-modal-content">
+                    <span class="edit-close-btn">&times;</span>
+                    <form class="edit-form">
+                        <h2>Edit Profile</h2>
+                        
+                        <label for="pfp">profile picture </label>
+
+                        <div id="profile-pic-container" class="profile-pic-container">
+                            <img class="upload-img" src="../images/icons8-upload-48.png" alt="">
+                            <div class="upload-text">Upload</div>
+                            <img id="profile-pic-preview" alt="Profile picture preview" style="display: none;">
+                        </div>
+                        <!-- The file input is hidden -->
+                        <input class="input pfp" name="pfp" type="file" id="pfp" style="display: none;">
+
+            
+                        <label for="edit-username">Username:</label>
+                        <input type="text" id="edit-username" name="username" placeholder="Enter new username">
+            
+                        <label for="edit-bio">Bio:</label>
+                        <textarea id="edit-bio" name="bio" placeholder="Enter new bio"></textarea>
+            
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+            
+
         </div>
 
         <div class="about">

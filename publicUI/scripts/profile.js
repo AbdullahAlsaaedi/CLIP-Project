@@ -24,12 +24,13 @@ import {
     app,
     db,
     getAuth, 
-    arrayUnion
+    arrayUnion, getStorage, ref, getDownloadURL, deleteObject, uploadBytes
 } from "./firebaseconfig.js";
 
 const usersRef = collection(db, "users");
 const posts = collection(db, "posts");
 const commentsRef = collection(db, "comments");
+const storage = getStorage();
 
 
 let currUser = null;
@@ -44,6 +45,10 @@ onAuthStateChanged(auth, (user) => {
 
     if (user) {
         console.log("User is logged in:", user);
+
+
+        fetchPfp(user); 
+        editModaldisplay(user)
 
         fetchPosts(user); 
 
@@ -69,6 +74,35 @@ onAuthStateChanged(auth, (user) => {
 
     }
 });
+
+
+let fetchPfp = async function(user) {
+
+
+    const viewedUserId = extractIdFromUrl(window.location.href)
+    const docRef = doc(db, 'users', viewedUserId);
+    const userDoc = await getDoc(docRef); // Retrieve the document
+    const userData = userDoc.data(); 
+
+
+
+    const imageRef = ref(storage, `profiles/${viewedUserId}`);
+
+    getDownloadURL(imageRef)
+    .then((url) => {
+        // `url` is the download URL for your file
+        console.log(url);
+        // You can use this URL to display the image or download it.
+        // For example, setting it as the source for an <img> element:
+        document.querySelector('.profile-pfp-img').src = url;
+    })
+    .catch((error) => {
+        // Handle any errors
+        console.error('Error downloading the image: ', error);
+    });
+
+
+}
 
 
 function extractIdFromUrl(urlString) {
@@ -1011,3 +1045,159 @@ function displayFollowers(userDoc) {
 
 
 
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    
+});
+
+async function editModaldisplay(user) {
+
+    const viewedUserId = extractIdFromUrl(window.location.href)
+    const docRef = doc(db, 'users', viewedUserId);
+    const userDoc = await getDoc(docRef); // Retrieve the document
+    const userData = userDoc.data(); 
+    const modal = document.querySelector('.edit-modal');
+    const editBtn = document.querySelector('.edit-profile-btn');
+
+
+    if(user.uid !== userData.uid) return; 
+    
+
+
+    const closeBtn = document.querySelector('.edit-close-btn');
+    editBtn.style.display = "block";
+    editBtn.addEventListener('click', function() {
+        showEditModal(modal); 
+        document.querySelector(".edit-form").reset(); 
+    });
+
+    closeBtn.addEventListener('click', function() {
+        hideEditModal(modal)
+    });
+}
+
+
+
+function showEditModal(modal) {
+    modal.style.display = 'flex'
+}
+
+function hideEditModal(modal) {
+    modal.style.display = 'none'
+
+}
+
+
+document.getElementById('profile-pic-container').addEventListener('click', function() {
+    document.getElementById('pfp').click();
+});
+
+
+document.getElementById('pfp').addEventListener('change', function(event) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const preview = document.getElementById('profile-pic-preview');
+        const uploadImgText = document.querySelector('.upload-img');
+        const uploadText = document.querySelector('.upload-text');
+
+        const picContainer = document.querySelector('.profile-pic-container');
+
+        preview.src = e.target.result;
+        preview.style.display = 'block'; // Show the preview
+        uploadImgText.style.display = "none";
+        uploadText.style.display = "none";
+        };
+    reader.readAsDataURL(event.target.files[0]);
+});
+
+
+
+const editForm = document.querySelector('.edit-form'); 
+editForm.addEventListener('submit', async (e) => {
+    e.preventDefault(); 
+    const pfp = editForm.pfp
+    const username = editForm.username
+    const bio = editForm.bio; 
+
+    // update the databse username and bio. 
+
+    const viewedUserId = extractIdFromUrl(window.location.href)
+    const docRef = doc(db, 'users', viewedUserId);
+    const userDoc = await getDoc(docRef); // Retrieve the document
+    
+    const userData = userDoc.data();
+    
+    if(username.value.trim().length > 0) {
+        updateDoc(docRef, {
+            name: username.value, 
+        })
+
+        document.querySelector(".profile-username").textContent = username.value; 
+    }
+
+    if(bio.value.trim().length > 0) {
+        updateDoc(docRef, {
+            bio: bio.value
+        })
+
+        document.querySelector(".about-description").textContent = bio.value; 
+
+    }
+
+    if(pfp.files[0]) {
+        const oldImageRef = ref(storage, `profiles/${viewedUserId}`);
+
+        deleteObject(oldImageRef)
+            .then(() => {
+                console.log('Old image deleted successfully.');
+                // Proceed to upload new image
+            })
+            .catch((error) => {
+                console.error('Failed to delete the old image:', error);
+                // Handle error, possibly continue uploading the new image
+            });
+
+            console.log(pfp.value);
+            // document.querySelector('.profile-pfp-img').src = pfp.value; 
+            const dataUrl = await readFile(pfp.files[0]);
+            document.querySelector('.profile-pfp-img').src = dataUrl;
+            
+    
+        
+            const newImageFile = pfp.files[0];
+    
+            const newImageRef = ref(storage, `profiles/${viewedUserId}`);
+    
+            uploadBytes(newImageRef, newImageFile)
+            .then((snapshot) => {
+                console.log('New image uploaded successfully:', snapshot.metadata.fullPath);
+                console.log(snapshot);
+                
+                // You might want to get and display the new download URL here
+            })
+            .catch((error) => {
+                console.error('Upload failed:', error);
+                // Handle the upload error
+            });
+    }
+
+
+
+    
+
+    // change storage: 
+
+    hideEditModal(document.querySelector(".edit-modal"))
+
+    
+})
+
+function readFile(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(file);
+    });
+}

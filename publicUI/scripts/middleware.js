@@ -11,6 +11,7 @@ middleware.generateToken = (req, res, next) => {
         let signature = ''; 
         const iat = Math.round(new Date().getTime / 1000); 
         const exp = iat + 60 * 60 * 2; 
+        
 
         const oHeader = {alg: 'HS256', typ: 'JWT'}
 
