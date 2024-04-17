@@ -61,17 +61,29 @@ function fetchCourses() {
         })
     })
 }
-function createCourseHTML(doc) {
+async function createCourseHTML(doc) {
     const courseData = doc.data(); 
+    const userID = courseData.userUid; 
+
+    console.log(userID);
+    
+
+    const q = query(usersRef, where("uid", "==", userID))
+    const usersDocs = await getDocs(q); 
+    const userDoc = usersDocs.docs[0]; 
+
+    const userData = userDoc.data(); 
+
+
 
     const courseEl = document.createElement('div');
     courseEl.classList.add('course');
     courseEl.dataset.id = doc.id; 
     courseEl.innerHTML = `
-        <div class="course-author">Khalid</div>
+        <div class="course-author">${userData.name}</div>
         <div class="course-title">${courseData['crs-name']}</div>
         <div class="course-details">
-            <div class="course-students">231 student</div>
+            <div class="course-students"></div>
         </div>
     `;
 

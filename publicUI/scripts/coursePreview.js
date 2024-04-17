@@ -32,6 +32,8 @@ import {
 
 const enrollbtn = document.querySelector(".enrollbtn");
 const numOfStudents = document.querySelector('.num-of-students');
+const storage = getStorage();
+
 
 const usersRef = collection(db, "users");
 
@@ -142,7 +144,6 @@ async function fetchLogo(user) {
 
 function displayLogo(logoID) {
 
-    const storage = getStorage();
     // Create a reference to the file we want to download
     const imageRef = ref(storage, `courses/${logoID}`);
   
@@ -174,7 +175,10 @@ async function checkEnrollmentStatus (user) {
     const currentUserSnap = await getDocs(currentUserQ);
     const currentUserDoc = currentUserSnap.docs[0]; 
 
-    console.log(currentUserDoc.id);
+    const imageRef = ref(storage, `profiles/${currentUserDoc.id}`);
+
+    const pfpUrl = await getDownloadURL(imageRef)
+    document.querySelector('.author-pfp').src = pfpUrl
     
 
 

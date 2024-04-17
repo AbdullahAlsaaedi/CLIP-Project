@@ -1063,6 +1063,7 @@ async function editModaldisplay(user) {
 
     if(user.uid !== userData.uid) return; 
     
+    
 
 
     const closeBtn = document.querySelector('.edit-close-btn');

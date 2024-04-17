@@ -132,10 +132,9 @@ onAuthStateChanged(auth, (user) => {
                 );
 
                 onSnapshot(posterQuery, (snapshot) => {
-                    snapshot.forEach((doc) => {
+                    snapshot.forEach(async (doc) => {
                         
-                        const post = createPost3(el, doc.data()) 
-                      
+                        const post = await createPost3(el, doc.data(), doc.id) 
                         
                         const tmpPost = document.getElementById(post.id);
                         posts.appendChild(post);
@@ -151,8 +150,8 @@ onAuthStateChanged(auth, (user) => {
                         onSnapshot(commentsQuery, (snapshot) => {
                             post.querySelector(".comments").innerHTML = "";
 
-                            snapshot.forEach((doc) => {
-                                let commentEl = createComment3(post, doc, el);
+                            snapshot.forEach(async (doc) => {
+                                let commentEl = await createComment3(post, doc, el);
 
 
                                 // fetch the replies to the comment 
@@ -166,10 +165,10 @@ onAuthStateChanged(auth, (user) => {
                                 onSnapshot(commentRepliesQuery, (snapshot) => {
                                     commentEl.querySelector('.replies').innerHTML = ''
 
-                                    snapshot.forEach(doc => {
+                                    snapshot.forEach(async doc => {
                                         console.log(doc.data());
                                         
-                                        createReply(commentEl, doc)
+                                        await createReply(commentEl, doc)
                                     })
                                 })
 
@@ -203,7 +202,7 @@ singoutEl.addEventListener("click", (e) => {
 
 // function
 
-function createPost3(postDoc, userDoc) {
+async function createPost3(postDoc, userDoc, userID) {
     // console.log("POST CREATED");
 
     // get user associated with the post
@@ -215,6 +214,11 @@ function createPost3(postDoc, userDoc) {
     let postEl = document.createElement("div");
     postEl.classList.add("post");
     postEl.id = postDoc.id;
+
+
+    const imageRef = ref(storage, `profiles/${userID}`);
+
+    const url = await getDownloadURL(imageRef)
 
 
 
@@ -232,7 +236,7 @@ function createPost3(postDoc, userDoc) {
         <div class="post-heading-details"> 
 
             <div class="pfp-container">
-                <img src="${userDoc.photoURL}" class="pfp" alt="img">
+                <img src="${url}" class="pfp" alt="img">
             </div>
 
             <div class="post-username">
@@ -342,7 +346,7 @@ function createPost3(postDoc, userDoc) {
         <div class="post-heading-details"> 
 
             <div class="pfp-container">
-                <img src="${userDoc.photoURL}" class="pfp" alt="img">
+                <img src="${url}" class="pfp" alt="img">
             </div>
 
             <div class="post-username">
@@ -460,7 +464,8 @@ function createPost3(postDoc, userDoc) {
             postId: postId,
             content: commentContent,
             date: serverTimestamp(),
-            parentCommentID: null
+            parentCommentID: null, 
+            userID: currUser.uid
         });
     });
 
@@ -540,13 +545,30 @@ function createPost3(postDoc, userDoc) {
 
 // console.log(createPost3());
 
-function createComment3(postEl, commentDoc, postDoc) {
+async function createComment3(postEl, commentDoc, postDoc) {
     let comments = postEl.querySelector(".comments");
     let newCommentEl = document.createElement("div");
     let commentData = commentDoc.data(); 
     newCommentEl.classList.add("comment");
 
     newCommentEl.dataset.id = commentDoc.id; 
+    
+
+    // // fetch based on the userID of the comment. 
+    const userID = commentDoc.data().userID; 
+
+    const q = query(usersRef, where('uid', '==', userID)); 
+
+    const usersDocs = await getDocs(q); 
+    const user = usersDocs.docs[0];
+    const userData = user.data(); 
+    
+    console.log('the user is ', user)
+
+    
+    const imageRef = ref(storage, `profiles/${user.id}`);
+
+    const url = await getDownloadURL(imageRef)
 
     newCommentEl.innerHTML = `    
         <div class="reply-details">
@@ -555,11 +577,11 @@ function createComment3(postEl, commentDoc, postDoc) {
         <div class="post-heading-details"> 
 
             <div class="pfp-container">
-                <img src="../images/photo-1631477076110-2b8c1fe0f3cc.avif" class="pfp" alt="img">
+                <img src="${url}" class="pfp" alt="img">
             </div>
 
             <div class="post-username">
-                ${currUser.displayName}
+                ${userData.name}
 
                 <div class="post-date">
                     2 days ago
@@ -637,7 +659,8 @@ function replies(commentEl, commentDoc, postDoc) {
             postId: postId,
             content: commentContent,
             date: serverTimestamp(),
-            parentCommentID: commentId
+            parentCommentID: commentId,
+            userID: currUser.uid
         });
         
     })
@@ -646,9 +669,30 @@ function replies(commentEl, commentDoc, postDoc) {
 
 } 
 
-function createReply(commentEl, commentDoc, userDoc) {
+async function createReply(commentEl, commentDoc, userDoc) {
     let newReply = document.createElement("div");
     let repliesDiv = commentEl.querySelector('.replies')
+
+
+
+    // // fetch based on the userID of the comment. 
+    const userID = commentDoc.data().userID; 
+
+    const q = query(usersRef, where('uid', '==', userID)); 
+
+    const usersDocs = await getDocs(q); 
+    const user = usersDocs.docs[0];
+    const userData = user.data(); 
+    
+    console.log('the user is ', user)
+
+    
+    const imageRef = ref(storage, `profiles/${user.id}`);
+
+    const url = await getDownloadURL(imageRef)
+
+
+
     newReply.innerHTML = `
 
         <div class="reply-details">
@@ -657,11 +701,11 @@ function createReply(commentEl, commentDoc, userDoc) {
         <div class="post-heading-details"> 
 
             <div class="pfp-container">
-                <img src="../images/photo-1631477076110-2b8c1fe0f3cc.avif" class="pfp" alt="img">
+                <img src="${url}" class="pfp" alt="img">
             </div>
 
             <div class="post-username">
-                Osama
+                ${userData.name}
 
                 <div class="post-date">
                     2 days ago
