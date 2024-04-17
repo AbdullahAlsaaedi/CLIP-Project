@@ -230,6 +230,7 @@ a {
     display: flex;
     margin-bottom: 2rem;
     gap: 1rem;
+    align-items: center;
 }
 
 .select-user-input {
@@ -280,12 +281,13 @@ a {
 
 
 .user-pfp-container {
-    height: 3rem;
-    width: 3rem;
+    /* height: 3rem;
+    width: 3rem; */
 }
 
 .user-pfp {
-    height: 100%;
+    height: 5rem;
+    width: 5rem;
     border-radius: 100rem;
 }
 
@@ -409,4 +411,12 @@ a {
 
 .red {
     color: orangered;
+}
+
+
+.conversation-header-pfp, .pfp {
+    height: 5rem;
+    width: 5rem;
+    border-radius: 100rem;
+
 }

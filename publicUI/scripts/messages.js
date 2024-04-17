@@ -24,7 +24,13 @@ import {
     app,
     db,
     getAuth,
+    arrayUnion, 
+    arrayRemove, 
+    getStorage, ref, getDownloadURL
 } from "./firebaseconfig.js";
+
+const storage = getStorage();
+
 
 
 // HTML ELEMENTS
@@ -121,17 +127,22 @@ async function createDirectMsgHtml(conv) {
     const recieverId = participants[0] === currUser.uid  ? participants[1] : participants[0]; 
 
     const q = query(usersRef, where("uid", "==", recieverId));
+
     const usersDoc = await getDocs(q); 
 
     const reciever = usersDoc.docs[0];
     const revieverName = reciever.data().name; 
+
+    const imageRef = ref(storage, `profiles/${reciever.id}`);
+
+    const url = await getDownloadURL(imageRef)
         
 
     // const recieverToDisplay = conv.data().participants[0] === currUser.uid ? currUser.displayName : "Lol"; 
 
     convDM.innerHTML = 
     `
-    <div class="user-pfp-container"><img src="../images/photo-1631477076110-2b8c1fe0f3cc.avif" alt="pfp" class="user-pfp"></div>
+    <div class="user-pfp-container"><img src="${url}" alt="pfp" class="user-pfp"></div>
     ${revieverName}
     `
 
@@ -139,7 +150,7 @@ async function createDirectMsgHtml(conv) {
     usersList.appendChild(convDM)
 
 
-    openDM(convDM)
+    openDM(convDM, reciever)
 
     //
 }
@@ -248,9 +259,16 @@ async function initateConversation() {
 
 
 
-function createUserElement(userDoc) {
+async function createUserElement(userDoc) {
     const userId = userDoc.id; 
     const userData = userDoc.data(); 
+
+    console.log(userId);
+    
+
+    const imageRef = ref(storage, `profiles/${userId}`);
+
+    const url = await getDownloadURL(imageRef)
 
     
     // create js element 
@@ -263,7 +281,7 @@ function createUserElement(userDoc) {
     userEl.innerHTML = 
     `
     <div class="pfp-container">
-        <img src="" alt="pfp" class="pfp">
+        <img src="${url}" alt="pfp" class="pfp">
     </div>
     ${userData.name} 
     <input class="select-user-input" name="selectUser" id="selectUser" type="radio">
@@ -287,8 +305,8 @@ const conversationHeaderMore = document.querySelector(".conversation-header-more
 const messages = document.querySelector('.message-area'); 
 
 
-function openDM(userDM) {
-        userDM.addEventListener("click", () => {
+function openDM(userDM, reciever) {
+        userDM.addEventListener("click", async () => {
 
             const msgInp = document.querySelector(".message-input"); 
 
@@ -310,12 +328,14 @@ function openDM(userDM) {
             // name 
             const userName = userDM.textContent
 
+            const imageRef = ref(storage, `profiles/${reciever.id}`);
 
+            const url = await getDownloadURL(imageRef)
 
             // make the header to reciever 
             conversationHeader.innerHTML = 
             `
-            <img src="" alt="logo" class="conversation-header-pfp">
+            <img src="${url}" alt="logo" class="conversation-header-pfp">
             <p class="conversation-header-username">${userName}</p>
 
             <div class="dropdown">
