@@ -24,7 +24,7 @@ import {
     app,
     db,
     getAuth, setDoc,
-    getStorage, ref, uploadBytes, getDownloadURL, deleteObject, 
+    getStorage, ref, uploadBytes, getDownloadURL, deleteObject, increment, arrayUnion, arrayRemove
 } from "./firebaseconfig.js";
 
 
@@ -45,6 +45,8 @@ const storage = getStorage();
 const postsRef = collection(db, "posts");
 const usersRef = collection(db, "users");
 const commentsRef = collection(db, "comments");
+const likesRef = collection(db, "likes");
+
 
 let overlay = document.querySelector(".modal-overlay");
 
@@ -83,7 +85,7 @@ onAuthStateChanged(auth, (user) => {
         // 1 ----- CLICKED  THE BUTTON
 
 
-        postForm.addEventListener("submit", function (e) {
+        postForm.addEventListener("submit", async function (e) {
             
             if (postForm.postTitle.value === "") return false;
             e.preventDefault();
@@ -91,18 +93,32 @@ onAuthStateChanged(auth, (user) => {
             const modal = document.querySelector('.form-modal');
             modal.style.display = "none";
 
-            addDoc(postsRef, {
+            const postRef = await addDoc(postsRef, {
                 userID: currUser.uid,
                 title: postForm.postTitle.value,
                 content: postForm.postContent.value,
                 // check this later
                 course: currentPageName,
                 date: serverTimestamp(),
-                type: 'text', 
+                type: 'text',
+                likes: 0, 
+                userLikes: arrayUnion()
+
             });
             // console.log(postForm.postTitle);
             postForm.reset();
-            console.log(posts);
+            console.log("=================", postRef.id);
+
+
+            const likeDoc = doc(db, "likes", postRef.id);
+            
+            await setDoc(likeDoc, {
+                likes: 0
+              });
+
+
+
+
         });
 
 
@@ -268,15 +284,17 @@ async function createPost3(postDoc, userDoc, userID) {
             
                 <div class="votes">
                     <div class="like-container">
+                    
                         <img src="../images/heart-svgrepo-com.svg" alt="" class="like-svg">
-                        <div class="likes-num">321 likes</div> 
+                        <div class="likes-num"> likes</div> 
 
+                        
                     </div>
     
     
                     <div class="comment-container">
                         <img src="../images/comment.svg" alt="" class="comment-svg">
-                        <div class="comments-num"> 23 comments </div> 
+                        <div class="comments-num"> 0 comments </div> 
 
                     </div>
                 </div>
@@ -442,6 +460,54 @@ async function createPost3(postDoc, userDoc, userID) {
 
 
     }
+
+
+
+     
+    const likeDoc = doc(db, 'likes', postDoc.id); 
+
+    onSnapshot(likeDoc, (documentSnapshot) => {
+        console.log(documentSnapshot);
+        
+        const likesData = documentSnapshot.data(); 
+
+        postEl.querySelector('.likes-num').textContent = `${likesData.likes} likes`
+
+
+        
+    })
+
+    async function checkInitialLikeStatus(postId, userId, postEl) {
+        const likeRef = doc(db, "likes", postId);
+        const docSnap = await getDoc(likeRef);
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            const userLikes = data.userLikes || [];
+            updateHeartIcon(userLikes.includes(userId), postEl);
+        } else {
+            updateHeartIcon(false, postEl); // No likes yet, show unfilled heart
+        }
+    }
+    
+    // Example of how you might call this when setting up each post element
+    checkInitialLikeStatus(postDoc.id, currUser.uid, postEl);
+
+
+
+    // onSnapshot()
+
+    postEl.querySelector('.like-svg').addEventListener("click", () => {
+        console.log("Like toggled!");
+        toggleLike(postDoc.id, currUser.uid, postEl); // Assuming currentUser.id holds the logged-in user's ID
+        // postEl.querySelector('.like-svg').src = '/../images/heart-svgrepo-com(2).svg'; 
+        
+    });
+    
+
+    // document.querySelector('.likes-svg').addEventListener("click", () => {
+    //     console.log("LIKED");
+        
+    // })
     
 
 
@@ -930,4 +996,50 @@ function visualFromSubmission() {
         
         
     })
+}
+
+
+
+async function toggleLike(postId, userId, postEl) {
+    const likeRef = doc(db, "likes", postId);
+    const docSnap = await getDoc(likeRef);
+
+    if (docSnap.exists()) {
+        const data = docSnap.data();
+        const userLikes = data.userLikes || [];
+        const isLiked = userLikes.includes(userId);
+
+        if (!isLiked) { // User has not liked, like the post
+            updateHeartIcon(true, postEl);
+
+            await updateDoc(likeRef, {
+                likes: increment(1),
+                userLikes: arrayUnion(userId)
+            });
+            console.log("Liked successfully");
+        } else { // User has liked, unlike the post
+            updateHeartIcon(false, postEl);
+
+            await updateDoc(likeRef, {
+                likes: increment(-1),
+                userLikes: arrayRemove(userId)
+            });
+            console.log("Unliked successfully");
+        }
+    } else {
+        // Document does not exist, create it with the first like
+        updateHeartIcon(true, postEl);
+
+        await setDoc(likeRef, {
+            likes: 1,
+            userLikes: [userId]
+        });
+        console.log("First like added");
+    }
+}
+
+
+function updateHeartIcon(isLiked, postEl) {
+    const svgSource = isLiked ? '../images/heart-svgrepo-com(2).svg' : '../images/heart-svgrepo-com.svg';
+    postEl.querySelector('.like-svg').src = svgSource;
 }

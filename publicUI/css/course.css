@@ -859,3 +859,15 @@ border-radius: 50%;
 .imagePreviewContainer {
     width: 100%;
 }
+
+
+.heart-icon {
+    width: 100px;
+    height: 100px;
+    background-color: red; /* This color will show through the mask */
+    -webkit-mask-image: url('heart.svg');
+    mask-image: url('heart.svg');
+    mask-mode: alpha;
+    mask-repeat: no-repeat;
+    mask-size: cover;
+}

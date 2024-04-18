@@ -126,9 +126,9 @@ let fetchPosts = async function(user) {
     const activities = document.querySelector('.activities'); 
 
     onSnapshot(q, (snapshot) => {
-        snapshot.docs.forEach(postData => {
+        snapshot.docs.forEach(async postData => {
             console.log(postData.data());
-            const post = displayPosts(postData, userDoc.data())
+            const post = await displayPosts(postData, userDoc.data())
             activities.appendChild(post)
 
 
@@ -178,7 +178,7 @@ let fetchPosts = async function(user) {
     })
 }
 
-let displayPosts = function(postDoc, userDoc) {
+let displayPosts = async function(postDoc, userDoc) {
 
         const postData = postDoc.data(); 
     
@@ -187,6 +187,17 @@ let displayPosts = function(postDoc, userDoc) {
         let postEl = document.createElement("div");
         postEl.classList.add("post");
         postEl.id = postDoc.id;
+
+
+
+        const viewedUserId = extractIdFromUrl(window.location.href)
+        // const docRef = doc(db, 'users', viewedUserId);
+        // const userDoc = await getDoc(docRef); // Retrieve the document
+
+
+        const imageRef = ref(storage, `profiles/${viewedUserId}`);
+
+        const url = await getDownloadURL(imageRef)
         
     
     
@@ -205,7 +216,7 @@ let displayPosts = function(postDoc, userDoc) {
             <div class="post-heading-details"> 
     
                 <div class="pfp-container">
-                    <img src="${userDoc.photoURL}" class="pfp" alt="img">
+                    <img src="${url}" class="pfp" alt="img">
                 </div>
     
                 <div class="post-username">

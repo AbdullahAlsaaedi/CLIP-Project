@@ -1,6 +1,8 @@
 import {auth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "./firebaseconfig.js"
 import {initializeApp, getFirestore, collection, getDocs, addDoc, deleteDoc, doc, onSnapshot,
-  query, where, orderBy, serverTimestamp, getDoc, updateDoc, firebaseConfig, app, db, getAuth } from "./firebaseconfig.js"
+  query, where, orderBy, serverTimestamp, getDoc, updateDoc, firebaseConfig, app, db, getAuth,
+  getStorage, ref, uploadBytes, getDownloadURL, deleteObject, 
+} from "./firebaseconfig.js"
 
 
 
@@ -14,6 +16,7 @@ const profileLink = document.querySelector('.profile-link');
 
 const usersRef = collection(db, 'users');
 
+const storage = getStorage(); 
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -24,11 +27,16 @@ onAuthStateChanged(auth, (user) => {
 
       const q = query(usersRef, where('uid', '==', user.uid));
 
-      getDocs(q).then(querySnapshot => {
+      getDocs(q).then(async querySnapshot => {
         
             const user = querySnapshot.docs[0];
             profileLink.href = `/user/${user.id}`
             profileLinkCon.classList.remove('hidden');
+
+            const imageRef = ref(storage, `profiles/${user.id}`);
+
+            const url = await getDownloadURL(imageRef)
+            profileLinkCon.querySelector('img').src = url; 
         
         
       })
