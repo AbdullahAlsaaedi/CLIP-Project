@@ -678,19 +678,15 @@ border-radius: 50%;
 }
 
 
-.reply-details-user input {
-    padding: 0.5rem 2rem;
-    margin-right: 1rem;
-    width: 40%;
-}
-
 
 
 .reply-details-user .primary-btn {
     padding: 0.5rem 2rem;
     margin-right: 1rem;
-    background-color: rgb(210, 211, 210);
+    background-color: transparent;
+    box-shadow: none;
     color: black;
+    border: solid 0.5px gray;
 }
 
 
@@ -870,4 +866,86 @@ border-radius: 50%;
     mask-mode: alpha;
     mask-repeat: no-repeat;
     mask-size: cover;
+}
+
+
+.reply-inp {
+    /* padding: 5rem 2rem;
+    border-radius: 2rem;
+    background-color: transparent;
+    border: solid 0.5px rgb(155, 155, 155);
+    /* flex-basis: 40%; */
+
+    width: 50rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem; 
+}
+
+
+
+.reply-inp:hover {
+    /* background-color: rgba(227, 227, 244, 0.799); */
+    border: solid 0.5px rgba(39, 1, 255, 0.939);
+    color: rgba(39, 1, 255, 0.939);
+
+}
+
+.reply-inp:focus {
+    box-shadow: rgba(136, 107, 255, 0.8) 0px 0px 0px 3px;
+}
+
+.input-wrapper2 {
+    position: relative; /* Set the position context for absolute positioning of the button */
+    /* display: inline-block; */
+    display: none;
+    
+}
+
+.reply-inp {
+    padding-right: 60px; /* Add padding to prevent text from being hidden behind the button */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    
+    padding: 2rem 2rem;
+    border-radius: 2rem;
+    background-color: transparent;
+    border: solid 0.5px rgb(155, 155, 155);
+    /* flex-basis: 40%; */
+
+    width: 50rem;
+    /* margin-top: 1rem; */
+    /* margin-bottom: 2rem; */
+}
+
+.reply-btn {
+    position: absolute; /* Position the button absolutely inside the wrapper */
+    top: 1.5rem; /* Align the top of the button with the container */
+    right: 0; /* Align the button to the right side of the container */
+    height: 50%; /* Make the button height equal to the input */
+    border: none; /* Optional: removes the border */
+    cursor: pointer; /* Changes the cursor to a pointer when hovering over the button */
+    background-color: transparent;
+}
+
+
+
+
+
+
+.reply-details-user .votes{
+
+    margin-top: 2rem;
+    
+}
+
+
+.comment-reply {
+    padding-right: 60px; /* Add padding to prevent text from being hidden behind the button */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    
+    padding: 0.5rem 2rem;
+    border-radius: 2rem;
+    background-color: transparent;
+    border: solid 0.5px rgb(155, 155, 155);
+    /* flex-basis: 40%; */
+
 }

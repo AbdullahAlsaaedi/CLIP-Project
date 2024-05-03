@@ -40,6 +40,61 @@ let localScreenTracks;
 let sharingScreen = false; 
 
 
+let mediaRecorders = {}; // To manage multiple recorders
+let audioBlobs = {}; // To store recorded blobs by user ID
+
+// Start recording a specific media stream
+function startRecording(uid, mediaStream) {
+    if (mediaRecorders[uid]) {
+        console.warn("Already recording this user:", uid);
+        return;
+    }
+
+    let recorder = new MediaRecorder(mediaStream);
+    mediaRecorders[uid] = recorder;
+    audioBlobs[uid] = [];
+
+    recorder.ondataavailable = function(event) {
+        audioBlobs[uid].push(event.data);
+    };
+
+    recorder.onstop = function() {
+        let audioBlob = new Blob(audioBlobs[uid], { type: 'audio/webm' });
+        saveRecording(uid, audioBlob);
+        delete mediaRecorders[uid]; // Clean up
+        delete audioBlobs[uid];
+    };
+
+    recorder.start();
+    console.log(`Recording started for user ${uid}`);
+}
+
+function stopRecording(uid) {
+    if (mediaRecorders[uid]) {
+        mediaRecorders[uid].stop();
+        console.log(`Recording stopped for user ${uid}`);
+    } else {
+        console.log("No recorder found for user:", uid);
+    }
+}
+
+// Save the recording as a downloadable file
+function saveRecording(uid, blob) {
+    let url = URL.createObjectURL(blob);
+    let a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = `recording_${uid}.webm`;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+
+
+
+
+}
+
+
 
 let joinRoomInit = async () => {
 
@@ -96,6 +151,11 @@ let joinStream = async() => {
 
     localTracks[1].play(`user-${uid}`);
 
+    if (localTracks[0].type === "audio") {  // This is your audio track
+        const audioStream = new MediaStream([localTracks[0].getMediaStreamTrack()]);
+        startRecording(uid, audioStream);
+    }   
+
     await client.publish([localTracks[0], localTracks[1]])
 
 
@@ -133,6 +193,12 @@ let handleUserPublished = async (user, mediaType) => {
 
     await client.subscribe(user, mediaType); 
 
+    if (mediaType === 'audio') {
+        const audioStream = new MediaStream([user.audioTrack.getMediaStreamTrack()]);
+        startRecording(user.uid, audioStream);
+    }
+    
+
     let player = document.getElementById(`user-container-${user.uid}`); 
     
     if(player === null) {
@@ -163,6 +229,13 @@ let handleUserPublished = async (user, mediaType) => {
          
     
 }
+
+// For local audio track
+localTracks.forEach(track => {
+    if (track.getType() === 'audio') {
+        startRecording(uid, new MediaStream([track.getMediaStreamTrack()]));
+    }
+});
 
 
 let handleUserLeft = async (user) => {
@@ -309,6 +382,8 @@ let leaveStream = async (e) => {
 }
 
 
+
+
 document.getElementById('camera-btn').addEventListener('click', toggleCamera)
 document.getElementById('mic-btn').addEventListener('click', toggleMic)
 document.getElementById('screen-btn').addEventListener('click', toggleScreen);
@@ -317,6 +392,18 @@ document.getElementById('leave-btn').addEventListener('click', leaveStream);
 
 
 
+document.getElementById('start-recording-btn').addEventListener('click', () => {
+    console.log('Start recording button clicked.');
 
+        console.log('Starting recording for audio track.');
+        const audioStream = new MediaStream([localTracks[0].getMediaStreamTrack()]);
+        startRecording(uid, audioStream);
+    
+});
+
+document.getElementById('stop-recording-btn').addEventListener('click', () => {
+    console.log('Stop recording button clicked.');
+    stopRecording(uid);  // Stop recording for the user's UID
+});
 
 joinRoomInit();

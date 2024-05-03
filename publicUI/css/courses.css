@@ -66,24 +66,7 @@ header a {
     flex: 1;
 }
 .course {
-    /* position: relative; /* Ensure the ::before pseudo-element is positioned relative to this element */
-    /* flex-basis: 30%;
-    padding: 1rem 2rem;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 20px 0px;
-    border: 1px solid rgb(99, 99, 99);
-    border-radius: 1rem;
-    cursor: pointer;
-    width: 20rem;
-    height: 14rem;
-    display: flex;
-    flex-direction: column;
-    background-color: rgba(255, 255, 255, 0.71); 
-    color: black;
-    font-weight: bold;
-    transition: transform 0.3s ease; */ 
-    /* justify-content: space-evenly; */
-
-    /* z-index: 2; */
+    
     background-color: #fff;
     padding: 3rem;
     border-radius: 2rem;

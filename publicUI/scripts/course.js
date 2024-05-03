@@ -462,9 +462,17 @@ async function createPost3(postDoc, userDoc, userID) {
     }
 
 
+    const commentsBtn = postEl.querySelector('.comments-num'); 
+
+   
+
+
 
      
     const likeDoc = doc(db, 'likes', postDoc.id); 
+
+    
+
 
     onSnapshot(likeDoc, (documentSnapshot) => {
         console.log(documentSnapshot);
@@ -474,8 +482,20 @@ async function createPost3(postDoc, userDoc, userID) {
         postEl.querySelector('.likes-num').textContent = `${likesData.likes} likes`
 
 
+    })
+
+    const q = query(commentsRef, where('postId', '==', postDoc.id))
+
+    onSnapshot(q, (documentSnapshot) => {
+        const length = documentSnapshot.docs.length; 
+        console.log('Number of comments:', length);
+
+        postEl.querySelector('.comments-num').textContent = `${length} comments`
+
+
         
     })
+    
 
     async function checkInitialLikeStatus(postId, userId, postEl) {
         const likeRef = doc(db, "likes", postId);
@@ -594,6 +614,38 @@ async function createPost3(postDoc, userDoc, userID) {
         }
     });
 
+    commentsBtn.addEventListener('click', () => {
+        console.log("Hey");
+
+            let currModal = modalElement;
+            modalElement.classList.remove("hidden");
+            overlay.classList.remove("hidden");
+
+            document.body.classList.add("no-scroll");
+
+            let closeBtn = modalElement.querySelector(".modal-close");
+
+            closeBtn.addEventListener("click", () => {
+                modalElement.classList.add("hidden");
+                document.body.classList.remove("no-scroll");
+                overlay.classList.add("hidden");
+            });
+
+            document.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") {
+                    currModal.classList.add("hidden");
+                    document.body.classList.remove("no-scroll"); // Remove the class to enable scrolling
+                    overlay.classList.add("hidden");
+                }
+            });
+
+            overlay.addEventListener("click", () => {
+                currModal.classList.add("hidden");
+                document.body.classList.remove("no-scroll"); // Remove the class to enable scrolling
+                overlay.classList.add("hidden");
+            });
+    })
+
     return postEl;
 }
 
@@ -670,25 +722,44 @@ async function createComment3(postEl, commentDoc, postDoc) {
             
                 <div class="votes">
 
-                    <div class="like-container">
+                        <div class="like-container">
+                            
                         <img src="../images/heart-svgrepo-com.svg" alt="" class="like-svg">
-                    </div>
-            
-            
-                    <div class="comment-container">
-                        <img src="../images/comment.svg" alt="" class="comment-svg">
-                    </div>
+                        <div class="likes-num"> likes</div> 
+
+
+                        <buton class="comment-reply">Reply</button>
+
+                        
+                </div>
+
+
+                    
                     
                 </div>
 
-                <input placeholder="reply.." class="reply-inp input" type="text"/> 
-                <button class="reply-btn primary-btn"> reply </button>
+                <div class="input-wrapper2">
+                    <input placeholder="Reply…" class="reply-inp" type="text"/>
+                    <button class="reply-btn primary-btn">Reply</button>
+                </div>
+
 
             </div>
         </div>
 
         <div class="replies"></div>
     `;
+
+
+
+    const replyOnCmnt = newCommentEl.querySelector('.comment-reply'); 
+    replyOnCmnt.addEventListener("click", () => {
+        
+        const inputsWrapper = newCommentEl.querySelector('.input-wrapper2'); 
+        inputsWrapper.style.display = 'inline-block'
+        
+        
+    })
 
 
     console.log(commentDoc.id);
@@ -793,17 +864,10 @@ async function createReply(commentEl, commentDoc, userDoc) {
 
             
                 <div class="votes">
-                    <button class="upvote">
-                        ^
-                    </button>
-
-                    <div class="votes-number">
-                        12k
-                    </div>
-
-                    <button class="downvote">
-                        v
-                    </button>
+                <div class="like-container">
+                            
+                <img src="../images/heart-svgrepo-com.svg" alt="" class="like-svg">
+                <div class="likes-num"> likes</div> 
                 </div>
 
 
@@ -1043,3 +1107,5 @@ function updateHeartIcon(isLiked, postEl) {
     const svgSource = isLiked ? '../images/heart-svgrepo-com(2).svg' : '../images/heart-svgrepo-com.svg';
     postEl.querySelector('.like-svg').src = svgSource;
 }
+
+

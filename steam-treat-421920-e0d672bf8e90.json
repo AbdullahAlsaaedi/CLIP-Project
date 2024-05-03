@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "steam-treat-421920",
+  "private_key_id": "e0d672bf8e90c57837b6811a67b9e040cce6c746",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDP2anLtASqVPQR\ncyRczMAh+tA1ZB6k5ZolLGafbomxX9kGkSJydMYKq9uBFGrpkxCrnjjFsicwaUhO\nOyo8l1Ff9ZjfGPfOnlSkpFAdOKz5ifawCKbsAhjV5XlyKOOq//6tZr/NReaL4Gdq\n6TwGX7rwq8boeMOn/1sMhNIpJbc+5ZGlOF2G1er7fxGg0nXGOvKLDj6aqskRoNhl\nCB1TYxy1hub4b5SaVuT9OtoMno4umbRvESoqWneu44cDrDpzK3FQiLRagM0h6qUE\nrQMYTm3eU0TOM4za0o7K3a67KUVlwObA0SwxLrkCfz0k3qDcwTwhDif00BIwokKJ\nC1CY+78fAgMBAAECggEAAgfAxQN0UOD1Ogm+DwVVp8n7kwHwMLEoy83UD3ZKHwhD\ne5vFp945zwHgajGJB9C5cXZhXJZXE/3QndRYdHC6npgsuZp/VS6Dv3tMEwpU2jfS\n8o5AadQYFQLMUw/7hVXsfBohq9TPzImmc6C6nDSpg/n8PpTAvdkx36dD0Zto36g5\njP9yBueujnMgLZpZiEAr63qI1cueTa6Z3S4aQlHWn4K01Coa5ivSgZCQXOIf06oC\nE04e3E3JWcVZ+7ONVHezADPL6HH6L4WfXcqDhBpNHr+scL76drxGrcybqQoVWewd\n11p5ElN2axN+lUKjV8+Y9s6ZucOMYCXxGZU2H74ryQKBgQD/xKajJzKvi0yF+n4I\nq7VIxBzjZYa0TTwGPHRXT+2Eyaya7e5/zLx6PkTpgXcUiBSnbrpslI8pR5KE3n0P\nwinz0M+yxgj10Q2K4jsDANFFNzJHAP1o4qWKoaJQzX30o1Mk8HiXwmnZ+iekEqAc\nZHYsu+WSFXD6cZrXwG9TlN0qSQKBgQDQCeSyTVvdvk3jIq+ug1i9cfux2mIXlGC8\nptMMSwByZDkR6Gf+5fmWg1kkjReYZM2JPmCr9AtLYaMV2jCNyoVV0LdLuwmNAI+z\nQzfTdPAKLJOehnZfiPm7BEKUydkDk8l+k6LbbY5BH/iPGvQYc6bK/AbZCurM9Cek\njwh6M6feJwKBgQD0Bmv2vi9dzUn1ikk1fJ46DuKBExyyaf4a9RMLOvci+kf0iY5D\n4NLyzvZw01UKAcuy87JqZlMwz1i77IrlvhrIxTFlIAzse8iv+ajT9LO1ljQiCo+8\nwoGvAwgaj/Tcs/dgBw8HvDXCAypPIHYioLcfdyZReqOQT1OtBa0x0ZYyAQKBgG3N\n+v69ZBKrInMTWMT0oL8FTYL3MDUf5NtN9jET2T2HdrPkBhf9DHqMA14OdnjCI9Yf\nrWi1G80C0NB05JHCZhQAYO7A3u6kcDR+8xVSMGw+UQAoGoycQKucOQRNcZS4yW5c\nwGWu8pmfJVNrN5E8YbnbwkWGxJ2+9LmfoSrW3vCbAoGBANn0prvmGQBbkpaZJfdu\nxnXLQE94I+AMFEHsSZV1Z5TTgl7V5O3Nil4PfV2z88T8TMGqpVI+aWy6bcZgNsBN\nJuC/2ga3bJHigxcKcyFHST7DfGG8JW8Fw8SEv7XaKi9eyJxUiDzPGfdLqj4QgNuk\nFjCXkZXltOyCC2uQfbZsR676\n-----END PRIVATE KEY-----\n",
+  "client_email": "clip-841@steam-treat-421920.iam.gserviceaccount.com",
+  "client_id": "118070862471005962109",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/clip-841%40steam-treat-421920.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
