@@ -80,6 +80,7 @@ function stopRecording(uid) {
 
 // Save the recording as a downloadable file
 function saveRecording(uid, blob) {
+
     let url = URL.createObjectURL(blob);
     let a = document.createElement('a');
     a.style.display = 'none';
@@ -90,6 +91,16 @@ function saveRecording(uid, blob) {
     window.URL.revokeObjectURL(url);
 
 
+    const formData = new FormData();
+    formData.append('file', blob, `recording_${uid}.webm`);
+
+    fetch('/transcribe-downloading', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(data => alert(data.transcription))
+    .catch(error => console.error('Error uploading recording:', error));
 
 
 }
@@ -405,5 +416,80 @@ document.getElementById('stop-recording-btn').addEventListener('click', () => {
     console.log('Stop recording button clicked.');
     stopRecording(uid);  // Stop recording for the user's UID
 });
+
+
+document.getElementById('file-upload').addEventListener('change', function(event) {
+
+    if (this.files.length > 0) {
+        const formData = new FormData();
+        formData.append('file', this.files[0]);
+
+        fetch('/transcribe', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => alert(data.transcription))
+        .catch(error => alert('Error uploading file: ' + error));
+    }
+
+    
+});
+
+
+document.querySelector('.summarize-msgs').addEventListener("click", async () => {
+    // get the entire conversion list 
+    const messageWrappers = document.querySelectorAll('.message__wrapper');
+    console.log(messageWrappers);
+    
+    // Array to hold individual message texts
+    const messages = [];    
+
+
+    function capitalizeFirstLetter(word) {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    }
+
+    // Loop through each message wrapper element
+    for (const messageWrapper of messageWrappers) {
+        // Extract author name and message text if found
+        const authorElement = messageWrapper.querySelector('.message__author');
+        const textElement = messageWrapper.querySelector('.message__text');
+        
+        // Check if both author and text elements are found
+        if (authorElement && textElement) {
+            const author = authorElement.textContent.trim().split(' ').map(capitalizeFirstLetter).join(' ');
+            const text = textElement.textContent.trim();
+    
+            // Concatenate author name and message text
+            const message = `${author}: ${text}`;
+            messages.push(message);
+        }
+    }
+
+    console.log(messages);
+
+    // convert them into text 
+    const mergedMessages = messages.join('\n');
+
+    console.log(mergedMessages);
+
+    try {
+        // Send mergedMessages to server for summarization
+        const response = await fetch('/sum', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({mergedMessages})
+        });
+
+        const data = await response.json();
+        console.log(data);
+        // Handle the summary as needed
+    } catch (error) {
+        console.error('Error:', error);
+    }
+})
 
 joinRoomInit();

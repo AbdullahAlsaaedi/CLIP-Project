@@ -46,6 +46,8 @@ document.querySelector('.new-message-btn').addEventListener('click', function() 
     document.querySelector('.accounts-modal').classList.toggle('active');
     document.querySelector('.overlay').classList.toggle('hidden');
 
+    
+
 });
 
 document.querySelector('.accounts-modal-closebtn').addEventListener('click', closeModal);

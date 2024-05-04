@@ -100,15 +100,21 @@
                 <div id="messages">
                 </div>
 
-                <form id="message__form">
-                    <input type="text" name="message" placeholder="Send a message...." />
+                
+                <form id="message__form" >
+                    <input class="message__form-msg" type="text" name="message" placeholder="Send a message...." />
+                    <input accept="audio/*" type="file" id="file-upload" class="message__form-upload" style="display: none;"/>
+                    <input value="sum" class="summarize-msgs" type="button">
+                    <label for="file-upload" class="upload-label">+</label>
                 </form>
+                
 
             </section>
         </div>
     </main>
     
 </body>
+<script src="https://cdn.WebRTC-Experiment.com/RecordRTC.js"></script>
 <script type="text/javascript" src="js/AgoraRTC_N-4.14.0.js"></script>
 <script type="text/javascript" src="js/agora-rtm-sdk-1.5.1.js"></script>
 <script type="text/javascript" src="js/room.js"></script>

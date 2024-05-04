@@ -2,6 +2,12 @@ const admin = require('firebase-admin');
 const express = require('express');
 const speech = require('@google-cloud/speech')
 const fs = require('fs')
+const ffmpeg = require('fluent-ffmpeg');
+const toWav = require('audiobuffer-to-wav');
+const { exec } = require('child_process');
+const { spawn } = require('child_process');
+const bodyParser = require('body-parser');
+
 
 
 
@@ -37,6 +43,12 @@ const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
 const { v4: uuidv4 } = require('uuid');
 
+app.use(bodyParser.json()); // Parse JSON bodies
+app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
+
+
+const cors = require('cors');
+app.use(cors());
 
 
 
@@ -45,51 +57,111 @@ const { v4: uuidv4 } = require('uuid');
 process.env.GOOGLE_APPLICATION_CREDENTIALS = 'steam-treat-421920-e0d672bf8e90.json'; // Set the path to your Google Cloud service account key.
 
 
-async function transcribeAudio(audioName) {
+function convertWebmToWav(inputBuffer, outputPath) {
+    return new Promise((resolve, reject) => {
+        const inputPath = 'temp_input.webm'; // Temp input file path
+        fs.writeFileSync(inputPath, inputBuffer); // Write the buffer to a file
+
+        ffmpeg(inputPath)
+            .output(outputPath)
+            .audioCodec('pcm_s16le') // Set codec to PCM 16-bit
+            .audioFrequency(44100)   // Set sample rate to 44100 Hz
+            .on('end', () => {
+                fs.unlinkSync(inputPath); // Clean up input file
+                resolve(outputPath);
+            })
+            .on('error', (err) => {
+                fs.unlinkSync(inputPath); // Clean up input file even on error
+                reject(err);
+            })
+            .toFormat('mp3')
+            .run();
+    });
+}
+
+async function transcribeAudio(audioBuffer) {
     try {
-        // Initialize a SpeechClient from the Google Cloud Speech library.
         const speechClient = new speech.SpeechClient();
 
-        // Read the binary audio data from the specified file.
-        const file = fs.readFileSync(audioName);
-        const audioBytes = file.toString('base64');
+        // Convert the buffer to base64
+        const audioBytes = audioBuffer.toString('base64');
 
-        // Create an 'audio' object with the audio content in base64 format.
         const audio = {
             content: audioBytes
         };
 
-        // Define the configuration for audio encoding, sample rate, and language code.
         const config = {
-            // encoding: 'LINEAR16',   // Audio encoding (change if needed).
-            // sampleRateHertz: 44100, // Audio sample rate in Hertz (change if needed).
-            languageCode: 'en-US'   // Language code for the audio (change if needed).
+            // Uncomment and adjust the following lines as necessary
+            // encoding: 'LINEAR16',
+            // sampleRateHertz: 44100,
+            languageCode: 'en-US'
         };
 
-        // Return a Promise for the transcription result.
-        return new Promise((resolve, reject) => {
-            // Use the SpeechClient to recognize the audio with the specified config.
-            speechClient.recognize({ audio, config })
-                .then(data => {
-                    resolve(data); // Resolve the Promise with the transcription result.
-                })
-                .catch(err => {
-                    reject(err); // Reject the Promise if an error occurs.
-                });
-        });
+        // Perform the speech recognition
+        const [response] = await speechClient.recognize({ audio, config });
+        return response.results.map(r => r.alternatives[0].transcript).join("\n");
     } catch (error) {
         console.error('Error:', error);
+        throw error; // Throw the error so it can be caught by the caller
     }
 }
 
-(async () => {
-    // Call the transcribeAudio function to transcribe 'output.mp3'.
-    const text = await transcribeAudio('t4.wav');
+// (async () => {
+//     // Call the transcribeAudio function to transcribe 'output.mp3'.
+//     const text = await transcribeAudio('t4.wav');
 
 
-    // Extract and log the transcribed text from the response.
-    console.log(text[0].results.map(r => r.alternatives[0].transcript).join("\n"));
-})();
+//     // Extract and log the transcribed text from the response.
+//     console.log(text[0].results.map(r => r.alternatives[0].transcript).join("\n"));
+// })();
+
+
+app.post('/transcribe', upload.single('file'), async (req, res) => {
+    if (!req.file) {
+        return res.status(400).send('No file uploaded.');
+    }
+
+    try {
+        const transcription = await transcribeAudio(req.file.buffer);
+        // console.log(transcription[0].results.map(r => r.alternatives[0].transcript).join("\n"));
+
+        res.json({ transcription: transcription });
+    } catch (err) {
+        res.status(500).send('Failed to transcribe file: ' + err.message);
+    }
+});
+
+
+
+app.post('/transcribe-downloading', upload.single('file'), async (req, res) => {
+    if (!req.file) {
+        return res.status(400).send('No file uploaded.');
+    }
+
+    const outputPath = 'temp_output.wav'; // Temp output file path
+
+    try {
+        // Convert webm to wav before transcribing
+        await convertWebmToWav(req.file.buffer, outputPath);
+        
+        // Read the converted file into a buffer
+        const audioBuffer = fs.readFileSync(outputPath);
+        
+        // Transcribe the audio file
+        const transcription = await transcribeAudio(audioBuffer);
+        
+        // Clean up the output file
+        fs.unlinkSync(outputPath);
+        
+        res.json({ transcription });
+    } catch (err) {
+        if (fs.existsSync(outputPath)) {
+            fs.unlinkSync(outputPath); // Ensure clean up even on error
+        }
+        console.error('Failed to process file:', err);
+        res.status(500).send('Failed to transcribe file: ' + err.message);
+    }
+});
 
 
 app.get("/", (req, res) => {
@@ -277,12 +349,72 @@ app.get("/html/courses2.html/:id", async (req, res) => {
 
 
 
+
+// Example input text
+
+// app.post('/sum', (req, res) => {
+//     const { inputText } = req.body;
+    
+
+//     // Execute the Python script with input text
+//     const pythonProcess = spawn('python', ['transcribe.py', inputText]);
+
+//     // Handle output from the Python script
+//     let summary = '';
+//     pythonProcess.stdout.on('data', (data) => {
+//         summary += data.toString();
+//     });
+
+//     pythonProcess.stderr.on('data', (data) => {
+//         console.error(`Error: ${data}`);
+//     });
+
+//     pythonProcess.on('close', (code) => {
+//         console.log(`Child process exited with code ${code}`);
+//         res.json({ summary });
+//     });
+// });
+
+
+
+app.post('/sum', (req, res) => {
+    const {mergedMessages} = req.body;
+
+
+
+    console.log("The textis", mergedMessages);
+    
+    
+
+    // Execute the Python script with input text
+    const pythonProcess = spawn('python', ['transcript.py', mergedMessages]);
+
+    // Handle output from the Python script
+    let summary = '';
+    pythonProcess.stdout.on('data', (data) => {
+        summary += data.toString();
+    });
+
+    pythonProcess.stderr.on('data', (data) => {
+        console.error(`Error: ${data}`);
+    });
+
+    pythonProcess.on('close', (code) => {
+        console.log(`Child process exited with code ${code}`);
+        res.json({ summary });
+    });
+});
+
+
+
+
+
 const usersRouter = require('./routes/users');
 const { on } = require('nodemon');
 app.use('/users', usersRouter)
 
 
-app.listen(3001);
+app.listen(3004);
 
 
 // const port = 3000;
