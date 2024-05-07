@@ -84,11 +84,10 @@ let fetchPfp = async function(user) {
     const userDoc = await getDoc(docRef); // Retrieve the document
     const userData = userDoc.data(); 
 
+    if(userData.type === "admin") {
+        const imageRef = ref(storage, `profiles/vampire.png`);
 
-
-    const imageRef = ref(storage, `profiles/${viewedUserId}`);
-
-    getDownloadURL(imageRef)
+        getDownloadURL(imageRef)
     .then((url) => {
         // `url` is the download URL for your file
         console.log(url);
@@ -100,6 +99,26 @@ let fetchPfp = async function(user) {
         // Handle any errors
         console.error('Error downloading the image: ', error);
     });
+
+    } else {
+        const imageRef = ref(storage, `profiles/${viewedUserId}`);
+
+
+        getDownloadURL(imageRef)
+    .then((url) => {
+        // `url` is the download URL for your file
+        console.log(url);
+        // You can use this URL to display the image or download it.
+        // For example, setting it as the source for an <img> element:
+        document.querySelector('.profile-pfp-img').src = url;
+    })
+    .catch((error) => {
+        // Handle any errors
+        console.error('Error downloading the image: ', error);
+    });
+    }
+
+    
 
 
 }

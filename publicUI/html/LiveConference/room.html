@@ -84,10 +84,10 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M16 10v-5l8 7-8 7v-5h-8v-4h8zm-16-8v20h14v-2h-12v-16h12v-2h-14z"/></svg>
                     </button>
                     <button id="start-recording-btn" style="background-color: #FF5050;"  >
-                        start
+                        record audio 
                     </button>
-                    <button id="stop-recording-btn" style="background-color: #FF5050;"  >
-                        end
+                    <button style="display: none;" id="stop-recording-btn" style="background-color: #FF5050;"  >
+                        end recording
                     </button>
                 </div>
 
@@ -102,10 +102,44 @@
 
                 
                 <form id="message__form" >
-                    <input class="message__form-msg" type="text" name="message" placeholder="Send a message...." />
-                    <input accept="audio/*" type="file" id="file-upload" class="message__form-upload" style="display: none;"/>
-                    <input value="sum" class="summarize-msgs" type="button">
-                    <label for="file-upload" class="upload-label">+</label>
+                    <input class="message__form-msg" type="text" name="message" placeholder="press / for additional commands.." />
+                    <!-- <input value="sum" class="summarize-msgs" type="button"> -->
+
+                    <ul class="command-menu">
+                        <p class="menu-header">AI Commands</p>
+                        <li class="summarize-msgs">
+                            <div class="menu-image-container">
+                                <img src="/../../images/sum.png" alt="" class="menu-image">
+                            </div>
+                            <div class="menu-command">
+                                <p class="command-title">
+                                    Summarize conversations
+                                </p>
+                                <p class="command-desc">
+                                    summarize the entire conversation into a single block of text
+                                </p>
+                            </div>
+                        </li>
+                        
+
+                        <li class="transcribe-item">
+                            <input accept="audio/*" type="file" id="file-upload" class="message__form-upload" style="display: none;"/>
+
+                            <div class="menu-image-container">
+                                <img src="/../../images/transcribe.png" alt="" class="menu-image">
+                            </div>
+                            <div class="menu-command">
+                                <p class="command-title">
+                                    Transcribe
+                                </p>
+                                <p class="command-desc">
+                                    transcribe the meeting audio, it requires wav files
+                                </p>
+                            </div>
+                        </li>
+
+
+                    </ul>
                 </form>
                 
 

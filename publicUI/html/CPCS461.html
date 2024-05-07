@@ -202,6 +202,23 @@
                 <button class="post-btn" type="submit">Submit</button>
             </form>
 
+            <form action="#" class="file-type hidden">
+                <h1 class="post-form-heading">Title</h1>
+                <input type="text" required name="postTitle" id="postTitle" placeholder="title: ">
+                
+                <!-- Hidden file input -->
+                <input type="file" id="fileInput" style="display: none;" />
+            
+                <!-- Button to trigger file input click -->
+                <button type="button" id="uploadBtn">Upload Image Here</button>
+
+                <div class="imagePreviewContainer">
+                    <img class="imagePreview hidden" src="" alt="Image preview">
+                </div>
+            
+                <button class="post-btn" type="submit">Submit</button>
+            </form>
+
             <!-- <form action="#" class="file-form hidden">
                 <h1 class="post-form-heading">Enter your post details</h1>
                 <input type="text" required name="postTitle" id="postTitle" placeholder="title: ">

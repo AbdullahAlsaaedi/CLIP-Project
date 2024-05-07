@@ -61,6 +61,7 @@ signupForm.addEventListener('submit', async function(e) {
                 uid: user.uid, 
                 name: user.displayName,
                 email: user.email,
+                type: "user"
             }).then((doc) => {
                 console.log("Auth changed, ", user.displayName);
                 console.log(docRef);

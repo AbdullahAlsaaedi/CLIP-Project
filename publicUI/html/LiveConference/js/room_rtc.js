@@ -1,3 +1,4 @@
+
 const APP_ID = "2286e7d2ddeb4539aa30d69f25a230c9"
 
 let uid = sessionStorage.getItem('uid'); 
@@ -91,16 +92,16 @@ function saveRecording(uid, blob) {
     window.URL.revokeObjectURL(url);
 
 
-    const formData = new FormData();
-    formData.append('file', blob, `recording_${uid}.webm`);
+    // const formData = new FormData();
+    // formData.append('file', blob, `recording_${uid}.webm`);
 
-    fetch('/transcribe-downloading', {
-        method: 'POST',
-        body: formData,
-    })
-    .then(response => response.json())
-    .then(data => alert(data.transcription))
-    .catch(error => console.error('Error uploading recording:', error));
+    // fetch('/transcribe-downloading', {
+    //     method: 'POST',
+    //     body: formData,
+    // })
+    // .then(response => response.json())
+    // .then(data => alert(data.transcription))
+    // .catch(error => console.error('Error uploading recording:', error));
 
 
 }
@@ -409,16 +410,23 @@ document.getElementById('start-recording-btn').addEventListener('click', () => {
         console.log('Starting recording for audio track.');
         const audioStream = new MediaStream([localTracks[0].getMediaStreamTrack()]);
         startRecording(uid, audioStream);
-    
+
+        document.getElementById('start-recording-btn').style.display = "none"; 
+        document.getElementById('stop-recording-btn').style.display = "block"; 
+
 });
 
 document.getElementById('stop-recording-btn').addEventListener('click', () => {
     console.log('Stop recording button clicked.');
+    document.getElementById('start-recording-btn').style.display = "block"; 
+    document.getElementById('stop-recording-btn').style.display = "none"; 
     stopRecording(uid);  // Stop recording for the user's UID
 });
 
 
 document.getElementById('file-upload').addEventListener('change', function(event) {
+
+    addBotMessageToDom("transcibing the meeting session, please hold on ...")
 
     if (this.files.length > 0) {
         const formData = new FormData();
@@ -429,7 +437,9 @@ document.getElementById('file-upload').addEventListener('change', function(event
             body: formData,
         })
         .then(response => response.json())
-        .then(data => alert(data.transcription))
+        .then(data => {
+            addBotMessageToDom(data.transcription)
+        })
         .catch(error => alert('Error uploading file: ' + error));
     }
 
@@ -438,8 +448,20 @@ document.getElementById('file-upload').addEventListener('change', function(event
 
 
 document.querySelector('.summarize-msgs').addEventListener("click", async () => {
+    hideCommandMenu();
+    messageInput.value = ''
+
     // get the entire conversion list 
     const messageWrappers = document.querySelectorAll('.message__wrapper');
+    const messagesExist = document.querySelector('.message__body');
+
+    if(!messagesExist) {
+        addBotMessageToDom("No conversation has started yet"); 
+        return; 
+    }  else {
+        addBotMessageToDom("Generating summary, please hold on ...")
+    }
+
     console.log(messageWrappers);
     
     // Array to hold individual message texts
@@ -467,7 +489,6 @@ document.querySelector('.summarize-msgs').addEventListener("click", async () => 
         }
     }
 
-    console.log(messages);
 
     // convert them into text 
     const mergedMessages = messages.join('\n');
@@ -485,11 +506,60 @@ document.querySelector('.summarize-msgs').addEventListener("click", async () => 
         });
 
         const data = await response.json();
-        console.log(data);
+        
+        addBotMessageToDom(data.summary)
+
         // Handle the summary as needed
     } catch (error) {
         console.error('Error:', error);
     }
 })
+
+
+const messageInput = document.querySelector('.message__form-msg');
+
+// Function to handle input change
+function handleInputChange(event) {
+
+    const inputValue = event.target.value.trim();
+    
+
+    // Check if input starts with "/"
+    if (inputValue.startsWith('/')) {
+        // Show the command menu
+        showCommandMenu();
+    } else {
+        // Hide the command menu if visible
+        hideCommandMenu();
+
+    }
+}
+
+// Function to show the command menu
+function showCommandMenu() {
+    // Display your menu here, for example:
+    const commandMenu = document.querySelector('.command-menu');
+    commandMenu.classList.add('show');
+}
+
+// Function to hide the command menu
+function hideCommandMenu() {
+    // Hide your menu here, for example:
+    const commandMenu = document.querySelector('.command-menu');
+    commandMenu.classList.remove('show');
+}
+
+// Add event listener to input field
+messageInput.addEventListener('input', handleInputChange);
+
+
+document.querySelector('.transcribe-item').addEventListener('click', () => {
+    document.getElementById('file-upload').click(); 
+    hideCommandMenu(); 
+
+    messageInput.value = ''
+    
+})
+
 
 joinRoomInit();

@@ -60,7 +60,7 @@ console.log(currentPageName);
 
 let currUser = null;
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
     currUser = auth.currentUser;
 
     // currUser.photoURL = '../images/photo-1631477076110-2b8c1fe0f3cc.avif'
@@ -130,6 +130,16 @@ onAuthStateChanged(auth, (user) => {
             where("course", "==", currentPageName), orderBy("date", "desc")
         );
 
+
+        const q = query(usersRef, where('uid', "==", currUser.uid));
+        const querySnapshot = await getDocs(q);
+        const currUserDoc = await querySnapshot.docs[0];
+
+
+
+
+        
+
         onSnapshot(postQuery, (snapshot) => {
             posts.innerHTML = "";
 
@@ -150,7 +160,7 @@ onAuthStateChanged(auth, (user) => {
                 onSnapshot(posterQuery, (snapshot) => {
                     snapshot.forEach(async (doc) => {
                         
-                        const post = await createPost3(el, doc.data(), doc.id) 
+                        const post = await createPost3(el, doc.data(), doc.id, currUserDoc) 
                         
                         const tmpPost = document.getElementById(post.id);
                         posts.appendChild(post);
@@ -167,7 +177,7 @@ onAuthStateChanged(auth, (user) => {
                             post.querySelector(".comments").innerHTML = "";
 
                             snapshot.forEach(async (doc) => {
-                                let commentEl = await createComment3(post, doc, el);
+                                let commentEl = await createComment3(post, doc, el, currUserDoc);
 
 
                                 // fetch the replies to the comment 
@@ -184,7 +194,7 @@ onAuthStateChanged(auth, (user) => {
                                     snapshot.forEach(async doc => {
                                         console.log(doc.data());
                                         
-                                        await createReply(commentEl, doc)
+                                        await createReply(commentEl, doc, currUserDoc)
                                     })
                                 })
 
@@ -218,7 +228,7 @@ singoutEl.addEventListener("click", (e) => {
 
 // function
 
-async function createPost3(postDoc, userDoc, userID) {
+async function createPost3(postDoc, userDoc, userID, currUserDoc) {
     // console.log("POST CREATED");
 
     // get user associated with the post
@@ -232,7 +242,7 @@ async function createPost3(postDoc, userDoc, userID) {
     postEl.id = postDoc.id;
 
 
-    const imageRef = ref(storage, `profiles/${userID}`);
+    const imageRef = ref(storage, `profiles/${userDoc.type === 'admin' ? 'vampire.png' : userID}`);
 
     const url = await getDownloadURL(imageRef)
 
@@ -263,7 +273,7 @@ async function createPost3(postDoc, userDoc, userID) {
                 </div>
             </div>
 
-            <button class="post-delete">X</button>
+            ${((userDoc.uid === currUser.uid) || (currUserDoc.data().type === "admin")) ? '<button class="post-delete">X</button>' : ""}
 
         
         </div>
@@ -397,14 +407,14 @@ async function createPost3(postDoc, userDoc, userID) {
                 <div class="votes">
                     <div class="like-container">
                         <img src="../images/heart-svgrepo-com.svg" alt="" class="like-svg">
-                        <div class="likes-num">321 likes</div> 
+                        <div class="likes-num"> likes</div> 
 
                     </div>
     
     
                     <div class="comment-container">
                         <img src="../images/comment.svg" alt="" class="comment-svg">
-                        <div class="comments-num"> 23 comments </div> 
+                        <div class="comments-num"> comments </div> 
 
                     </div>
                 </div>
@@ -421,7 +431,12 @@ async function createPost3(postDoc, userDoc, userID) {
 
             <h3 class="title">${postDoc.title}</h3>
 
-            <p>${postDoc.content}</p>
+            <p>             <img src="${url}"/>
+                </p>
+
+
+
+
             <textarea class="commentIn" type="text" placeholder="Add a comment"></textarea>
             <button class="commentBtn"> add comment </button>
 
@@ -559,24 +574,28 @@ async function createPost3(postDoc, userDoc, userID) {
     const modalElement = postEl.querySelector(".post-modal");
     const postDeleteEl = postEl.querySelector(".post-delete")
 
-    postDeleteEl.addEventListener("click", () => {
+    if(postDeleteEl) {
+        postDeleteEl.addEventListener("click", () => {
         
-        console.log(postDoc.id);
-
-        // postsRef.doc(postDoc.id).delete().then(() => {
-        //     console.log("Successfuly delete");
+            console.log(postDoc.id);
+    
+            // postsRef.doc(postDoc.id).delete().then(() => {
+            //     console.log("Successfuly delete");
+                
+            // })
+    
+    
+            const docRef = doc(db, "posts", postDoc.id);
+    
+            console.log(docRef);
             
-        // })
+            deleteDoc(docRef); 
+            
+            
+        })
+    }
 
-
-        const docRef = doc(db, "posts", postDoc.id);
-
-        console.log(docRef);
-        
-        deleteDoc(docRef); 
-        
-        
-    })
+    
 
     postReadEl.addEventListener("click", () => {
         {
@@ -663,7 +682,7 @@ async function createPost3(postDoc, userDoc, userID) {
 
 // console.log(createPost3());
 
-async function createComment3(postEl, commentDoc, postDoc) {
+async function createComment3(postEl, commentDoc, postDoc, currUserDoc) {
     let comments = postEl.querySelector(".comments");
     let newCommentEl = document.createElement("div");
     let commentData = commentDoc.data(); 
@@ -684,7 +703,7 @@ async function createComment3(postEl, commentDoc, postDoc) {
     console.log('the user is ', user)
 
     
-    const imageRef = ref(storage, `profiles/${user.id}`);
+    const imageRef = ref(storage, `profiles/${userData.type === "admin" ? 'vampire.png'  : user.id}`);
 
     const url = await getDownloadURL(imageRef)
 
@@ -706,7 +725,8 @@ async function createComment3(postEl, commentDoc, postDoc) {
                 </div>
             </div>
 
-            <button class="post-delete">X</button>
+            ${((userData.uid === currUser.uid) || (currUserDoc.data().type === "admin")) ? '<button class="post-delete">X</button>' : ""}
+
 
         
         </div>
@@ -763,6 +783,33 @@ async function createComment3(postEl, commentDoc, postDoc) {
 
 
     console.log(commentDoc.id);
+
+
+    const postDeleteEl = newCommentEl.querySelector(".post-delete")
+
+    if(postDeleteEl) {
+        postDeleteEl.addEventListener("click", () => {
+        
+            console.log(postDoc.id);
+    
+            // postsRef.doc(postDoc.id).delete().then(() => {
+            //     console.log("Successfuly delete");
+                
+            // })
+    
+    
+            const docRef = doc(db, "comments", commentDoc.id);
+    
+            console.log(docRef);
+            
+            deleteDoc(docRef); 
+            
+            
+        })
+    }
+
+
+    
     
 
 
@@ -806,7 +853,7 @@ function replies(commentEl, commentDoc, postDoc) {
 
 } 
 
-async function createReply(commentEl, commentDoc, userDoc) {
+async function createReply(commentEl, commentDoc, currUserDoc) {
     let newReply = document.createElement("div");
     let repliesDiv = commentEl.querySelector('.replies')
 
@@ -824,7 +871,8 @@ async function createReply(commentEl, commentDoc, userDoc) {
     console.log('the user is ', user)
 
     
-    const imageRef = ref(storage, `profiles/${user.id}`);
+    const imageRef = ref(storage, `profiles/${userData.type === "admin" ? 'vampire.png'  : user.id}`);
+
 
     const url = await getDownloadURL(imageRef)
 
@@ -849,7 +897,7 @@ async function createReply(commentEl, commentDoc, userDoc) {
                 </div>
             </div>
 
-            <button class="post-delete">X</button>
+            ${((userData.uid === currUser.uid) || (currUserDoc.data().type === "admin")) ? '<button class="post-delete">X</button>' : ""}
 
         
         </div>
@@ -875,6 +923,29 @@ async function createReply(commentEl, commentDoc, userDoc) {
         </div>
     
     `;
+
+
+    const postDeleteEl = newReply.querySelector(".post-delete")
+
+    if(postDeleteEl) {
+        postDeleteEl.addEventListener("click", () => {
+        
+    
+            // postsRef.doc(postDoc.id).delete().then(() => {
+            //     console.log("Successfuly delete");
+                
+            // })
+    
+    
+            const docRef = doc(db, "comments", commentDoc.id);
+    
+            console.log(docRef);
+            
+            deleteDoc(docRef); 
+            
+            
+        })
+    }
 
 
     repliesDiv.appendChild(newReply)
@@ -971,8 +1042,11 @@ postType.forEach((elem) => {
             document.querySelector(".post-types").style.display = "none"; 
             document.querySelector(".visual-form").style.display = "flex"; 
             uploadBtn.style.display = 'initial'
-
-
+        }
+        else if (elem.classList.contains("file-type")) {
+            document.querySelector(".post-types").style.display = "none"; 
+            document.querySelector(".file-type").style.display = "flex"; 
+            uploadBtn.style.display = 'initial'
         }
         
         

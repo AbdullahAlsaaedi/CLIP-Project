@@ -35,8 +35,56 @@ onAuthStateChanged(auth, (user) => {
 
             const imageRef = ref(storage, `profiles/${user.id}`);
 
-            const url = await getDownloadURL(imageRef)
-            profileLinkCon.querySelector('img').src = url; 
+
+            if(user.data().type === "admin") {
+
+                const imageRef = ref(storage, `profiles/vampire.png`);
+        
+                getDownloadURL(imageRef)
+                .then((url) => {
+                    // `url` is the download URL for your file
+                    console.log(url);
+                    // You can use this URL to display the image or download it.
+                    // For example, setting it as the source for an <img> element:
+                    document.querySelector('.profile-pfp-img').src = url;
+                })
+                .catch((error) => {
+                    // Handle any errors
+                    console.error('Error downloading the image: ', error);
+                });
+
+                const url = await getDownloadURL(imageRef)
+                profileLinkCon.querySelector('img').src = url; 
+         
+            } else if (user.data().type === "user") {
+                
+                    const imageRef = ref(storage, `profiles/${user.id}`);
+            
+                    getDownloadURL(imageRef)
+                    .then((url) => {
+                        // `url` is the download URL for your file
+                        console.log(url);
+                        // You can use this URL to display the image or download it.
+                        // For example, setting it as the source for an <img> element:
+                        document.querySelector('.profile-pfp-img').src = url;
+                    })
+                    .catch((error) => {
+                        // Handle any errors
+                        console.error('Error downloading the image: ', error);
+                    });
+    
+                    const url = await getDownloadURL(imageRef)
+                    profileLinkCon.querySelector('img').src = url; 
+            
+                
+            }
+
+
+
+
+
+
+            
         
         
       })

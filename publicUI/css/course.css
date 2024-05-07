@@ -805,6 +805,7 @@ border-radius: 50%;
     display: flex;
     /* gap: 4rem; */
     height: 40rem;
+    color: black;
 }
 
 .post-types > * {
