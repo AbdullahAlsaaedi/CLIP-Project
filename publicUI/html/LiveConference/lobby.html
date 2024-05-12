@@ -13,6 +13,9 @@
 
     <link rel='stylesheet' type='text/css' media='screen' href='styles/main.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='styles/lobby.css'>
+
+    <script defer type="module" src="../../scripts/index.js"></script>
+    <script defer type="module" src="../../scripts/courses.js"></script>
     
 </head>
 <body>
@@ -37,7 +40,11 @@
     
                 <ul class="nav-list nav-list-2">
                     
-                    <li class="nav-item pfp">pfp</li>
+                    <li class="nav-item profile-link-container hidden">
+                        <a class="profile-link" href="#">
+                            <img src="#" alt="">
+                        </a>
+                    </li> 
     
                     <li><a class="signin" href="../signin.html">Sign in</a></li>
                     <li><a class="signout hidden">Sign out</a></li>

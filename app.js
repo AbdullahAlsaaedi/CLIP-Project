@@ -1,6 +1,10 @@
 const admin = require('firebase-admin');
 const express = require('express');
+
+
 const speech = require('@google-cloud/speech')
+
+
 const fs = require('fs')
 const ffmpeg = require('fluent-ffmpeg');
 const toWav = require('audiobuffer-to-wav');
@@ -99,21 +103,14 @@ async function transcribeAudio(audioBuffer) {
 
         // Perform the speech recognition
         const [response] = await speechClient.recognize({ audio, config });
+
+
         return response.results.map(r => r.alternatives[0].transcript).join("\n");
     } catch (error) {
         console.error('Error:', error);
         throw error; // Throw the error so it can be caught by the caller
     }
 }
-
-// (async () => {
-//     // Call the transcribeAudio function to transcribe 'output.mp3'.
-//     const text = await transcribeAudio('t4.wav');
-
-
-//     // Extract and log the transcribed text from the response.
-//     console.log(text[0].results.map(r => r.alternatives[0].transcript).join("\n"));
-// })();
 
 
 app.post('/transcribe', upload.single('file'), async (req, res) => {
@@ -189,13 +186,6 @@ app.get("/html/courses2.html/review/:id", async (req, res) => {
 
 
 
-
-
-//    console.log(data.userUid);
-    
-
-    // if(userDoc.exists) console.log("exists", userDoc);
-    
 
     
     const crsDesc = data['crs-desc']; 
@@ -335,64 +325,33 @@ app.get("/html/courses2.html/:id", async (req, res) => {
     // create the ejs html template 
     res.render("course", {course: data, id: courseID});
 
-    // style it 
-
-    // uploading a video functionality 
-
-    // when uploaded, insert video to database 
-
-    // fetch the videos and display them into the sidebar 
-
-    // when sidebar is clicked, make the video active 
     
 })
 
 
 
-
-// Example input text
-
-// app.post('/sum', (req, res) => {
-//     const { inputText } = req.body;
-    
-
-//     // Execute the Python script with input text
-//     const pythonProcess = spawn('python', ['transcribe.py', inputText]);
-
-//     // Handle output from the Python script
-//     let summary = '';
-//     pythonProcess.stdout.on('data', (data) => {
-//         summary += data.toString();
-//     });
-
-//     pythonProcess.stderr.on('data', (data) => {
-//         console.error(`Error: ${data}`);
-//     });
-
-//     pythonProcess.on('close', (code) => {
-//         console.log(`Child process exited with code ${code}`);
-//         res.json({ summary });
-//     });
-// });
-
-
-
+// if any post is sent to this url, catch it
 app.post('/sum', (req, res) => {
+
     const {mergedMessages} = req.body;
 
 
-
-    console.log("The textis", mergedMessages);
     
-    
-
     // Execute the Python script with input text
     const pythonProcess = spawn('python', ['transcript.py', mergedMessages]);
 
+
+
+
+
     // Handle output from the Python script
     let summary = '';
+
+
     pythonProcess.stdout.on('data', (data) => {
+
         summary += data.toString();
+        
     });
 
     pythonProcess.stderr.on('data', (data) => {
@@ -403,6 +362,8 @@ app.post('/sum', (req, res) => {
         console.log(`Child process exited with code ${code}`);
         res.json({ summary });
     });
+
+
 });
 
 
@@ -414,22 +375,8 @@ const { on } = require('nodemon');
 app.use('/users', usersRouter)
 
 
-app.listen(3004);
+app.listen(3006
+
+);
 
 
-// const port = 3000;
-
-// // Serve static files
-// app.use('/css', express.static('css')); // Serve CSS files
-// app.use('/scripts', express.static('scripts')); // Serve JavaScript files
-// app.use('/html', express.static('html')); // Serve HTML files as static files
-// app.use('/images', express.static('images')); // Serve images
-
-// // You can still have dynamic routes if needed
-// app.get('/profile', (req, res) => {
-//     res.sendFile(__dirname + '/html/profile.html');
-// });
-
-// app.listen(port, () => {
-//     console.log(`Server is running on http://localhost:${port}`);
-// });

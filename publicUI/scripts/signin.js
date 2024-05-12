@@ -1,12 +1,13 @@
 import {auth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile} from "./firebaseconfig.js"
 
 import {initializeApp, getFirestore, collection, getDocs, addDoc, deleteDoc, doc, onSnapshot,
-  query, where, orderBy, serverTimestamp, getDoc, updateDoc, firebaseConfig, app, db, getAuth } from "./firebaseconfig.js"
+  query, where, orderBy, serverTimestamp, getDoc, updateDoc, firebaseConfig, app, db, getAuth, GoogleAuthProvider, signInWithPopup } from "./firebaseconfig.js"
 
 const loginForm = document.querySelector('#login-form');
 const signoutbtnEl  = document.querySelector('.signoutbtn');
 
-
+auth.languageCode = 'en'
+const provider = new GoogleAuthProvider()
 
 
 onAuthStateChanged(auth, async (user) => {
@@ -24,6 +25,19 @@ onAuthStateChanged(auth, async (user) => {
       console.log("User is not logged in");
     }
   });
+
+
+const googleSignBtn = document.querySelector('.goolge-sign-btn'); 
+googleSignBtn.addEventListener('click', () => {
+    signInWithPopup(auth, provider).then(result => {
+        const cred = GoogleAuthProvider.credentialFromResult(result); 
+        const user = result.user; 
+
+        window.location.href = '../index.html';
+    }).catch(error => {
+        console.log(error);
+    })
+})
 
 
 

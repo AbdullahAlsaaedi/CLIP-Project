@@ -83,6 +83,7 @@ a {
     border-top-left-radius: 10rem;
     position: relative;
     height: 100vh;
+    margin-top: 3rem;
 }
 
 
@@ -118,15 +119,15 @@ a {
 
 
 .landing-intro-heading {
-    font-size: 8rem;
+    font-size: 7rem;
     color: #3A3438;
-    width: 80rem;
+    width: 90rem;
 }
 
 .landing-intro-description {
     color: #777575;
-    font-size: 1.4rem;
-    width: 50rem;
+    font-size: 1.5rem;
+    width: 90rem;
     margin-top: 2rem;
     margin-bottom: 4rem;
 }
@@ -135,6 +136,8 @@ a {
     position: absolute;
     top: 2rem;
     right: 5rem;
+
+    width: 60rem;
 }
 
 
@@ -333,3 +336,85 @@ a {
 
 
 
+
+
+/* CSS */
+.signout {
+  background-color: #111827;
+  border: 1px solid transparent;
+  border-radius: .75rem;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  flex: 0 0 auto;
+  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+  padding: .75rem 1.2rem;
+  text-align: center;
+  text-decoration: none #6B7280 solid;
+  text-decoration-thickness: auto;
+  transition-duration: .2s;
+  transition-property: background-color,border-color,color,fill,stroke;
+  transition-timing-function: cubic-bezier(.4, 0, 0.2, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto;
+}
+
+.signout:hover {
+  background-color: #374151;
+}
+
+.signout:focus {
+  box-shadow: none;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+
+
+
+
+/* CSS */
+.signin {
+    background-color: #111827 !important; 
+    border: 1px solid transparent;
+    border-radius: .75rem;
+    box-sizing: border-box;
+    color: #FFFFFF !important;
+    cursor: pointer ;
+    flex: 0 0 auto;
+    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    padding: .75rem 1.2rem;
+    text-align: center;
+    text-decoration: none #6B7280 solid;
+    text-decoration-thickness: auto;
+    transition-duration: .2s;
+    transition-property: background-color,border-color,color,fill,stroke;
+    transition-timing-function: cubic-bezier(.4, 0, 0.2, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: auto;
+  }
+  
+  .signin:hover {
+    background-color: #374151;
+  }
+  
+  .signin:focus {
+    box-shadow: none;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+  
+
+  .primary-btn {
+    padding: 2rem 5rem !important;
+  }

@@ -436,7 +436,11 @@ document.getElementById('file-upload').addEventListener('change', function(event
             method: 'POST',
             body: formData,
         })
+
+        // catch the response
         .then(response => response.json())
+
+        // if the respone.json() made succcesfully
         .then(data => {
             addBotMessageToDom(data.transcription)
         })
@@ -498,14 +502,24 @@ document.querySelector('.summarize-msgs').addEventListener("click", async () => 
     try {
         // Send mergedMessages to server for summarization
         const response = await fetch('/sum', {
+
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+
             body: JSON.stringify({mergedMessages})
+
         });
 
+
+        // the fetch post is sent.. 
+
+
+        // after the result is retrieved 
         const data = await response.json();
+
+        
         
         addBotMessageToDom(data.summary)
 

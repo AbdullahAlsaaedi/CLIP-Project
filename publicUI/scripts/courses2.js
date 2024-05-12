@@ -30,23 +30,33 @@ import {
 
 
 
+// initilize the references to our collections in the database 
 const usersRef = collection(db, "users");
 const conversationsRef = collection(db, "conversations");
 const coursesRef = collection(db, "courses");
 const recsRef = collection(db, "recommended_courses");
 
+// the html container which will contain each course container
 const coursesContainer = document.querySelector('.courses-container');
 
 
 
+// the current user singed in, its null untill its verified 
 let currUser = null;
 
+
+
+// this function checks if the user is singed in, if yes, return the user in the function argument 
 onAuthStateChanged(auth, (user) => {
+
+    // the current user now verified, retrieve it from the auth object. 
     currUser = auth.currentUser;
 
-    // currUser.photoURL = '../images/photo-1631477076110-2b8c1fe0f3cc.avif'
     console.log("the user rn is ", currUser);
 
+
+
+    // if the user exists, call the main features function 
     if (user) {
         console.log("User is logged in:", user);        
         fetchCourses(); 
@@ -56,26 +66,42 @@ onAuthStateChanged(auth, (user) => {
 
 
 
+
+// this function will fetch the courses from the database 
 function fetchCourses() {
+
+    // onsnapshot on the course collection to retrieve the documents
     onSnapshot(coursesRef, snap => {
+
+        // empty the courses conainer 
         coursesContainer.innerHTML = ''; 
+
+        // the documents retrieved and its in the docs array. loop over it and create an html element on every item 
         snap.docs.forEach(doc => {
+            
+            // the doc here is the course document, create an html element based on it by calling this function
             createCourseHTML(doc)            
         })
     })
 }
 async function createCourseHTML(doc) {
-    const courseData = doc.data(); 
-    const userID = courseData.userUid; 
 
-    console.log(userID);
+
+    // doc.data() will retrieve the fields of the document
+    const courseData = doc.data(); 
+
+    // each course will have the id of the user that created it 
+    const userID = courseData.userUid; 
     
 
-    const q = query(usersRef, where("uid", "==", userID), limit(200))
-    const usersDocs = await getDocs(q); 
-    const userDoc = usersDocs.docs[0]; 
-    const userData = userDoc.data(); 
+    // query from the database the user that created this specific course, we can do it because we already got the id of that user from above 
+    const q = query(usersRef, where("uid", "==", userID), limit(200)) // the limit function will make sure there will be no more than 200 reading from the db
+    const usersDocs = await getDocs(q);  // based on the query, get all the documents which is stored in an array
+    const userDoc = usersDocs.docs[0];  // get the first element in the array which will be the user 
+    const userData = userDoc.data(); // get that user fields 
 
+
+    // query from the database the user that currently signed in  
     const q2 = query(usersRef, where("uid", "==", currUser.uid), limit(200))
     const currUsersDocs = await getDocs(q2); 
     const currUserDoc = currUsersDocs.docs[0]; 
@@ -83,11 +109,14 @@ async function createCourseHTML(doc) {
 
 
 
+    // ** CREATING THE HTML ELEMENT TO APPEND IT IN THE HTML FILE ** // 
 
 
-    const courseEl = document.createElement('div');
-    courseEl.classList.add('course');
-    courseEl.dataset.id = doc.id; 
+    const courseEl = document.createElement('div'); // create html elemetn of tag 'div' 
+    courseEl.classList.add('course'); // adding a class to the element for styling reasons 
+    courseEl.dataset.id = doc.id;  
+
+    // now we insert the actual html text to the element 
     courseEl.innerHTML = `
         <div class="course-author">
         ${userData.name}
@@ -107,6 +136,9 @@ async function createCourseHTML(doc) {
         </div>
     `;
 
+
+    
+    // if the owner of the coure is an admin, or the current user then let them have the privilage to delete the course 
     if(!((userData.uid === currUser.uid) || (currUserData.type === 'admin'))) {
         courseEl.querySelector('.dropdown').style.display = 'none' 
     } 
@@ -153,20 +185,7 @@ async function createCourseHTML(doc) {
 
 function moreButtonFunctionality(courseHeader) {
 
-
-    /* 
-
-     <div class="dropdown">
-                <button class="dropbtn">
-                    <img src="../images/icons8-info-50.png" alt="Info"/>
-                </button>
-                <div class="dropdown-content" id="myDropdown">
-                    <a href="#" id="closeMessage">Close the message</a>
-                    <a href="#" id="deleteMessage">Delete the message</a>
-                </div>
-            </div>
-
-    */
+    // function that allow the dropdown menu
 
     courseHeader.querySelector('.dropbtn').addEventListener('click', function(event) {
         event.stopPropagation();

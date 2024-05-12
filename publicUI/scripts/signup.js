@@ -17,7 +17,7 @@ import {initializeApp,
     firebaseConfig,
     app,
     db,
-    getAuth, setDoc,
+    getAuth, setDoc, GoogleAuthProvider, signInWithPopup,
     getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "./firebaseconfig.js"
 
   
@@ -27,7 +27,8 @@ signupForm.reset();
 
 const storage = getStorage(); 
 
-
+auth.languageCode = 'en'
+const provider = new GoogleAuthProvider()
 
 onAuthStateChanged(auth, async (user) => {
     if (user) {
@@ -41,6 +42,40 @@ onAuthStateChanged(auth, async (user) => {
       console.log("User is not logged in");
     }
   });
+
+
+
+const googleSignBtn = document.querySelector('.goolge-signup-btn'); 
+googleSignBtn.addEventListener('click', () => {
+    signInWithPopup(auth, provider).then(result => {
+        const cred = GoogleAuthProvider.credentialFromResult(result); 
+        const user = result.user; 
+
+        updateProfileFromGoogle(user);
+    }).catch(error => {
+        console.log(error);
+    })
+})
+
+function updateProfileFromGoogle(user) {
+
+    updateProfile(user, {
+        displayName: user.displayName, 
+    }).then(() => {
+        const docRef = addDoc(collection(db, 'users'), {
+            uid: user.uid, 
+            name: user.displayName,
+            email: user.email,
+            type: "user"
+        }).then((doc) => {
+            console.log("Auth changed, ", user.displayName);
+            console.log(docRef);
+
+            infoFormFun(doc, signupForm, true)
+        })
+
+    })
+}
 
 signupForm.addEventListener('submit', async function(e) {
     e.preventDefault(); 
@@ -65,7 +100,7 @@ signupForm.addEventListener('submit', async function(e) {
             }).then((doc) => {
                 console.log("Auth changed, ", user.displayName);
                 console.log(docRef);
-    
+                
                 
                 infoFormFun(doc, signupForm);
             })
@@ -117,7 +152,11 @@ document.getElementById('pfp').addEventListener('change', function(event) {
 const signupInfoBtn = document.querySelector('.signup-info-btn'); 
 const infoForm = document.getElementById('profile-info-form');
 
-function infoFormFun(doc, form) { 
+function infoFormFun(doc, form, isGoogleAcc) { 
+
+
+    if(isGoogleAcc) window.location.href = `/../user/${doc.id}`; 
+
 
     
         const signBtn = document.querySelector('.signup-info-btn');
@@ -169,6 +208,8 @@ function infoFormFun(doc, form) {
                 gotoProfile.style.display = "flex"; 
                 gotoProfile.href = `/../user/${doc.id}`
                 gotoHomepage.style.display = "block"; 
+
+
 
             }, 1500)
             
