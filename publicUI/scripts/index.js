@@ -93,6 +93,7 @@ onAuthStateChanged(auth, (user) => {
 
     } else {
       console.log("User is not logged in");
+      window.location.href = '/html/signin.html'
     }
   });
 

@@ -458,7 +458,9 @@ function displayMessages(doc) {
     const msg = document.createElement("div"); 
     msg.classList.add('message'); 
 
-    doc.data().senderId === currUser.uid && msg.classList.add('currrent-user');
+    if(doc.data().senderId === currUser.uid) msg.classList.add('currrent-user');
+
+
 
     msg.innerHTML = `${doc.data().text}`
 

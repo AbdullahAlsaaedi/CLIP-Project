@@ -99,7 +99,6 @@ onAuthStateChanged(auth, async (user) => {
                 content: postForm.postContent.value,
                 // check this later
                 course: currentPageName,
-                date: serverTimestamp(),
                 type: 'text',
                 likes: 0, 
                 userLikes: arrayUnion()
@@ -127,7 +126,7 @@ onAuthStateChanged(auth, async (user) => {
 
         const postQuery = query(
             postsRef,
-            where("course", "==", currentPageName), orderBy("date", "desc")
+            where("course", "==", currentPageName)
         );
 
 
@@ -169,8 +168,7 @@ onAuthStateChanged(auth, async (user) => {
                     
                         const commentsQuery = query(
                             commentsRef,
-                            where("postId", "==", el.id), where("parentCommentID", "==", null),
-                            orderBy("date", "desc")
+                            where("postId", "==", el.id), where("parentCommentID", "==", null)
                         );
 
                         onSnapshot(commentsQuery, (snapshot) => {
@@ -184,8 +182,7 @@ onAuthStateChanged(auth, async (user) => {
 
                                 const commentRepliesQuery = query(
                                     commentsRef,
-                                    where("parentCommentID", "==", doc.id),
-                                    orderBy("date", "desc")
+                                    where("parentCommentID", "==", doc.id)
                                 );
 
                                 onSnapshot(commentRepliesQuery, (snapshot) => {
@@ -268,9 +265,7 @@ async function createPost3(postDoc, userDoc, userID, currUserDoc) {
             <div class="post-username">
                 ${userDoc.name}
 
-                <div class="post-date">
-                    2 days ago
-                </div>
+               
             </div>
 
             ${((userDoc.uid === currUser.uid) || (currUserDoc.data().type === "admin")) ? '<button class="post-delete">X</button>' : ""}
@@ -380,9 +375,7 @@ async function createPost3(postDoc, userDoc, userID, currUserDoc) {
             <div class="post-username">
                 ${userDoc.name}
 
-                <div class="post-date">
-                    2 days ago
-                </div>
+                
             </div>
 
             <button class="post-delete">X</button>
@@ -564,7 +557,6 @@ async function createPost3(postDoc, userDoc, userID, currUserDoc) {
         addDoc(commentsRef, {
             postId: postId,
             content: commentContent,
-            date: serverTimestamp(),
             parentCommentID: null, 
             userID: currUser.uid
         });
@@ -720,9 +712,7 @@ async function createComment3(postEl, commentDoc, postDoc, currUserDoc) {
             <div class="post-username">
                 ${userData.name}
 
-                <div class="post-date">
-                    2 days ago
-                </div>
+                
             </div>
 
             ${((userData.uid === currUser.uid) || (currUserDoc.data().type === "admin")) ? '<button class="post-delete">X</button>' : ""}
@@ -842,7 +832,6 @@ function replies(commentEl, commentDoc, postDoc) {
         addDoc(commentsRef, {
             postId: postId,
             content: commentContent,
-            date: serverTimestamp(),
             parentCommentID: commentId,
             userID: currUser.uid
         });
@@ -1117,7 +1106,6 @@ function visualFromSubmission() {
                 content: url, 
                 type: "image", 
                 course: currentPageName,
-                date: serverTimestamp(),
                 userID: currUser.uid, 
                 title: visualForm.postTitle.value
             })

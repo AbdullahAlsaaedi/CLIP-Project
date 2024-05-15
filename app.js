@@ -225,7 +225,7 @@ app.get("/user/:id", async (req, res) => {
 
     } catch (error) {
         console.error("Error fetching document: ", error);
-        res.status(500).send('WTF');
+        res.status(500).send('Page not found');
     }
 })
 
